@@ -3,9 +3,12 @@ from __future__ import annotations
 """
 Central visual style definitions for NetworkPlotter.
 
-These values have no mechanical meaning. They only make geometry
-categories visually consistent and prevent Matplotlib from assigning
-a different automatic color to every element.
+Geometry styles carry no mechanical meaning.
+
+Mechanical mode:
+- line width represents absolute transmitted axial force;
+- line color represents normalized force stimulus;
+- failed elements always use the dedicated failure style.
 """
 
 REFERENCE_ELEMENT_STYLE = {
@@ -55,3 +58,8 @@ GRID_STYLE = {
     "alpha": 0.35,
     "linewidth": 0.8,
 }
+
+MECHANICAL_COLORMAP = "viridis"
+MECHANICAL_MIN_LINEWIDTH = 1.2
+MECHANICAL_MAX_LINEWIDTH = 5.0
+MECHANICAL_COLORBAR_LABEL = "Normalized force stimulus"

@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import numpy as np
 
 try:
     import matplotlib.pyplot as plt
+    from matplotlib import colormaps
+    from matplotlib.cm import ScalarMappable
+    from matplotlib.colors import Normalize
 except ImportError as exc:
     raise ImportError(
         "NetworkPlotter requires matplotlib. "
@@ -19,32 +22,47 @@ from .styles import (
     FIXED_NODE_STYLE,
     FREE_NODE_STYLE,
     GRID_STYLE,
+    MECHANICAL_COLORBAR_LABEL,
+    MECHANICAL_COLORMAP,
+    MECHANICAL_MAX_LINEWIDTH,
+    MECHANICAL_MIN_LINEWIDTH,
     NODE_LABEL_STYLE,
     REFERENCE_ELEMENT_STYLE,
 )
 
+PlotMode = Literal["geometry", "force"]
+
 
 class NetworkPlotter:
     """
-    Static, read-only geometry visualizer for a ROIF Engine Network.
+    Static, read-only visualizer for a ROIF Engine Network.
 
-    Version 1.1 draws:
-    - elements with one consistent current-geometry style;
-    - reference geometry with one consistent neutral style;
-    - failed elements with a dedicated failure style;
-    - fixed and free nodes;
-    - node identifiers.
+    Version 1.2 modes
+    -----------------
+    geometry:
+        Consistent reference and current geometry styles.
 
-    One-, two-, and three-dimensional networks are supported.
-    Reference geometry is captured when the plotter is created.
+    force:
+        Current-element line width represents absolute transmitted
+        axial force. Line color represents normalized force stimulus.
+        Failed elements keep the dedicated failure style.
+
+    The plotter never assembles forces and never changes the network.
+    Force mode therefore displays the latest force state already stored
+    by the engine.
     """
 
-    VERSION = "1.1"
+    VERSION = "1.2"
+    SUPPORTED_MODES = ("geometry", "force")
 
     def __init__(self, network: Any) -> None:
         self.network = network
         self._validate_network()
         self._reference_positions = self._capture_positions()
+
+    # =========================================================
+    # Validation and state access
+    # =========================================================
 
     def _validate_network(self) -> None:
         if not hasattr(self.network, "nodes"):
@@ -84,6 +102,15 @@ class NetworkPlotter:
             if element.node_b not in self.network.nodes:
                 raise ValueError("element.node_b is not part of the network")
 
+    @staticmethod
+    def _validate_mode(mode: str) -> PlotMode:
+        if mode not in NetworkPlotter.SUPPORTED_MODES:
+            supported = ", ".join(NetworkPlotter.SUPPORTED_MODES)
+            raise ValueError(
+                f"unsupported plot mode {mode!r}; expected one of: {supported}"
+            )
+        return mode  # type: ignore[return-value]
+
     @property
     def dimension(self) -> int:
         return int(
@@ -115,10 +142,65 @@ class NetworkPlotter:
         return str(getattr(node, "id", fallback_index))
 
     @staticmethod
+    def _element_label(element: Any, fallback_index: int) -> str:
+        element_id = getattr(element, "id", fallback_index)
+        return str(element_id)
+
+    @staticmethod
     def _is_failed(element: Any) -> bool:
         material = getattr(element, "material", None)
         state = getattr(material, "state", None)
         return bool(getattr(state, "failed", False))
+
+    @staticmethod
+    def element_force(element: Any) -> float:
+        """
+        Return the latest stored total axial force without recomputing it.
+        """
+        last_force = getattr(element, "last_force", None)
+        total = getattr(last_force, "total", None)
+
+        if total is None:
+            material = getattr(element, "material", None)
+            state = getattr(material, "state", None)
+            total = getattr(state, "total_force_component", 0.0)
+
+        force = float(total)
+
+        if not np.isfinite(force):
+            raise ValueError("element force must be finite")
+
+        return force
+
+    @classmethod
+    def element_force_stimulus(cls, element: Any) -> float:
+        """
+        Return normalized transmitted-force stimulus for one element.
+        """
+        material = getattr(element, "material", None)
+
+        if material is None:
+            raise TypeError("element must provide material")
+
+        method = getattr(material, "normalized_force_stimulus", None)
+
+        if method is None:
+            raise TypeError(
+                "element material must provide normalized_force_stimulus()"
+            )
+
+        stimulus = float(
+            method(force=cls.element_force(element))
+        )
+
+        if not np.isfinite(stimulus):
+            raise ValueError("element force stimulus must be finite")
+
+        return max(0.0, stimulus)
+
+    # =========================================================
+    # Axes and drawing primitives
+    # =========================================================
 
     def _create_axes(self) -> tuple[Any, Any]:
         figure = plt.figure()
@@ -130,10 +212,17 @@ class NetworkPlotter:
 
         return figure, axes
 
-    def _prepare_axes(self, axes: Any, title: str | None) -> None:
-        axes.set_title(
-            title or f"ROIF Engine — NetworkPlotter v{self.VERSION}"
+    def _prepare_axes(
+        self,
+        axes: Any,
+        title: str | None,
+        mode: PlotMode,
+    ) -> None:
+        default_title = (
+            f"ROIF Engine — NetworkPlotter v{self.VERSION} "
+            f"({mode} mode)"
         )
+        axes.set_title(title or default_title)
         axes.set_xlabel("X")
 
         if self.dimension >= 2:
@@ -152,26 +241,28 @@ class NetworkPlotter:
         point_a: np.ndarray,
         point_b: np.ndarray,
         **kwargs: Any,
-    ) -> None:
+    ) -> Any:
         if self.dimension == 1:
-            axes.plot(
+            lines = axes.plot(
                 [point_a[0], point_b[0]],
                 [0.0, 0.0],
                 **kwargs,
             )
         elif self.dimension == 2:
-            axes.plot(
+            lines = axes.plot(
                 [point_a[0], point_b[0]],
                 [point_a[1], point_b[1]],
                 **kwargs,
             )
         else:
-            axes.plot(
+            lines = axes.plot(
                 [point_a[0], point_b[0]],
                 [point_a[1], point_b[1]],
                 [point_a[2], point_b[2]],
                 **kwargs,
             )
+
+        return lines[0]
 
     def _scatter_nodes(
         self,
@@ -247,29 +338,113 @@ class NetworkPlotter:
                 **NODE_LABEL_STYLE,
             )
 
+    # =========================================================
+    # Mechanical mapping
+    # =========================================================
+
+    @staticmethod
+    def _scaled_linewidth(
+        force_magnitude: float,
+        maximum_force: float,
+    ) -> float:
+        if maximum_force <= 0.0:
+            return float(MECHANICAL_MIN_LINEWIDTH)
+
+        fraction = float(
+            np.clip(force_magnitude / maximum_force, 0.0, 1.0)
+        )
+
+        return float(
+            MECHANICAL_MIN_LINEWIDTH
+            + fraction
+            * (
+                MECHANICAL_MAX_LINEWIDTH
+                - MECHANICAL_MIN_LINEWIDTH
+            )
+        )
+
+    def mechanical_snapshot(self) -> dict[int, dict[str, float]]:
+        """
+        Return read-only mechanical values used by force mode.
+
+        Dictionary keys use Python object identity so elements do not need
+        hashable or unique public identifiers.
+        """
+        return {
+            id(element): {
+                "force": self.element_force(element),
+                "force_magnitude": abs(self.element_force(element)),
+                "force_stimulus": self.element_force_stimulus(element),
+            }
+            for element in self.network.elements
+        }
+
+    # =========================================================
+    # Public API
+    # =========================================================
+
     def plot(
         self,
         *,
+        mode: PlotMode = "geometry",
         show_reference: bool = True,
         show_labels: bool = True,
+        show_colorbar: bool = True,
         title: str | None = None,
         axes: Any | None = None,
     ) -> tuple[Any, Any]:
-        """Draw the network and return ``(figure, axes)``."""
+        """
+        Draw the network and return ``(figure, axes)``.
+
+        In ``force`` mode, the engine must already have evaluated forces.
+        NetworkPlotter only reads the latest stored values.
+        """
         self._validate_network()
+        mode = self._validate_mode(mode)
 
         if axes is None:
             figure, axes = self._create_axes()
         else:
             figure = axes.figure
 
-        self._prepare_axes(axes, title)
+        self._prepare_axes(axes, title, mode)
+
+        mechanical = (
+            self.mechanical_snapshot()
+            if mode == "force"
+            else {}
+        )
+
+        maximum_force = max(
+            (
+                values["force_magnitude"]
+                for values in mechanical.values()
+            ),
+            default=0.0,
+        )
+        maximum_stimulus = max(
+            (
+                values["force_stimulus"]
+                for values in mechanical.values()
+            ),
+            default=0.0,
+        )
+
+        color_maximum = max(1.0, maximum_stimulus)
+        normalization = Normalize(
+            vmin=0.0,
+            vmax=color_maximum,
+            clip=True,
+        )
+        colormap = colormaps.get_cmap(MECHANICAL_COLORMAP)
 
         reference_label_added = False
         current_label_added = False
         failed_label_added = False
 
-        for element in self.network.elements:
+        for index, element in enumerate(self.network.elements):
+            element_label = self._element_label(element, index)
+
             if show_reference:
                 reference_style = dict(REFERENCE_ELEMENT_STYLE)
                 reference_style["label"] = (
@@ -278,12 +453,13 @@ class NetworkPlotter:
                     else None
                 )
 
-                self._plot_segment(
+                line = self._plot_segment(
                     axes,
                     self.reference_position(element.node_a),
                     self.reference_position(element.node_b),
                     **reference_style,
                 )
+                line.set_gid(f"reference:{element_label}")
                 reference_label_added = True
 
             current_a = np.asarray(element.node_a.position, dtype=float)
@@ -297,28 +473,43 @@ class NetworkPlotter:
                     else None
                 )
 
-                self._plot_segment(
+                line = self._plot_segment(
                     axes,
                     current_a,
                     current_b,
                     **failed_style,
                 )
+                line.set_gid(f"failed:{element_label}")
                 failed_label_added = True
-            else:
+                continue
+
+            if mode == "geometry":
                 current_style = dict(CURRENT_ELEMENT_STYLE)
-                current_style["label"] = (
-                    "Current geometry"
-                    if not current_label_added
-                    else None
+            else:
+                values = mechanical[id(element)]
+                current_style = dict(CURRENT_ELEMENT_STYLE)
+                current_style["color"] = colormap(
+                    normalization(values["force_stimulus"])
+                )
+                current_style["linewidth"] = self._scaled_linewidth(
+                    values["force_magnitude"],
+                    maximum_force,
                 )
 
-                self._plot_segment(
-                    axes,
-                    current_a,
-                    current_b,
-                    **current_style,
-                )
-                current_label_added = True
+            current_style["label"] = (
+                "Current geometry"
+                if not current_label_added
+                else None
+            )
+
+            line = self._plot_segment(
+                axes,
+                current_a,
+                current_b,
+                **current_style,
+            )
+            line.set_gid(f"current:{element_label}")
+            current_label_added = True
 
         fixed_nodes = [
             node
@@ -356,20 +547,37 @@ class NetworkPlotter:
                     unique[label] = handle
             axes.legend(unique.values(), unique.keys())
 
+        if mode == "force" and show_colorbar:
+            scalar_mappable = ScalarMappable(
+                norm=normalization,
+                cmap=colormap,
+            )
+            scalar_mappable.set_array([])
+            colorbar = figure.colorbar(
+                scalar_mappable,
+                ax=axes,
+                pad=0.02,
+            )
+            colorbar.set_label(MECHANICAL_COLORBAR_LABEL)
+
         figure.tight_layout()
         return figure, axes
 
     def show(
         self,
         *,
+        mode: PlotMode = "geometry",
         show_reference: bool = True,
         show_labels: bool = True,
+        show_colorbar: bool = True,
         title: str | None = None,
     ) -> tuple[Any, Any]:
         """Draw the network and open the Matplotlib window."""
         figure, axes = self.plot(
+            mode=mode,
             show_reference=show_reference,
             show_labels=show_labels,
+            show_colorbar=show_colorbar,
             title=title,
         )
         plt.show()
@@ -379,8 +587,10 @@ class NetworkPlotter:
         self,
         path: str | Path,
         *,
+        mode: PlotMode = "geometry",
         show_reference: bool = True,
         show_labels: bool = True,
+        show_colorbar: bool = True,
         title: str | None = None,
         dpi: int = 150,
     ) -> Path:
@@ -393,8 +603,10 @@ class NetworkPlotter:
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         figure, _ = self.plot(
+            mode=mode,
             show_reference=show_reference,
             show_labels=show_labels,
+            show_colorbar=show_colorbar,
             title=title,
         )
         figure.savefig(
