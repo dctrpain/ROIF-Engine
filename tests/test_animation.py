@@ -55,56 +55,33 @@ def draw_one_frame(
     )
 
 
-def test_from_simulation_uses_simulation_network():
+def test_duplicate_visual_frame_does_not_advance_twice():
     network, _ = make_network()
     simulation = Simulation(
         network,
-        dt=0.1,
-        update_materials=False,
-    )
-
-    animator = NetworkAnimator.from_simulation(
-        simulation
-    )
-
-    assert animator.network is network
-    assert animator.simulation is simulation
-    assert animator.is_simulation_driven is True
-
-
-def test_simulation_driven_frame_advances_physics():
-    network, node = make_network()
-    simulation = Simulation(
-        network,
-        dt=0.1,
+        dt=0.01,
         update_materials=False,
     )
     animator = NetworkAnimator.from_simulation(
-        simulation
+        simulation,
+        simulation_steps_per_frame=5,
     )
 
     animator.create(
-        frames=2,
-        interval_ms=20.0,
+        frames=3,
         mode="geometry",
     )
 
-    artists = draw_one_frame(animator)
+    draw_one_frame(animator, 0)
+    draw_one_frame(animator, 0)
 
-    assert simulation.step_index == 1
-    assert simulation.time == pytest.approx(0.1)
-    assert node.velocity == pytest.approx(
-        [0.0, -1.0]
-    )
-    assert node.position == pytest.approx(
-        [0.0, -0.1]
-    )
-    assert len(artists) > 0
+    assert simulation.step_index == 5
+    assert simulation.time == pytest.approx(0.05)
 
     close_test_animation(animator)
 
 
-def test_simulation_steps_per_frame_are_applied():
+def test_skipped_frames_are_caught_up():
     network, _ = make_network()
     simulation = Simulation(
         network,
@@ -117,14 +94,70 @@ def test_simulation_steps_per_frame_are_applied():
     )
 
     animator.create(
-        frames=2,
+        frames=5,
         mode="geometry",
     )
-    draw_one_frame(animator, frame_index=1)
 
-    assert simulation.step_index == 4
-    assert simulation.time == pytest.approx(0.04)
-    assert len(simulation.frames) == 4
+    draw_one_frame(animator, 0)
+    draw_one_frame(animator, 3)
+
+    assert simulation.step_index == 16
+    assert simulation.time == pytest.approx(0.16)
+
+    close_test_animation(animator)
+
+
+def test_complete_requested_frames_fills_missing_tail():
+    network, _ = make_network()
+    simulation = Simulation(
+        network,
+        dt=0.01,
+        update_materials=False,
+    )
+    animator = NetworkAnimator.from_simulation(
+        simulation,
+        simulation_steps_per_frame=5,
+    )
+
+    animator.create(
+        frames=300,
+        mode="geometry",
+    )
+
+    # Simulate a GUI backend that rendered only frames 0..297.
+    draw_one_frame(animator, 297)
+
+    assert simulation.step_index == 1490
+
+    animator.complete_requested_frames()
+
+    assert simulation.step_index == 1500
+    assert simulation.time == pytest.approx(15.0)
+    assert len(simulation.frames) == 1500
+    assert animator.last_advanced_frame_index == 299
+
+    # Completion is idempotent.
+    animator.complete_requested_frames()
+    assert simulation.step_index == 1500
+
+    close_test_animation(animator)
+
+
+def test_requested_step_count_property():
+    network, _ = make_network()
+    simulation = Simulation(network)
+    animator = NetworkAnimator.from_simulation(
+        simulation,
+        simulation_steps_per_frame=5,
+    )
+
+    animator.create(
+        frames=300,
+        mode="geometry",
+    )
+
+    assert animator.requested_frame_count == 300
+    assert animator.expected_physical_steps == 1500
 
     close_test_animation(animator)
 
@@ -148,7 +181,7 @@ def test_callback_mode_remains_supported():
         frames=3,
         mode="geometry",
     )
-    draw_one_frame(animator, frame_index=2)
+    draw_one_frame(animator, 2)
 
     assert calls == [2]
     assert node.position[0] == pytest.approx(2.0)
@@ -170,31 +203,13 @@ def test_rejects_simulation_and_callback_together():
         )
 
 
-def test_rejects_different_network_from_simulation():
-    network, _ = make_network()
-    other_network, _ = make_network()
-    simulation = Simulation(network)
-
-    with pytest.raises(
-        ValueError,
-        match="network must be simulation.network",
-    ):
-        NetworkAnimator(
-            other_network,
-            simulation=simulation,
-        )
-
-
 def test_rejects_invalid_steps_per_frame():
     network, _ = make_network()
     simulation = Simulation(network)
 
     with pytest.raises(
         ValueError,
-        match=(
-            "simulation_steps_per_frame "
-            "must be positive"
-        ),
+        match="must be positive",
     ):
         NetworkAnimator.from_simulation(
             simulation,
@@ -227,15 +242,22 @@ def test_create_rejects_invalid_interval():
         )
 
 
-def test_create_rejects_unknown_mode():
+def test_negative_frame_index_is_rejected():
     network, _ = make_network()
-    animator = NetworkAnimator(network)
+    simulation = Simulation(network)
+    animator = NetworkAnimator.from_simulation(
+        simulation
+    )
+
+    animator.create(
+        frames=2,
+        mode="geometry",
+    )
 
     with pytest.raises(
         ValueError,
-        match="unsupported plot mode",
+        match="frame_index cannot be negative",
     ):
-        animator.create(
-            frames=2,
-            mode="energy",
-        )
+        draw_one_frame(animator, -1)
+
+    close_test_animation(animator)

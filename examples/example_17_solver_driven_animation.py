@@ -1,11 +1,8 @@
 r"""
 ROIF Engine Example 17
 
-Solver-driven animation with Simulation Engine v2.1 and
-NetworkAnimator v2.2.
-
-No node position is prescribed. Every visual frame advances the
-physical simulation and displays the resulting network state.
+Deterministic solver-driven animation with Simulation Engine v2.1 and
+NetworkAnimator v2.2.2.
 
 Run from the project root:
 
@@ -83,7 +80,7 @@ def build_network() -> Network:
 def main() -> None:
     print("=" * 88)
     print("ROIF Engine - Example 17")
-    print("Solver-Driven Animation")
+    print("Deterministic Solver-Driven Animation v2.2.2")
     print("=" * 88)
 
     network = build_network()
@@ -105,14 +102,29 @@ def main() -> None:
         ),
     )
 
+    expected_steps = (
+        FRAME_COUNT
+        * SIMULATION_STEPS_PER_FRAME
+    )
+    expected_time = (
+        expected_steps
+        * simulation.dt
+    )
+
     print()
     print(
-        "Each visual frame advances "
+        "Each unique visual frame advances "
         f"{SIMULATION_STEPS_PER_FRAME} physical steps."
     )
     print(
         "Physical time per visual frame: "
         f"{simulation.dt * SIMULATION_STEPS_PER_FRAME:.4f} s"
+    )
+    print(
+        f"Expected final physical steps: {expected_steps}"
+    )
+    print(
+        f"Expected final physical time : {expected_time:.4f} s"
     )
     print("Close the Matplotlib window to finish.")
 
@@ -124,6 +136,7 @@ def main() -> None:
         show_labels=True,
         title="ROIF — Solver-Driven Motion",
         repeat=False,
+        complete_on_close=True,
     )
 
     print()

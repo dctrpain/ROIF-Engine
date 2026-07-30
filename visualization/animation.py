@@ -26,20 +26,22 @@ class NetworkAnimator:
     """
     Animated visualization for a ROIF Engine network.
 
-    NetworkAnimator v2.2 supports two execution sources:
+    NetworkAnimator v2.2.2 provides deterministic simulation timing.
 
-    1. Simulation-driven mode
-       A Simulation advances physical time and updates the network.
+    Matplotlib is allowed to redraw, duplicate, or skip visual frames.
+    The animator guarantees:
 
-    2. Callback mode
-       A legacy update_frame(frame_index) callback updates the network.
+    - the same visual frame never advances physics twice;
+    - skipped frame indices are caught up deterministically;
+    - show(..., complete_on_close=True) completes the requested
+      physical interval after the window closes.
 
-    The animator never implements mechanics. It only advances the
-    configured source and redraws the resulting network state through
-    NetworkPlotter.
+    This last rule is important because GUI backends may stop one or
+    more frames before the nominal end when the user closes a window,
+    even when the animation appears visually complete.
     """
 
-    VERSION = "2.2"
+    VERSION = "2.2.2"
 
     def __init__(
         self,
@@ -67,19 +69,13 @@ class NetworkAnimator:
                 "network or simulation must be provided"
             )
 
-        if (
-            simulation is not None
-            and update_frame is not None
-        ):
+        if simulation is not None and update_frame is not None:
             raise ValueError(
                 "provide either simulation or update_frame, "
                 "not both"
             )
 
-        if (
-            update_frame is not None
-            and not callable(update_frame)
-        ):
+        if update_frame is not None and not callable(update_frame):
             raise TypeError(
                 "update_frame must be callable"
             )
@@ -106,6 +102,9 @@ class NetworkAnimator:
         self._figure: Any | None = None
         self._axes: Any | None = None
 
+        self._last_advanced_frame_index = -1
+        self._requested_frame_count = 0
+
     @classmethod
     def from_simulation(
         cls,
@@ -113,10 +112,6 @@ class NetworkAnimator:
         *,
         simulation_steps_per_frame: int = 1,
     ) -> "NetworkAnimator":
-        """
-        Construct an animator directly from Simulation Engine.
-        """
-
         return cls(
             simulation=simulation,
             simulation_steps_per_frame=(
@@ -127,6 +122,21 @@ class NetworkAnimator:
     @property
     def is_simulation_driven(self) -> bool:
         return self.simulation is not None
+
+    @property
+    def last_advanced_frame_index(self) -> int:
+        return int(self._last_advanced_frame_index)
+
+    @property
+    def requested_frame_count(self) -> int:
+        return int(self._requested_frame_count)
+
+    @property
+    def expected_physical_steps(self) -> int:
+        return (
+            self._requested_frame_count
+            * self.simulation_steps_per_frame
+        )
 
     @staticmethod
     def _validate_frames(frames: int) -> int:
@@ -155,25 +165,88 @@ class NetworkAnimator:
 
         return interval_ms
 
+    @staticmethod
+    def _validate_frame_index(
+        frame_index: int,
+    ) -> int:
+        frame_index = int(frame_index)
+
+        if frame_index < 0:
+            raise ValueError(
+                "frame_index cannot be negative"
+            )
+
+        return frame_index
+
     def set_reference_geometry(self) -> None:
+        self.plotter.set_reference_geometry()
+
+    def reset_frame_tracking(self) -> None:
+        self._last_advanced_frame_index = -1
+
+    def _advance_simulation_to_frame(
+        self,
+        frame_index: int,
+    ) -> None:
+        if self.simulation is None:
+            return
+
+        frame_index = self._validate_frame_index(
+            frame_index
+        )
+
+        if frame_index <= self._last_advanced_frame_index:
+            return
+
+        visual_intervals = (
+            frame_index
+            - self._last_advanced_frame_index
+        )
+        physical_steps = (
+            visual_intervals
+            * self.simulation_steps_per_frame
+        )
+
+        self.simulation.run_steps(
+            physical_steps
+        )
+
+        self._last_advanced_frame_index = frame_index
+
+    def complete_requested_frames(self) -> None:
         """
-        Capture current geometry as visual reference.
+        Complete the physical interval represented by create()/show().
+
+        This is idempotent. Calling it more than once does not advance
+        the simulation again.
         """
 
-        self.plotter.set_reference_geometry()
+        if self.simulation is None:
+            return
+
+        if self._requested_frame_count <= 0:
+            return
+
+        final_frame_index = (
+            self._requested_frame_count - 1
+        )
+
+        self._advance_simulation_to_frame(
+            final_frame_index
+        )
 
     def _advance_source(
         self,
         frame_index: int,
     ) -> None:
-        if self.simulation is not None:
-            for _ in range(
-                self.simulation_steps_per_frame
-            ):
-                self.simulation.advance_frame(
-                    frame_index
-                )
+        frame_index = self._validate_frame_index(
+            frame_index
+        )
 
+        if self.simulation is not None:
+            self._advance_simulation_to_frame(
+                frame_index
+            )
             return
 
         if self.update_frame is not None:
@@ -212,6 +285,10 @@ class NetworkAnimator:
         show_colorbar: bool,
         title: str | None,
     ) -> tuple[Any, ...]:
+        frame_index = self._validate_frame_index(
+            frame_index
+        )
+
         self._advance_source(frame_index)
 
         if self._axes is None:
@@ -250,19 +327,15 @@ class NetworkAnimator:
         title: str | None = None,
         repeat: bool = False,
     ) -> FuncAnimation:
-        """
-        Build and return a Matplotlib FuncAnimation.
-
-        Dynamic colorbars remain disabled because per-frame colorbar
-        recreation causes duplicated axes and memory growth.
-        """
-
         frames = self._validate_frames(frames)
         interval_ms = self._validate_interval(
             interval_ms
         )
 
         self.plotter._validate_mode(mode)
+
+        self.reset_frame_tracking()
+        self._requested_frame_count = frames
 
         self._figure, self._axes = (
             self.plotter._create_axes()
@@ -278,10 +351,11 @@ class NetworkAnimator:
                 show_colorbar=show_colorbar,
                 title=title,
             ),
-            frames=frames,
+            frames=range(frames),
             interval=interval_ms,
             repeat=bool(repeat),
             blit=False,
+            cache_frame_data=False,
         )
 
         return self._animation
@@ -296,9 +370,16 @@ class NetworkAnimator:
         show_labels: bool = True,
         title: str | None = None,
         repeat: bool = False,
+        complete_on_close: bool = True,
     ) -> FuncAnimation:
         """
-        Create the animation and open the Matplotlib window.
+        Open an interactive animation window.
+
+        When complete_on_close is True, the requested physical interval
+        is completed after the GUI window returns. Therefore a nominal
+        300-frame run with 5 physical steps per frame always finishes
+        at exactly 1500 physical steps, even if the GUI backend rendered
+        only 298 or 299 unique frames before closing.
         """
 
         animation = self.create(
@@ -313,6 +394,10 @@ class NetworkAnimator:
         )
 
         plt.show()
+
+        if complete_on_close:
+            self.complete_requested_frames()
+
         return animation
 
     def save_gif(
@@ -328,10 +413,6 @@ class NetworkAnimator:
         repeat: bool = False,
         dpi: int = 120,
     ) -> Path:
-        """
-        Save animation as GIF using Matplotlib's Pillow writer.
-        """
-
         output_path = Path(path)
 
         if output_path.suffix.lower() != ".gif":
@@ -367,6 +448,7 @@ class NetworkAnimator:
             dpi=int(dpi),
         )
 
+        self.complete_requested_frames()
         plt.close(self._figure)
 
         return output_path.resolve()
