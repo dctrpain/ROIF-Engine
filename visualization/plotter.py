@@ -13,21 +13,33 @@ except ImportError as exc:
         "Install it with: python -m pip install matplotlib"
     ) from exc
 
+from .styles import (
+    CURRENT_ELEMENT_STYLE,
+    FAILED_ELEMENT_STYLE,
+    FIXED_NODE_STYLE,
+    FREE_NODE_STYLE,
+    GRID_STYLE,
+    NODE_LABEL_STYLE,
+    REFERENCE_ELEMENT_STYLE,
+)
+
 
 class NetworkPlotter:
     """
     Static, read-only geometry visualizer for a ROIF Engine Network.
 
-    Version 1.0 draws:
-    - elements;
+    Version 1.1 draws:
+    - elements with one consistent current-geometry style;
+    - reference geometry with one consistent neutral style;
+    - failed elements with a dedicated failure style;
     - fixed and free nodes;
-    - node identifiers;
-    - stored reference geometry;
-    - current geometry.
+    - node identifiers.
 
     One-, two-, and three-dimensional networks are supported.
     Reference geometry is captured when the plotter is created.
     """
+
+    VERSION = "1.1"
 
     def __init__(self, network: Any) -> None:
         self.network = network
@@ -110,14 +122,18 @@ class NetworkPlotter:
 
     def _create_axes(self) -> tuple[Any, Any]:
         figure = plt.figure()
+
         if self.dimension == 3:
             axes = figure.add_subplot(111, projection="3d")
         else:
             axes = figure.add_subplot(111)
+
         return figure, axes
 
     def _prepare_axes(self, axes: Any, title: str | None) -> None:
-        axes.set_title(title or "ROIF Engine — NetworkPlotter v1.0")
+        axes.set_title(
+            title or f"ROIF Engine — NetworkPlotter v{self.VERSION}"
+        )
         axes.set_xlabel("X")
 
         if self.dimension >= 2:
@@ -125,7 +141,7 @@ class NetworkPlotter:
         if self.dimension == 3:
             axes.set_zlabel("Z")
 
-        axes.grid(True)
+        axes.grid(True, **GRID_STYLE)
 
         if self.dimension != 3:
             axes.set_aspect("equal", adjustable="datalim")
@@ -162,7 +178,7 @@ class NetworkPlotter:
         axes: Any,
         nodes: list[Any],
         *,
-        marker: str,
+        style: dict[str, Any],
         label: str,
     ) -> None:
         if not nodes:
@@ -177,29 +193,24 @@ class NetworkPlotter:
             axes.scatter(
                 [position[0] for position in positions],
                 [0.0 for _ in positions],
-                marker=marker,
-                s=70,
                 label=label,
-                zorder=4,
+                **style,
             )
         elif self.dimension == 2:
             axes.scatter(
                 [position[0] for position in positions],
                 [position[1] for position in positions],
-                marker=marker,
-                s=70,
                 label=label,
-                zorder=4,
+                **style,
             )
         else:
             axes.scatter(
                 [position[0] for position in positions],
                 [position[1] for position in positions],
                 [position[2] for position in positions],
-                marker=marker,
-                s=70,
                 label=label,
                 depthshade=False,
+                **style,
             )
 
     def _annotate_node(
@@ -217,6 +228,7 @@ class NetworkPlotter:
                 (position[0], 0.0),
                 xytext=(6, 8),
                 textcoords="offset points",
+                **NODE_LABEL_STYLE,
             )
         elif self.dimension == 2:
             axes.annotate(
@@ -224,6 +236,7 @@ class NetworkPlotter:
                 (position[0], position[1]),
                 xytext=(6, 6),
                 textcoords="offset points",
+                **NODE_LABEL_STYLE,
             )
         else:
             axes.text(
@@ -231,6 +244,7 @@ class NetworkPlotter:
                 position[1],
                 position[2],
                 f"  {label}",
+                **NODE_LABEL_STYLE,
             )
 
     def plot(
@@ -257,18 +271,18 @@ class NetworkPlotter:
 
         for element in self.network.elements:
             if show_reference:
+                reference_style = dict(REFERENCE_ELEMENT_STYLE)
+                reference_style["label"] = (
+                    "Reference geometry"
+                    if not reference_label_added
+                    else None
+                )
+
                 self._plot_segment(
                     axes,
                     self.reference_position(element.node_a),
                     self.reference_position(element.node_b),
-                    linestyle="--",
-                    linewidth=1.2,
-                    alpha=0.55,
-                    label=(
-                        "Reference geometry"
-                        if not reference_label_added
-                        else None
-                    ),
+                    **reference_style,
                 )
                 reference_label_added = True
 
@@ -276,31 +290,33 @@ class NetworkPlotter:
             current_b = np.asarray(element.node_b.position, dtype=float)
 
             if self._is_failed(element):
+                failed_style = dict(FAILED_ELEMENT_STYLE)
+                failed_style["label"] = (
+                    "Failed element"
+                    if not failed_label_added
+                    else None
+                )
+
                 self._plot_segment(
                     axes,
                     current_a,
                     current_b,
-                    linestyle=":",
-                    linewidth=2.0,
-                    label=(
-                        "Failed element"
-                        if not failed_label_added
-                        else None
-                    ),
+                    **failed_style,
                 )
                 failed_label_added = True
             else:
+                current_style = dict(CURRENT_ELEMENT_STYLE)
+                current_style["label"] = (
+                    "Current geometry"
+                    if not current_label_added
+                    else None
+                )
+
                 self._plot_segment(
                     axes,
                     current_a,
                     current_b,
-                    linestyle="-",
-                    linewidth=2.0,
-                    label=(
-                        "Current geometry"
-                        if not current_label_added
-                        else None
-                    ),
+                    **current_style,
                 )
                 current_label_added = True
 
@@ -318,13 +334,13 @@ class NetworkPlotter:
         self._scatter_nodes(
             axes,
             fixed_nodes,
-            marker="s",
+            style=FIXED_NODE_STYLE,
             label="Fixed nodes",
         )
         self._scatter_nodes(
             axes,
             free_nodes,
-            marker="o",
+            style=FREE_NODE_STYLE,
             label="Free nodes",
         )
 

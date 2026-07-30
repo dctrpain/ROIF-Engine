@@ -1,9 +1,9 @@
 r"""
 ROIF Engine Example 13
 
-NetworkPlotter v1.0:
-- reference geometry;
-- current geometry;
+NetworkPlotter v1.1:
+- one consistent reference-geometry style;
+- one consistent current-geometry style;
 - fixed and free nodes;
 - node labels.
 
@@ -98,7 +98,7 @@ def build_square_network() -> Network:
 def main() -> None:
     print("=" * 88)
     print("ROIF Engine - Example 13")
-    print("NetworkPlotter v1.0")
+    print("NetworkPlotter v1.1")
     print("=" * 88)
 
     network = build_square_network()
@@ -112,6 +112,7 @@ def main() -> None:
 
     print("Reference geometry captured.")
     print("Current geometry prescribed.")
+    print("Unified visual styles applied.")
     print("Opening visualization window...")
 
     plotter.show(
