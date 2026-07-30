@@ -15,6 +15,7 @@ except ImportError as exc:
         "Install it with: python -m pip install matplotlib"
     ) from exc
 
+from core.recorder import SimulationRecording
 from core.simulation import Simulation
 from .plotter import NetworkPlotter
 
@@ -24,33 +25,49 @@ FrameCallback = Callable[[int], None]
 
 class NetworkAnimator:
     """
-    Animated visualization for a ROIF Engine network.
+    ROIF Engine network animation.
 
-    NetworkAnimator v2.2.2 provides deterministic simulation timing.
+    Supported sources:
 
-    Matplotlib is allowed to redraw, duplicate, or skip visual frames.
-    The animator guarantees:
+    - Simulation: solver-driven live animation.
+    - SimulationRecording: offline playback without physics.
+    - update_frame callback: legacy manual animation.
 
-    - the same visual frame never advances physics twice;
-    - skipped frame indices are caught up deterministically;
-    - show(..., complete_on_close=True) completes the requested
-      physical interval after the window closes.
-
-    This last rule is important because GUI backends may stop one or
-    more frames before the nominal end when the user closes a window,
-    even when the animation appears visually complete.
+    v2.3.1 preserves the public deterministic-timing properties
+    introduced in v2.2.2 while adding recording playback.
     """
 
-    VERSION = "2.2.2"
+    VERSION = "2.3.1"
 
     def __init__(
         self,
         network: Any | None = None,
         *,
         simulation: Simulation | None = None,
+        recording: SimulationRecording | None = None,
         update_frame: FrameCallback | None = None,
         simulation_steps_per_frame: int = 1,
     ) -> None:
+        # Preserve the v2.2.2 validation message because existing tests
+        # and downstream users may depend on it.
+        if simulation is not None and update_frame is not None:
+            raise ValueError(
+                "provide either simulation or update_frame, "
+                "not both"
+            )
+
+        if recording is not None and simulation is not None:
+            raise ValueError(
+                "provide either simulation or recording, "
+                "not both"
+            )
+
+        if recording is not None and update_frame is not None:
+            raise ValueError(
+                "provide either recording or update_frame, "
+                "not both"
+            )
+
         if simulation is not None:
             if not isinstance(simulation, Simulation):
                 raise TypeError(
@@ -64,18 +81,28 @@ class NetworkAnimator:
                     "network must be simulation.network"
                 )
 
+        if recording is not None:
+            if not isinstance(
+                recording,
+                SimulationRecording,
+            ):
+                raise TypeError(
+                    "recording must be a "
+                    "SimulationRecording"
+                )
+
+            if network is None:
+                network = recording.first_frame.network
+
         if network is None:
             raise ValueError(
-                "network or simulation must be provided"
+                "network, simulation, or recording "
+                "must be provided"
             )
 
-        if simulation is not None and update_frame is not None:
-            raise ValueError(
-                "provide either simulation or update_frame, "
-                "not both"
-            )
-
-        if update_frame is not None and not callable(update_frame):
+        if update_frame is not None and not callable(
+            update_frame
+        ):
             raise TypeError(
                 "update_frame must be callable"
             )
@@ -91,6 +118,7 @@ class NetworkAnimator:
 
         self.network = network
         self.simulation = simulation
+        self.recording = recording
         self.update_frame = update_frame
         self.simulation_steps_per_frame = (
             simulation_steps_per_frame
@@ -119,20 +147,42 @@ class NetworkAnimator:
             ),
         )
 
+    @classmethod
+    def from_recording(
+        cls,
+        recording: SimulationRecording,
+    ) -> "NetworkAnimator":
+        return cls(recording=recording)
+
     @property
     def is_simulation_driven(self) -> bool:
         return self.simulation is not None
 
     @property
+    def is_recording_playback(self) -> bool:
+        return self.recording is not None
+
+    @property
     def last_advanced_frame_index(self) -> int:
+        """
+        Highest visual frame whose physical interval was completed.
+
+        Returns -1 before the first simulation-driven frame.
+        """
         return int(self._last_advanced_frame_index)
 
     @property
     def requested_frame_count(self) -> int:
+        """
+        Number of visual frames requested by the latest create/show call.
+        """
         return int(self._requested_frame_count)
 
     @property
     def expected_physical_steps(self) -> int:
+        """
+        Physical steps represented by the requested live animation.
+        """
         return (
             self._requested_frame_count
             * self.simulation_steps_per_frame
@@ -202,38 +252,45 @@ class NetworkAnimator:
             frame_index
             - self._last_advanced_frame_index
         )
-        physical_steps = (
-            visual_intervals
-            * self.simulation_steps_per_frame
-        )
 
         self.simulation.run_steps(
-            physical_steps
+            visual_intervals
+            * self.simulation_steps_per_frame
         )
 
         self._last_advanced_frame_index = frame_index
 
     def complete_requested_frames(self) -> None:
         """
-        Complete the physical interval represented by create()/show().
+        Complete the requested physical interval after GUI playback.
 
-        This is idempotent. Calling it more than once does not advance
-        the simulation again.
+        Idempotent: repeated calls do not add physical steps.
+        Recording playback never advances physics.
         """
-
         if self.simulation is None:
             return
 
         if self._requested_frame_count <= 0:
             return
 
-        final_frame_index = (
+        self._advance_simulation_to_frame(
             self._requested_frame_count - 1
         )
 
-        self._advance_simulation_to_frame(
-            final_frame_index
+    def _select_recording_frame(
+        self,
+        frame_index: int,
+    ) -> None:
+        if self.recording is None:
+            return
+
+        frame_index = self._validate_frame_index(
+            frame_index
         )
+        frame = self.recording.frame(frame_index)
+
+        self.network = frame.network
+        self.plotter = NetworkPlotter(self.network)
 
     def _advance_source(
         self,
@@ -242,6 +299,12 @@ class NetworkAnimator:
         frame_index = self._validate_frame_index(
             frame_index
         )
+
+        if self.recording is not None:
+            self._select_recording_frame(
+                frame_index
+            )
+            return
 
         if self.simulation is not None:
             self._advance_simulation_to_frame(
@@ -265,6 +328,16 @@ class NetworkAnimator:
                 f"NetworkAnimator v{self.VERSION}"
             )
         )
+
+        if self.recording is not None:
+            frame = self.recording.frame(
+                frame_index
+            )
+            return (
+                f"{prefix} — recorded frame {frame_index} "
+                f"— t={frame.time:.4f} s "
+                f"— step {frame.step_index}"
+            )
 
         if self.simulation is not None:
             return (
@@ -318,7 +391,7 @@ class NetworkAnimator:
     def create(
         self,
         *,
-        frames: int,
+        frames: int | None = None,
         interval_ms: float = 50.0,
         mode: str = "geometry",
         show_reference: bool = True,
@@ -327,6 +400,19 @@ class NetworkAnimator:
         title: str | None = None,
         repeat: bool = False,
     ) -> FuncAnimation:
+        if self.recording is not None:
+            if frames is None:
+                frames = len(self.recording)
+            elif int(frames) > len(self.recording):
+                raise ValueError(
+                    "frames cannot exceed recording length"
+                )
+
+        if frames is None:
+            raise ValueError(
+                "frames must be provided for live animation"
+            )
+
         frames = self._validate_frames(frames)
         interval_ms = self._validate_interval(
             interval_ms
@@ -363,7 +449,7 @@ class NetworkAnimator:
     def show(
         self,
         *,
-        frames: int,
+        frames: int | None = None,
         interval_ms: float = 50.0,
         mode: str = "geometry",
         show_reference: bool = True,
@@ -372,16 +458,6 @@ class NetworkAnimator:
         repeat: bool = False,
         complete_on_close: bool = True,
     ) -> FuncAnimation:
-        """
-        Open an interactive animation window.
-
-        When complete_on_close is True, the requested physical interval
-        is completed after the GUI window returns. Therefore a nominal
-        300-frame run with 5 physical steps per frame always finishes
-        at exactly 1500 physical steps, even if the GUI backend rendered
-        only 298 or 299 unique frames before closing.
-        """
-
         animation = self.create(
             frames=frames,
             interval_ms=interval_ms,
@@ -404,7 +480,7 @@ class NetworkAnimator:
         self,
         path: str | Path,
         *,
-        frames: int,
+        frames: int | None = None,
         interval_ms: float = 50.0,
         mode: str = "geometry",
         show_reference: bool = True,
@@ -431,20 +507,17 @@ class NetworkAnimator:
             mode=mode,
             show_reference=show_reference,
             show_labels=show_labels,
-            show_colorbar=False,
             title=title,
             repeat=repeat,
-        )
-
-        fps = max(
-            1.0,
-            1000.0 / float(interval_ms),
         )
 
         animation.save(
             output_path,
             writer="pillow",
-            fps=fps,
+            fps=max(
+                1.0,
+                1000.0 / float(interval_ms),
+            ),
             dpi=int(dpi),
         )
 
