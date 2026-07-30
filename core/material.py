@@ -1176,46 +1176,88 @@ class Material:
     # Stimulus
     # =========================================================
 
-    def normalized_stimulus(
+    def normalized_force_stimulus(
         self,
         *,
         force: float | None = None,
-        strain: float | None = None,
     ) -> float:
+        """
+        Normalized mechanical load transmitted by the material.
+
+        This quantity depends only on force. A failed material normally
+        has zero force stimulus because it can no longer transmit force.
+        """
         if force is None:
             force = (
                 self.state.total_force_component
             )
-
-        if strain is None:
-            strain = self.state.strain
 
         force = self._validate_scalar(
             force,
             name="force",
         )
 
+        return float(
+            abs(force)
+            / self.parameters.reference_force
+        )
+
+    def normalized_strain_stimulus(
+        self,
+        *,
+        strain: float | None = None,
+    ) -> float:
+        """
+        Normalized geometric deformation.
+
+        This quantity depends only on strain. It can remain nonzero after
+        failure because a failed element may stay geometrically stretched.
+        """
+        if strain is None:
+            strain = self.state.strain
+
         strain = self._validate_scalar(
             strain,
             name="strain",
         )
 
-        normalized_force = (
-            abs(force)
-            / self.parameters.reference_force
-        )
-
-        normalized_strain = (
+        return float(
             abs(strain)
             / self.parameters.reference_strain
         )
 
-        return float(
-            max(
-                normalized_force,
-                normalized_strain,
+    def normalized_stimulus(
+        self,
+        *,
+        force: float | None = None,
+        strain: float | None = None,
+    ) -> float:
+        """
+        Combined stimulus used by the existing material lifecycle.
+
+        The combined value is the larger of normalized transmitted force
+        and normalized geometric strain. This preserves compatibility with
+        overload, fatigue, damage, remodeling, and automatic failure.
+        """
+        force_stimulus = (
+            self.normalized_force_stimulus(
+                force=force,
             )
         )
+
+        strain_stimulus = (
+            self.normalized_strain_stimulus(
+                strain=strain,
+            )
+        )
+
+        return float(
+            max(
+                force_stimulus,
+                strain_stimulus,
+            )
+        )
+
 
     def overloaded(
         self,
