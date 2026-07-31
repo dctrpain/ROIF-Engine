@@ -5,9 +5,21 @@ from .recorder import (
     SimulationRecorder,
     SimulationRecording,
 )
+from .storage import (
+    RecordingFileInfo,
+    RecordingFormatError,
+    RecordingIntegrityError,
+    RecordingStorage,
+    RecordingStorageError,
+)
 
 __all__ = [
+    "RecordingFileInfo",
+    "RecordingFormatError",
     "RecordingFrame",
+    "RecordingIntegrityError",
+    "RecordingStorage",
+    "RecordingStorageError",
     "SimulationRecorder",
     "SimulationRecording",
 ]
