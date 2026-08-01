@@ -1,10 +1,18 @@
-"""
-Public API for the ROIF analytical layer.
+﻿"""
+Public API for ROIF Engine.
 
-This package contains the mathematical and computational components of the
-Recursive Organic Integration Framework built above the mechanical core.
+This package exposes both the analytical layer and the stable public
+application interface of the Recursive Organic Integration Framework.
 """
 
+from .api import (
+    APIError,
+    ROIF,
+    ROIFConfig,
+    StageCallable,
+    create_roif,
+    run_roif,
+)
 from .capacity_tensor import (
     CapacityEvaluation,
     CapacityTensor,
@@ -13,7 +21,27 @@ from .capacity_tensor import (
     ResponseMode,
     evaluate_capacity_batch,
 )
-from .direction import Direction, DirectionError
+from .datasets import (
+    Dataset,
+    DatasetError,
+    DatasetKind,
+    DatasetRecord,
+    DatasetSchema,
+    DatasetSplit,
+    DatasetSummary,
+    RecordId,
+    RecordPredicate,
+    RecordTransform,
+    SplitName,
+    dataset_from_mapping,
+    load_dataset,
+    save_dataset,
+    split_dataset,
+)
+from .direction import (
+    Direction,
+    DirectionError,
+)
 from .fast_layer import (
     FastLayer,
     FastLayerError,
@@ -21,19 +49,181 @@ from .fast_layer import (
     SolveMethod,
     solve_fast_layer,
 )
+from .paper import (
+    Affiliation,
+    Author,
+    Citation,
+    FigureKind,
+    PaperBuilder,
+    PaperDocument,
+    PaperError,
+    PaperFigure,
+    PaperSection,
+    PaperStatus,
+    PaperTable,
+    Paragraph,
+    Reference,
+    ReferenceType,
+    ReproducibilityManifest,
+    SectionKind,
+    TableAlignment,
+    paper_from_mapping,
+    render_latex,
+    render_markdown as render_paper_markdown,
+)
+from .roif_engine import (
+    EngineConfig,
+    EngineContext,
+    EngineResult,
+    EngineRunStatus,
+    EngineStage,
+    EngineState,
+    ROIFEngine,
+)
+from .serialization import (
+    ChecksumAlgorithm,
+    MigrationRegistry,
+    MigrationStep,
+    NPZBundle,
+    SerializationEnvelope,
+    SerializationError,
+    SerializationFormat,
+    compute_checksum,
+    decode_envelope,
+    dumps_csv,
+    dumps_json,
+    dumps_yaml,
+    envelope_from_mapping,
+    infer_format,
+    load_csv,
+    load_json,
+    load_json_envelope,
+    load_npz,
+    load_yaml,
+    loads_csv,
+    loads_json,
+    loads_yaml,
+    make_envelope,
+    require_valid_envelope,
+    save_csv,
+    save_json,
+    save_npz,
+    save_yaml,
+    to_serializable,
+    verify_envelope,
+)
+
+
+__version__ = "1.0.0"
+__title__ = "ROIF Engine"
+__description__ = (
+    "Recursive Organic Integration Framework engine for cascade analysis."
+)
+
+
+def version_info() -> dict[str, str]:
+    """Return stable package identity metadata."""
+    return {
+        "title": __title__,
+        "version": __version__,
+        "description": __description__,
+    }
+
 
 __all__ = [
+    "APIError",
+    "Affiliation",
+    "Author",
     "CapacityEvaluation",
     "CapacityTensor",
     "CapacityTensorError",
+    "ChecksumAlgorithm",
+    "Citation",
+    "Dataset",
+    "DatasetError",
+    "DatasetKind",
+    "DatasetRecord",
+    "DatasetSchema",
+    "DatasetSplit",
+    "DatasetSummary",
     "Direction",
     "DirectionError",
     "ElementActivity",
+    "EngineConfig",
+    "EngineContext",
+    "EngineResult",
+    "EngineRunStatus",
+    "EngineStage",
+    "EngineState",
     "FastLayer",
     "FastLayerError",
     "FastLayerResult",
+    "FigureKind",
+    "MigrationRegistry",
+    "MigrationStep",
+    "NPZBundle",
+    "PaperBuilder",
+    "PaperDocument",
+    "PaperError",
+    "PaperFigure",
+    "PaperSection",
+    "PaperStatus",
+    "PaperTable",
+    "Paragraph",
+    "ROIF",
+    "ROIFConfig",
+    "ROIFEngine",
+    "RecordId",
+    "RecordPredicate",
+    "RecordTransform",
+    "Reference",
+    "ReferenceType",
+    "ReproducibilityManifest",
     "ResponseMode",
+    "SectionKind",
+    "SerializationEnvelope",
+    "SerializationError",
+    "SerializationFormat",
     "SolveMethod",
+    "SplitName",
+    "StageCallable",
+    "TableAlignment",
+    "compute_checksum",
+    "create_roif",
+    "dataset_from_mapping",
+    "decode_envelope",
+    "dumps_csv",
+    "dumps_json",
+    "dumps_yaml",
+    "envelope_from_mapping",
     "evaluate_capacity_batch",
+    "infer_format",
+    "load_csv",
+    "load_dataset",
+    "load_json",
+    "load_json_envelope",
+    "load_npz",
+    "load_yaml",
+    "loads_csv",
+    "loads_json",
+    "loads_yaml",
+    "make_envelope",
+    "paper_from_mapping",
+    "render_latex",
+    "render_paper_markdown",
+    "require_valid_envelope",
+    "run_roif",
+    "save_csv",
+    "save_dataset",
+    "save_json",
+    "save_npz",
+    "save_yaml",
     "solve_fast_layer",
+    "split_dataset",
+    "to_serializable",
+    "verify_envelope",
+    "version_info",
+    "__description__",
+    "__title__",
+    "__version__",
 ]
