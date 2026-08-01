@@ -94,3 +94,109 @@ MATERIAL_MODE_STYLES = {
         "vmax": 1.0,
     },
 }
+
+# ============================================================
+# ROIF Viewer v3.0 — mechanical-role styles
+# ============================================================
+
+ELEMENT_ROLE_STYLES = {
+    "rigid": {
+        "color": "#303030",
+        "linestyle": "-",
+        "linewidth": 5.0,
+        "alpha": 1.0,
+        "zorder": 4,
+    },
+    "tension": {
+        "color": "#1F77B4",
+        "linestyle": "-",
+        "linewidth": 1.8,
+        "alpha": 1.0,
+        "zorder": 3,
+    },
+    "active_tension": {
+        "color": "#D62728",
+        "linestyle": "-",
+        "linewidth": 2.6,
+        "alpha": 1.0,
+        "zorder": 4,
+    },
+    "compression": {
+        "color": "#9467BD",
+        "linestyle": "-",
+        "linewidth": 3.0,
+        "alpha": 1.0,
+        "zorder": 3,
+    },
+    "generic": {
+        **CURRENT_ELEMENT_STYLE,
+    },
+    "disabled": {
+        "color": "#9A9A9A",
+        "linestyle": "--",
+        "linewidth": 1.4,
+        "alpha": 0.35,
+        "zorder": 1,
+    },
+    "failed": {
+        **FAILED_ELEMENT_STYLE,
+    },
+}
+
+
+ELEMENT_ROLE_LABELS = {
+    "rigid": "Rigid / strut",
+    "tension": "Tension-only",
+    "active_tension": "Active tension",
+    "compression": "Compression-only",
+    "generic": "Generic axial",
+    "disabled": "Disabled",
+    "failed": "Failed",
+}
+
+
+def element_role_style(
+    role: object,
+) -> dict[str, object]:
+    """
+    Return an independent Matplotlib style for a viewer element role.
+
+    role may be either:
+
+    - an ElementVisualRole enum value;
+    - a string such as ``"rigid"`` or ``"tension"``.
+
+    Unknown values safely fall back to the generic axial style.
+    """
+
+    value = getattr(
+        role,
+        "value",
+        role,
+    )
+    key = str(value).lower()
+
+    style = ELEMENT_ROLE_STYLES.get(
+        key,
+        ELEMENT_ROLE_STYLES["generic"],
+    )
+
+    return dict(style)
+
+
+def element_role_label(
+    role: object,
+) -> str:
+    """Return a human-readable label for a viewer element role."""
+
+    value = getattr(
+        role,
+        "value",
+        role,
+    )
+    key = str(value).lower()
+
+    return ELEMENT_ROLE_LABELS.get(
+        key,
+        ELEMENT_ROLE_LABELS["generic"],
+    )

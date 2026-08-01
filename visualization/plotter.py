@@ -29,7 +29,11 @@ from .styles import (
     MATERIAL_MODE_STYLES,
     NODE_LABEL_STYLE,
     REFERENCE_ELEMENT_STYLE,
+    element_role_label,
+    element_role_style,
 )
+
+from .viewer import ViewerState
 
 PlotMode = Literal[
     "geometry", "force", "damage", "fatigue", "integrity", "remodeling"
@@ -180,7 +184,7 @@ class NetworkPlotter:
 
     def _prepare_axes(self, axes: Any, title: str | None, mode: PlotMode) -> None:
         axes.set_title(
-            title or f"ROIF Engine — NetworkPlotter v{self.VERSION} ({mode} mode)"
+            title or f"ROIF Engine Р В Р вЂ Р В РІР‚С™Р Р†Р вЂљРЎСљ NetworkPlotter v{self.VERSION} ({mode} mode)"
         )
         axes.set_xlabel("X")
         if self.dimension >= 2:
@@ -339,7 +343,12 @@ class NetworkPlotter:
                 failed_label_added = True
                 continue
 
-            current_style = dict(CURRENT_ELEMENT_STYLE)
+            role = ViewerState.element_role(element)
+
+            if mode == "geometry":
+                current_style = element_role_style(role)
+            else:
+                current_style = dict(CURRENT_ELEMENT_STYLE)
 
             if mode == "force":
                 values = mechanical[id(element)]
@@ -350,7 +359,14 @@ class NetworkPlotter:
             elif mode in self.MATERIAL_MODES:
                 current_style["color"] = colormap(normalization(material_values[id(element)]))
 
-            current_style["label"] = "Current geometry" if not current_label_added else None
+            if mode == "geometry":
+                current_style["label"] = element_role_label(role)
+            else:
+                current_style["label"] = (
+                    "Current geometry"
+                    if not current_label_added
+                    else None
+                )
             line = self._plot_segment(axes, current_a, current_b, **current_style)
             line.set_gid(f"current:{element_label}")
             current_label_added = True
