@@ -8,7 +8,8 @@ version = "1.0.0"
 description = "Recursive Organic Integration Framework engine for cascade analysis."
 readme = "README.md"
 requires-python = ">=3.11"
-license = { file = "LICENSE" }
+license = "LicenseRef-ROIF-Proprietary"
+license-files = ["LICENSE"]
 authors = [
     { name = "dctrpain" }
 ]
