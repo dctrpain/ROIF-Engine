@@ -1,0 +1,124 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "roif-engine"
+version = "1.0.0"
+description = "Recursive Organic Integration Framework engine for cascade analysis."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [
+    { name = "dctrpain" }
+]
+keywords = [
+    "ROIF",
+    "cascade analysis",
+    "complex systems",
+    "active inference",
+    "scientific computing",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "numpy>=2.1",
+    "networkx>=3.4",
+]
+
+[project.optional-dependencies]
+yaml = [
+    "PyYAML>=6.0",
+]
+dev = [
+    "pytest>=9.0",
+    "pytest-cov>=6.0",
+    "ruff>=0.12",
+    "mypy>=1.16",
+    "build>=1.2",
+]
+all = [
+    "PyYAML>=6.0",
+]
+
+[project.scripts]
+roif = "roif.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/dctrpain/ROIF-Engine"
+Repository = "https://github.com/dctrpain/ROIF-Engine"
+Issues = "https://github.com/dctrpain/ROIF-Engine/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["roif*"]
+exclude = ["tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+xfail_strict = true
+filterwarnings = [
+    "error",
+]
+markers = [
+    "integration: integration tests",
+    "slow: slow-running tests",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["roif"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 0
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+src = ["roif", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "B",
+]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["B011"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+check_untyped_defs = true
+disallow_untyped_defs = false
+no_implicit_optional = true
+strict_equality = true
+exclude = [
+    "^tests/",
+]
+
