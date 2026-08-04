@@ -95,3 +95,17 @@ from .future_plane_analyzer import (
     FuturePlaneStatus,
     TemporalProfile,
 )
+from .history_pipeline import (
+    FutureCandidateFactory,
+    HistoryForwardPredictor,
+    HistoryPipeline,
+    HistoryPipelineConfig,
+    HistoryPipelineError,
+    HistoryPipelineMetrics,
+    HistoryPipelineResult,
+    InterventionScenarioFactory,
+    PipelineStage,
+    PipelineStageRecord,
+    PipelineStatus,
+    StageStatus,
+)
