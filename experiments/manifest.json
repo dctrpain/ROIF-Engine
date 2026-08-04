@@ -1,0 +1,100 @@
+{
+  "package": {
+    "name": "ROIF Engine Experimental Package",
+    "version": "1.0.0",
+    "project_stage": "research_prototype",
+    "release_date": "2026-08-04",
+    "evidence_level": "L1-L2",
+    "engine_validation": {
+      "unit_level": "L0",
+      "pipeline_level": "L1",
+      "robustness_level": "L2",
+      "external_validation": false,
+      "clinical_validation": false
+    }
+  },
+  "experiments": [
+    {
+      "id": "example_25",
+      "title": "Inverse structural-history reconstruction",
+      "file": "examples/example_25_inverse_history_reconstruction.py",
+      "level": "L1",
+      "data": "synthetic",
+      "supported_claim": "Pipeline consistency for inverse reconstruction within a fixed candidate library.",
+      "limitations": [
+        "No claim of unique real-world causal identification.",
+        "Restricted to the defined candidate library."
+      ]
+    },
+    {
+      "id": "example_26",
+      "title": "Robustness under noise and partial observability",
+      "file": "examples/example_26_inverse_history_robustness.py",
+      "level": "L2",
+      "data": "synthetic",
+      "supported_claim": "Controlled robustness under predefined perturbations.",
+      "limitations": [
+        "Noise model is predefined.",
+        "No out-of-distribution validation."
+      ]
+    },
+    {
+      "id": "example_27",
+      "title": "Unified history pipeline",
+      "file": "examples/example_27_history_pipeline.py",
+      "level": "L1",
+      "data": "synthetic",
+      "supported_claim": "End-to-end orchestration of the implemented history pipeline.",
+      "limitations": [
+        "No clinical decision validation.",
+        "No intervention efficacy claims."
+      ]
+    },
+    {
+      "id": "sls_material",
+      "title": "SLS material rheology",
+      "tests": [
+        "tests/test_creep.py",
+        "tests/test_material_creep.py"
+      ],
+      "level": "L0",
+      "verification": {
+        "full_regression": "4441 passed"
+      },
+      "supported_claim": "Implementation satisfies the current computational specification."
+    }
+  ],
+  "reproducibility": {
+    "python": "3.13",
+    "test_command": "python -m pytest -q",
+    "examples": [
+      "python examples/example_25_inverse_history_reconstruction.py",
+      "python examples/example_26_inverse_history_robustness.py",
+      "python examples/example_27_history_pipeline.py"
+    ]
+  },
+  "publication_notice": {
+    "required_label": "Controlled synthetic validation of a research prototype.",
+    "must_report": [
+      "project stage",
+      "evidence level",
+      "data type",
+      "candidate library",
+      "perturbation model",
+      "number of trials",
+      "limitations",
+      "commit hash"
+    ]
+  },
+  "next_stage": {
+    "target": "L3",
+    "planned": [
+      "randomized trials",
+      "held-out scenarios",
+      "baseline comparisons",
+      "confidence intervals",
+      "calibration analysis",
+      "runtime benchmarks"
+    ]
+  }
+}

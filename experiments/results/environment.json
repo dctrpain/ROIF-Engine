@@ -1,0 +1,29 @@
+{
+  "package_version": "1.0.0",
+  "project_stage": "research_prototype",
+  "evidence_scope": [
+    "L0",
+    "L1",
+    "L2"
+  ],
+  "generated_at_utc": "2026-08-04T07:37:53.974976+00:00",
+  "python": {
+    "version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "C:\\Users\\DELL\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
+    "implementation": "CPython"
+  },
+  "platform": {
+    "system": "Windows",
+    "release": "11",
+    "version": "10.0.26200",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel"
+  },
+  "repository": {
+    "root": "C:\\Users\\DELL\\OneDrive\\Документы\\roif_engine\\roif_engine",
+    "commit": "c7948e402c8de5319ad4130edda9f01e33fc279d",
+    "short_commit": "c7948e4",
+    "branch": "main",
+    "status_porcelain": "?? EXPERIMENTS_README.md\n?? core/material_before_sls.py\n?? experiments/\n?? output/example_21_tensegrity_recording.roifrec\n?? output/example_22_3d_tensegrity_recording.roifrec\n?? output/example_23_3d_arm_tensegrity.roifrec\n?? output/example_24_3d_arm_external_force.roifrec"
+  }
+}
