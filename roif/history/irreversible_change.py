@@ -48,6 +48,7 @@ from .event import (
     StateDelta,
     TimeScale,
 )
+from .rheology_memory import RheologicalMemory
 
 
 class IrreversibleChangeError(
@@ -294,6 +295,11 @@ class IrreversibleChange:
 
     agent_ids:
         External or internal agents involved in producing the trace.
+
+    rheology_memory:
+        Optional immutable snapshot of creep, relaxation, recovery, and
+        residual rheological state associated with this persistent trace.
+        Older changes remain valid when this value is absent.
     """
 
     kind: IrreversibleChangeKind
@@ -317,6 +323,7 @@ class IrreversibleChange:
     cause_change_ids: tuple[str, ...] = ()
     plane_ids: tuple[str, ...] = ()
     agent_ids: tuple[str, ...] = ()
+    rheology_memory: RheologicalMemory | None = None
     description: str | None = None
     metadata: Mapping[str, Any] = field(
         default_factory=dict
@@ -483,6 +490,30 @@ class IrreversibleChange:
             field_name="agent_ids",
         )
 
+        rheology_memory = self.rheology_memory
+
+        if (
+            rheology_memory is not None
+            and not isinstance(
+                rheology_memory,
+                RheologicalMemory,
+            )
+        ):
+            raise IrreversibleChangeError(
+                "rheology_memory must be a RheologicalMemory "
+                "or None"
+            )
+
+        if (
+            rheology_memory is not None
+            and rheology_memory.target_id
+            != self.target.target_id
+        ):
+            raise IrreversibleChangeError(
+                "rheology_memory target_id must match "
+                "the irreversible-change target"
+            )
+
         description = self.description
 
         if description is not None:
@@ -580,6 +611,11 @@ class IrreversibleChange:
             self,
             "agent_ids",
             agent_ids,
+        )
+        object.__setattr__(
+            self,
+            "rheology_memory",
+            rheology_memory,
         )
         object.__setattr__(
             self,
@@ -693,6 +729,57 @@ class IrreversibleChange:
             * self.memory_strength
         )
 
+    @property
+    def has_rheological_memory(self) -> bool:
+        """Return whether a rheological-memory snapshot is attached."""
+
+        return self.rheology_memory is not None
+
+    @property
+    def creep_strain(self) -> float:
+        """Return attached current creep strain, or zero."""
+
+        if self.rheology_memory is None:
+            return 0.0
+
+        return self.rheology_memory.creep_strain
+
+    @property
+    def peak_creep_strain(self) -> float:
+        """Return attached peak creep strain, or zero."""
+
+        if self.rheology_memory is None:
+            return 0.0
+
+        return self.rheology_memory.peak_creep_strain
+
+    @property
+    def residual_strain(self) -> float:
+        """Return attached residual strain, or zero."""
+
+        if self.rheology_memory is None:
+            return 0.0
+
+        return self.rheology_memory.residual_strain
+
+    @property
+    def rheological_memory_index(self) -> float:
+        """Return normalized rheological-memory strength, or zero."""
+
+        if self.rheology_memory is None:
+            return 0.0
+
+        return self.rheology_memory.memory_index
+
+    @property
+    def rheological_signature_weight(self) -> float:
+        """Return this change's weighted rheological contribution."""
+
+        return (
+            self.signature_weight
+            * self.rheological_memory_index
+        )
+
     def has_cause_change(
         self,
         change_id: str,
@@ -761,6 +848,11 @@ class IrreversibleChange:
             ),
             "plane_ids": list(self.plane_ids),
             "agent_ids": list(self.agent_ids),
+            "rheology_memory": (
+                None
+                if self.rheology_memory is None
+                else self.rheology_memory.to_dict()
+            ),
             "description": self.description,
             "metadata": dict(self.metadata),
         }
@@ -801,6 +893,24 @@ class IrreversibleChange:
             raise IrreversibleChangeError(
                 "delta is missing or invalid"
             )
+
+        rheology_data = data.get("rheology_memory")
+
+        if (
+            rheology_data is not None
+            and not isinstance(rheology_data, Mapping)
+        ):
+            raise IrreversibleChangeError(
+                "rheology_memory is invalid"
+            )
+
+        rheology_memory = (
+            None
+            if rheology_data is None
+            else RheologicalMemory.from_dict(
+                rheology_data
+            )
+        )
 
         return cls(
             change_id=str(data["change_id"]),
@@ -882,6 +992,7 @@ class IrreversibleChange:
                     (),
                 )
             ),
+            rheology_memory=rheology_memory,
             description=data.get(
                 "description"
             ),
@@ -908,6 +1019,7 @@ class IrreversibleChange:
         ),
         reversibility: ReversibilityClass | None = None,
         cause_change_ids: tuple[str, ...] = (),
+        rheology_memory: RheologicalMemory | None = None,
         description: str | None = None,
         metadata: Mapping[str, Any] | None = None,
         change_id: str | None = None,
@@ -1009,6 +1121,7 @@ class IrreversibleChange:
             "cause_change_ids": cause_change_ids,
             "plane_ids": event.plane_ids,
             "agent_ids": event.agent_ids,
+            "rheology_memory": rheology_memory,
             "description": (
                 description
                 if description is not None
@@ -1030,5 +1143,6 @@ __all__ = [
     "IrreversibleChange",
     "IrreversibleChangeError",
     "IrreversibleChangeKind",
+    "RheologicalMemory",
     "TracePersistence",
 ]

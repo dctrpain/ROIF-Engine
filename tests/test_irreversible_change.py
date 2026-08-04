@@ -20,6 +20,11 @@ from roif.history.irreversible_change import (
     IrreversibleChangeKind,
     TracePersistence,
 )
+from roif.history.rheology_memory import (
+    RheologicalMemory,
+    RheologyModel,
+    RheologyPhase,
+)
 
 
 def make_target() -> HistoryTarget:
@@ -43,6 +48,41 @@ def make_delta() -> StateDelta:
         metadata={
             "mechanism": "impact",
         },
+    )
+
+
+
+def make_rheology_memory(
+    *,
+    target_id: str = "PALM_FRONT_RAY",
+    memory_id: str = "rheology-memory-001",
+    creep_strain: float = 0.08,
+    peak_creep_strain: float = 0.10,
+    residual_strain: float = 0.03,
+    retained_fraction: float = 0.80,
+) -> RheologicalMemory:
+    return RheologicalMemory(
+        memory_id=memory_id,
+        target_id=target_id,
+        observation_time=0.60,
+        rheology_time=10.0,
+        creep_strain=creep_strain,
+        peak_creep_strain=peak_creep_strain,
+        elastic_strain=0.04,
+        residual_strain=residual_strain,
+        recoverable_strain=0.05,
+        total_strain=0.12,
+        instantaneous_stiffness=10.0,
+        relaxed_stiffness=5.0,
+        creep_time_constant=2.0,
+        applied_stress=1.0,
+        relaxation_fraction=0.50,
+        recovery_fraction=0.20,
+        retained_fraction=retained_fraction,
+        confidence=0.90,
+        phase=RheologyPhase.CREEPING,
+        model=RheologyModel.STANDARD_LINEAR_SOLID,
+        source_snapshot_id="material-snapshot-001",
     )
 
 
@@ -947,3 +987,171 @@ def test_from_event_merges_metadata() -> None:
         change.metadata["decoder_label"]
         == "impact_trace"
     )
+
+
+# ---------------------------------------------------------------------------
+# Rheological-memory integration
+# ---------------------------------------------------------------------------
+
+
+def test_change_without_rheology_preserves_backward_compatibility() -> None:
+    change = make_change()
+
+    assert change.rheology_memory is None
+    assert change.has_rheological_memory is False
+    assert change.creep_strain == pytest.approx(0.0)
+    assert change.peak_creep_strain == pytest.approx(0.0)
+    assert change.residual_strain == pytest.approx(0.0)
+    assert change.rheological_memory_index == pytest.approx(0.0)
+    assert change.rheological_signature_weight == pytest.approx(0.0)
+
+
+def test_change_accepts_rheological_memory() -> None:
+    memory = make_rheology_memory()
+    change = make_change(
+        kind=IrreversibleChangeKind.CREEP,
+        delta=StateDelta(
+            quantity="creep_strain",
+            before=0.0,
+            after=0.08,
+            units="strain",
+            channel="rheology",
+        ),
+        rheology_memory=memory,
+    )
+
+    assert change.has_rheological_memory is True
+    assert change.rheology_memory is memory
+    assert change.creep_strain == pytest.approx(0.08)
+    assert change.peak_creep_strain == pytest.approx(0.10)
+    assert change.residual_strain == pytest.approx(0.03)
+    assert change.rheological_memory_index == pytest.approx(
+        memory.memory_index
+    )
+    assert change.rheological_signature_weight == pytest.approx(
+        change.signature_weight * memory.memory_index
+    )
+
+
+def test_change_rejects_invalid_rheological_memory_type() -> None:
+    with pytest.raises(
+        IrreversibleChangeError,
+        match="rheology_memory",
+    ):
+        make_change(
+            rheology_memory="invalid",
+        )
+
+
+def test_change_rejects_rheology_target_mismatch() -> None:
+    with pytest.raises(
+        IrreversibleChangeError,
+        match="target_id",
+    ):
+        make_change(
+            rheology_memory=make_rheology_memory(
+                target_id="OTHER_ELEMENT",
+            ),
+        )
+
+
+def test_change_rheology_round_trip() -> None:
+    change = make_change(
+        kind=IrreversibleChangeKind.CREEP,
+        delta=StateDelta(
+            quantity="creep_strain",
+            before=0.0,
+            after=0.08,
+            units="strain",
+            channel="rheology",
+        ),
+        rheology_memory=make_rheology_memory(),
+    )
+
+    restored = IrreversibleChange.from_dict(
+        change.to_dict()
+    )
+
+    assert restored.to_dict() == change.to_dict()
+    assert restored.rheology_memory is not None
+    assert restored.rheology_memory.memory_id == (
+        "rheology-memory-001"
+    )
+
+
+def test_change_serializes_absent_rheology_as_none() -> None:
+    data = make_change().to_dict()
+
+    assert "rheology_memory" in data
+    assert data["rheology_memory"] is None
+
+
+def test_from_event_accepts_rheological_memory() -> None:
+    memory = make_rheology_memory()
+
+    change = IrreversibleChange.from_event(
+    make_event(
+        kind=HistoryEventKind.CREEP,
+        deltas=(
+            StateDelta(
+                quantity="creep_strain",
+                before=0.0,
+                after=0.08,
+                units="strain",
+                channel="rheology",
+            ),
+        ),
+    ),
+    quantity="creep_strain",
+    kind=IrreversibleChangeKind.CREEP,
+    retained_fraction=0.80,
+    permanence=TracePersistence.LONG_LIVED,
+    rheology_memory=memory,
+)
+
+    assert change.rheology_memory is memory
+    assert change.has_rheological_memory is True
+
+
+def test_rheological_revision_is_preserved_inside_new_change() -> None:
+    first_memory = make_rheology_memory()
+    second_memory = first_memory.evolve(
+        memory_id="rheology-memory-002",
+        observation_time=1.20,
+        rheology_time=18.0,
+        creep_strain=0.09,
+        residual_strain=0.04,
+        phase=RheologyPhase.RECOVERING,
+    )
+
+    first_change = make_change(
+        change_id="change-creep-001",
+        kind=IrreversibleChangeKind.CREEP,
+        delta=StateDelta(
+            quantity="creep_strain",
+            before=0.0,
+            after=0.08,
+            units="strain",
+        ),
+        rheology_memory=first_memory,
+    )
+    second_change = make_change(
+        change_id="change-creep-002",
+        source_event_id="event-creep-002",
+        kind=IrreversibleChangeKind.CREEP,
+        delta=StateDelta(
+            quantity="creep_strain",
+            before=0.08,
+            after=0.09,
+            units="strain",
+        ),
+        onset_time=1.0,
+        recorded_time=1.2,
+        cause_change_ids=("change-creep-001",),
+        rheology_memory=second_memory,
+    )
+
+    assert first_change.rheology_memory is first_memory
+    assert second_change.rheology_memory is second_memory
+    assert second_memory.parent_memory_id == first_memory.memory_id
+    assert first_memory.parent_memory_id is None

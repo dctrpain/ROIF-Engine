@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from dataclasses import FrozenInstanceError
 
@@ -18,6 +18,11 @@ from roif.history.irreversible_change import (
     IrreversibleChangeKind,
     TracePersistence,
 )
+from roif.history.rheology_memory import (
+    RheologicalMemory,
+    RheologyModel,
+    RheologyPhase,
+)
 from roif.history.structural_signature import (
     SignatureComparison,
     SignatureDistanceWeights,
@@ -33,6 +38,41 @@ def make_target(
         kind=HistoryTargetKind.ELEMENT,
         target_id=target_id,
         label=target_id,
+    )
+
+
+
+def make_rheology_memory(
+    *,
+    target_id: str = "ELEMENT_A",
+    memory_id: str = "rheology-memory-a",
+    creep_strain: float = 0.08,
+    peak_creep_strain: float = 0.10,
+    residual_strain: float = 0.03,
+    retained_fraction: float = 0.80,
+    phase: RheologyPhase = RheologyPhase.CREEPING,
+) -> RheologicalMemory:
+    return RheologicalMemory(
+        memory_id=memory_id,
+        target_id=target_id,
+        observation_time=3.0,
+        rheology_time=10.0,
+        creep_strain=creep_strain,
+        peak_creep_strain=peak_creep_strain,
+        elastic_strain=0.04,
+        residual_strain=residual_strain,
+        recoverable_strain=0.05,
+        total_strain=0.12,
+        instantaneous_stiffness=10.0,
+        relaxed_stiffness=5.0,
+        creep_time_constant=2.0,
+        applied_stress=1.0,
+        relaxation_fraction=0.50,
+        recovery_fraction=0.20,
+        retained_fraction=retained_fraction,
+        confidence=0.90,
+        phase=phase,
+        model=RheologyModel.STANDARD_LINEAR_SOLID,
     )
 
 
@@ -61,6 +101,7 @@ def make_change(
     cause_change_ids: tuple[str, ...] = (),
     plane_ids: tuple[str, ...] = ("mechanical",),
     agent_ids: tuple[str, ...] = ("external_load",),
+    rheology_memory: RheologicalMemory | None = None,
 ) -> IrreversibleChange:
     if recorded_time is None:
         recorded_time = onset_time
@@ -89,6 +130,7 @@ def make_change(
         cause_change_ids=cause_change_ids,
         plane_ids=plane_ids,
         agent_ids=agent_ids,
+        rheology_memory=rheology_memory,
     )
 
 
@@ -1109,3 +1151,240 @@ def test_comparison_rejects_invalid_component() -> None:
             },
             weights=SignatureDistanceWeights(),
         )
+
+
+# ---------------------------------------------------------------------------
+# Rheological signature integration
+# ---------------------------------------------------------------------------
+
+
+def make_rheological_pattern() -> HistoryPattern:
+    first_memory = make_rheology_memory(
+        target_id="ELEMENT_A",
+        memory_id="rheology-memory-a",
+        creep_strain=0.08,
+        peak_creep_strain=0.10,
+        residual_strain=0.03,
+        retained_fraction=0.80,
+    )
+    second_memory = make_rheology_memory(
+        target_id="ELEMENT_B",
+        memory_id="rheology-memory-b",
+        creep_strain=0.04,
+        peak_creep_strain=0.06,
+        residual_strain=0.02,
+        retained_fraction=0.60,
+        phase=RheologyPhase.RECOVERING,
+    )
+
+    first = make_change(
+        "change-creep-a",
+        onset_time=1.0,
+        recorded_time=1.2,
+        target_id="ELEMENT_A",
+        kind=IrreversibleChangeKind.CREEP,
+        plane_ids=("mechanical", "rheological"),
+        rheology_memory=first_memory,
+    )
+    second = make_change(
+        "change-creep-b",
+        onset_time=2.0,
+        recorded_time=2.3,
+        target_id="ELEMENT_B",
+        kind=IrreversibleChangeKind.CREEP,
+        cause_change_ids=("change-creep-a",),
+        plane_ids=("mechanical", "rheological"),
+        rheology_memory=second_memory,
+    )
+    ordinary = make_change(
+        "change-damage-c",
+        onset_time=3.0,
+        recorded_time=3.2,
+        target_id="ELEMENT_C",
+        cause_change_ids=("change-creep-b",),
+    )
+
+    return HistoryPattern(
+        pattern_id="rheological-pattern",
+        changes=(ordinary, second, first),
+    )
+
+
+def test_signature_without_rheology_is_backward_compatible() -> None:
+    signature = StructuralSignature.from_pattern(
+        make_pattern()
+    )
+
+    assert signature.has_rheological_memory is False
+    assert signature.rheology_change_count == 0
+    assert dict(signature.rheology_profile) == {}
+    assert signature.total_abs_creep_strain == pytest.approx(0.0)
+    assert signature.rheological_memory_index == pytest.approx(0.0)
+
+
+def test_from_pattern_aggregates_rheological_memory() -> None:
+    signature = StructuralSignature.from_pattern(
+        make_rheological_pattern()
+    )
+
+    assert signature.has_rheological_memory is True
+    assert signature.rheology_change_count == 2
+    assert signature.rheology_fraction == pytest.approx(2.0 / 3.0)
+    assert signature.total_abs_creep_strain == pytest.approx(0.12)
+    assert signature.mean_abs_creep_strain == pytest.approx(0.06)
+    assert signature.max_abs_creep_strain == pytest.approx(0.08)
+    assert signature.mean_abs_residual_strain == pytest.approx(0.025)
+    assert signature.max_abs_residual_strain == pytest.approx(0.03)
+    assert 0.0 < signature.rheological_memory_index <= 1.0
+    assert 0.0 < signature.rheological_retention_index <= 1.0
+    assert 0.0 < signature.rheological_relaxation_index <= 1.0
+
+
+def test_rheology_profile_is_normalized_and_read_only() -> None:
+    signature = StructuralSignature.from_pattern(
+        make_rheological_pattern()
+    )
+
+    assert sum(signature.rheology_profile.values()) == pytest.approx(1.0)
+
+    with pytest.raises(TypeError):
+        signature.rheology_profile["new"] = 1.0
+
+
+def test_signature_reports_dominant_rheology() -> None:
+    signature = StructuralSignature.from_pattern(
+        make_rheological_pattern()
+    )
+
+    assert signature.dominant_rheology is not None
+
+    name, weight = signature.dominant_rheology
+
+    assert name in signature.rheology_profile
+    assert signature.rheology_profile[name] == pytest.approx(weight)
+
+def test_rheology_vector_is_stable() -> None:
+    signature = StructuralSignature.from_pattern(
+        make_rheological_pattern()
+    )
+
+    first = signature.rheology_vector()
+    second = signature.rheology_vector()
+
+    assert first == second
+    assert len(first) > 0
+    assert all(isinstance(value, float) for value in first)
+
+
+def test_compact_vector_remains_backward_compatible() -> None:
+    plain = make_signature()
+    rheological = make_signature(
+        rheology_change_count=1,
+        rheology_profile={
+            "standard_linear_solid": 1.0,
+        },
+        total_abs_creep_strain=0.08,
+        mean_abs_creep_strain=0.08,
+        max_abs_creep_strain=0.08,
+        mean_abs_residual_strain=0.03,
+        max_abs_residual_strain=0.03,
+        rheological_memory_index=0.60,
+        rheological_retention_index=0.80,
+        rheological_relaxation_index=0.50,
+    )
+
+    assert len(plain.compact_vector()) == len(
+        rheological.compact_vector()
+    )
+
+
+def test_rheological_signature_round_trip() -> None:
+    signature = StructuralSignature.from_pattern(
+        make_rheological_pattern()
+    )
+
+    restored = StructuralSignature.from_dict(
+        signature.to_dict()
+    )
+
+    assert restored.to_dict() == signature.to_dict()
+    assert restored.has_rheological_memory is True
+
+
+def test_rheology_changes_signature_comparison() -> None:
+    without_memory = make_signature(
+        signature_id="without-memory",
+    )
+    with_memory = make_signature(
+        signature_id="with-memory",
+        rheology_change_count=1,
+        rheology_profile={
+            "standard_linear_solid": 1.0,
+        },
+        total_abs_creep_strain=0.08,
+        mean_abs_creep_strain=0.08,
+        max_abs_creep_strain=0.08,
+        mean_abs_residual_strain=0.03,
+        max_abs_residual_strain=0.03,
+        rheological_memory_index=0.60,
+        rheological_retention_index=0.80,
+        rheological_relaxation_index=0.50,
+    )
+
+    comparison = without_memory.compare(with_memory)
+
+    assert comparison.distance > 0.0
+    assert comparison.similarity < 1.0
+    assert comparison.components["rheology"] > 0.0
+    assert comparison.components["rheology_profile"] > 0.0
+
+
+def test_identical_rheological_signatures_compare_equal() -> None:
+    signature = StructuralSignature.from_pattern(
+        make_rheological_pattern()
+    )
+
+    comparison = signature.compare(signature)
+
+    assert comparison.distance == pytest.approx(0.0)
+    assert comparison.similarity == pytest.approx(1.0)
+    assert comparison.components["rheology"] == pytest.approx(0.0)
+
+
+def test_signature_rejects_rheology_count_above_total() -> None:
+    with pytest.raises(
+        StructuralSignatureError,
+        match="rheology_change_count",
+    ):
+        make_signature(
+            rheology_change_count=4,
+        )
+
+
+def test_signature_rejects_nonzero_rheology_without_count() -> None:
+    with pytest.raises(
+        StructuralSignatureError,
+        match="rheology",
+    ):
+        make_signature(
+            rheology_profile={
+                "standard_linear_solid": 1.0,
+            },
+        )
+
+
+def test_signature_rejects_wrong_mean_creep() -> None:
+    with pytest.raises(
+        StructuralSignatureError,
+        match="mean_abs_creep_strain",
+    ):
+        make_signature(
+            rheology_change_count=2,
+            rheology_profile={
+                "standard_linear_solid": 1.0,
+            },
+            total_abs_creep_strain=0.12,
+            mean_abs_creep_strain=0.05,
+            max_abs_creep_strain=0.08,
+        )
+

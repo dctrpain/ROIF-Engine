@@ -23,9 +23,9 @@ A StructuralSignature is an immutable numerical and categorical description
 derived from a HistoryPattern. It supports:
 
 - normalized influence-plane profiles;
-- agent, material-change, time-scale, and target profiles;
+- agent, material-change, time-scale, target, and rheology profiles;
 - capacity-loss and capacity-gain descriptors;
-- persistence and irreversibility descriptors;
+- persistence, irreversibility, and rheological-memory descriptors;
 - causal-depth and chronology descriptors;
 - harmful/adaptive balance;
 - comparison between structural histories;
@@ -245,7 +245,6 @@ class SignatureDistanceWeights:
     kind_profile: float = 0.8
     time_scale_profile: float = 0.8
     target_profile: float = 0.4
-
     capacity: float = 1.0
     persistence: float = 0.8
     irreversibility: float = 0.8
@@ -531,6 +530,9 @@ class StructuralSignature:
     target_profile: Mapping[str, float] = field(
         default_factory=dict
     )
+    rheology_profile: Mapping[str, float] = field(
+        default_factory=dict
+    )
 
     total_changes: int = 0
     root_count: int = 0
@@ -556,6 +558,16 @@ class StructuralSignature:
     harmful_fraction: float = 0.0
     beneficial_fraction: float = 0.0
     mixed_fraction: float = 0.0
+
+    rheology_change_count: int = 0
+    total_abs_creep_strain: float = 0.0
+    mean_abs_creep_strain: float = 0.0
+    max_abs_creep_strain: float = 0.0
+    mean_abs_residual_strain: float = 0.0
+    max_abs_residual_strain: float = 0.0
+    rheological_memory_index: float = 0.0
+    rheological_retention_index: float = 0.0
+    rheological_relaxation_index: float = 0.0
 
     label: str | None = None
     metadata: Mapping[str, Any] = field(
@@ -597,12 +609,17 @@ class StructuralSignature:
             self.target_profile,
             field_name="target_profile",
         )
+        rheology_profile = _normalize_profile(
+            self.rheology_profile,
+            field_name="rheology_profile",
+        )
 
         integer_fields = (
             "total_changes",
             "root_count",
             "leaf_count",
             "causal_depth",
+            "rheology_change_count",
         )
 
         for field_name in integer_fields:
@@ -617,6 +634,11 @@ class StructuralSignature:
                 raise StructuralSignatureError(
                     f"{field_name} must be non-negative"
                 )
+
+        if self.rheology_change_count > self.total_changes:
+            raise StructuralSignatureError(
+                "rheology_change_count cannot exceed total_changes"
+            )
 
         if self.total_changes == 0:
             if (
@@ -778,6 +800,103 @@ class StructuralSignature:
                 "functional fractions cannot sum above 1"
             )
 
+        total_abs_creep_strain = (
+            _validate_nonnegative_finite(
+                self.total_abs_creep_strain,
+                field_name="total_abs_creep_strain",
+            )
+        )
+        mean_abs_creep_strain = (
+            _validate_nonnegative_finite(
+                self.mean_abs_creep_strain,
+                field_name="mean_abs_creep_strain",
+            )
+        )
+        max_abs_creep_strain = (
+            _validate_nonnegative_finite(
+                self.max_abs_creep_strain,
+                field_name="max_abs_creep_strain",
+            )
+        )
+        mean_abs_residual_strain = (
+            _validate_nonnegative_finite(
+                self.mean_abs_residual_strain,
+                field_name="mean_abs_residual_strain",
+            )
+        )
+        max_abs_residual_strain = (
+            _validate_nonnegative_finite(
+                self.max_abs_residual_strain,
+                field_name="max_abs_residual_strain",
+            )
+        )
+        rheological_memory_index = _validate_unit_interval(
+            self.rheological_memory_index,
+            field_name="rheological_memory_index",
+        )
+        rheological_retention_index = _validate_unit_interval(
+            self.rheological_retention_index,
+            field_name="rheological_retention_index",
+        )
+        rheological_relaxation_index = _validate_unit_interval(
+            self.rheological_relaxation_index,
+            field_name="rheological_relaxation_index",
+        )
+
+        if self.rheology_change_count == 0:
+            rheology_scalars = (
+                total_abs_creep_strain,
+                mean_abs_creep_strain,
+                max_abs_creep_strain,
+                mean_abs_residual_strain,
+                max_abs_residual_strain,
+                rheological_memory_index,
+                rheological_retention_index,
+                rheological_relaxation_index,
+            )
+            if any(value != 0.0 for value in rheology_scalars):
+                raise StructuralSignatureError(
+                    "rheology scalars must be zero when "
+                    "rheology_change_count is zero"
+                )
+            if rheology_profile:
+                raise StructuralSignatureError(
+                    "rheology_profile must be empty when "
+                    "rheology_change_count is zero"
+                )
+        else:
+            expected_mean_creep = (
+                total_abs_creep_strain
+                / self.rheology_change_count
+            )
+            if abs(
+                mean_abs_creep_strain
+                - expected_mean_creep
+            ) > 1e-9:
+                raise StructuralSignatureError(
+                    "mean_abs_creep_strain must equal "
+                    "total_abs_creep_strain / "
+                    "rheology_change_count"
+                )
+            if (
+                max_abs_creep_strain
+                + 1e-12
+                < mean_abs_creep_strain
+            ):
+                raise StructuralSignatureError(
+                    "max_abs_creep_strain cannot be below "
+                    "mean_abs_creep_strain"
+                )
+            if (
+                max_abs_residual_strain
+                + 1e-12
+                < mean_abs_residual_strain
+            ):
+                raise StructuralSignatureError(
+                    "max_abs_residual_strain cannot be below "
+                    "mean_abs_residual_strain"
+                )
+
         label = self.label
 
         if label is not None:
@@ -825,6 +944,11 @@ class StructuralSignature:
             self,
             "target_profile",
             target_profile,
+        )
+        object.__setattr__(
+            self,
+            "rheology_profile",
+            rheology_profile,
         )
         object.__setattr__(
             self,
@@ -903,6 +1027,46 @@ class StructuralSignature:
         )
         object.__setattr__(
             self,
+            "total_abs_creep_strain",
+            total_abs_creep_strain,
+        )
+        object.__setattr__(
+            self,
+            "mean_abs_creep_strain",
+            mean_abs_creep_strain,
+        )
+        object.__setattr__(
+            self,
+            "max_abs_creep_strain",
+            max_abs_creep_strain,
+        )
+        object.__setattr__(
+            self,
+            "mean_abs_residual_strain",
+            mean_abs_residual_strain,
+        )
+        object.__setattr__(
+            self,
+            "max_abs_residual_strain",
+            max_abs_residual_strain,
+        )
+        object.__setattr__(
+            self,
+            "rheological_memory_index",
+            rheological_memory_index,
+        )
+        object.__setattr__(
+            self,
+            "rheological_retention_index",
+            rheological_retention_index,
+        )
+        object.__setattr__(
+            self,
+            "rheological_relaxation_index",
+            rheological_relaxation_index,
+        )
+        object.__setattr__(
+            self,
             "label",
             label,
         )
@@ -940,6 +1104,45 @@ class StructuralSignature:
         return (
             not self.is_progressive
             and not self.is_adaptive
+        )
+
+    @property
+    def has_rheological_memory(self) -> bool:
+        return self.rheology_change_count > 0
+
+    @property
+    def rheology_fraction(self) -> float:
+        return _safe_ratio(
+            float(self.rheology_change_count),
+            float(self.total_changes),
+        )
+
+    @property
+    def dominant_rheology(
+        self,
+    ) -> tuple[str, float] | None:
+        return self._dominant_from_profile(
+            self.rheology_profile
+        )
+
+    def rheology_vector(self) -> tuple[float, ...]:
+        """
+        Return rheology-only scalar descriptors.
+
+        Kept separate from compact_vector() so the legacy 21-value vector
+        remains backward compatible.
+        """
+        return (
+            float(self.rheology_change_count),
+            self.total_abs_creep_strain,
+            self.mean_abs_creep_strain,
+            self.max_abs_creep_strain,
+            self.mean_abs_residual_strain,
+            self.max_abs_residual_strain,
+            self.rheological_memory_index,
+            self.rheological_retention_index,
+            self.rheological_relaxation_index,
+            self.rheology_fraction,
         )
 
     @property
@@ -1072,6 +1275,7 @@ class StructuralSignature:
             "kind": self.kind_profile,
             "time_scale": self.time_scale_profile,
             "target": self.target_profile,
+            "rheology": self.rheology_profile,
         }
 
         try:
@@ -1258,6 +1462,45 @@ class StructuralSignature:
             )
         ) / 2.0
 
+        rheology_scalar_distance = (
+            self._relative_nonnegative_distance(
+                float(self.rheology_change_count),
+                float(other.rheology_change_count),
+            )
+            + self._relative_nonnegative_distance(
+                self.total_abs_creep_strain,
+                other.total_abs_creep_strain,
+            )
+            + self._relative_nonnegative_distance(
+                self.max_abs_creep_strain,
+                other.max_abs_creep_strain,
+            )
+            + self._relative_nonnegative_distance(
+                self.max_abs_residual_strain,
+                other.max_abs_residual_strain,
+            )
+            + self._bounded_scalar_distance(
+                self.rheological_memory_index,
+                other.rheological_memory_index,
+            )
+            + self._bounded_scalar_distance(
+                self.rheological_retention_index,
+                other.rheological_retention_index,
+            )
+            + self._bounded_scalar_distance(
+                self.rheological_relaxation_index,
+                other.rheological_relaxation_index,
+            )
+        ) / 7.0
+
+        rheology_distance = (
+            self._profile_distance(
+                self.rheology_profile,
+                other.rheology_profile,
+            )
+            + rheology_scalar_distance
+        ) / 2.0
+
         components = {
             "plane_profile": self._profile_distance(
                 self.plane_profile,
@@ -1279,6 +1522,11 @@ class StructuralSignature:
                 self.target_profile,
                 other.target_profile,
             ),
+            "rheology_profile": self._profile_distance(
+    self.rheology_profile,
+    other.rheology_profile,
+),
+            "rheology": rheology_distance,
             "capacity": capacity_distance,
             "persistence": (
                 self._bounded_scalar_distance(
@@ -1287,7 +1535,18 @@ class StructuralSignature:
                 )
             ),
             "irreversibility": (
-                self._bounded_scalar_distance(
+                (
+                    self._bounded_scalar_distance(
+                        self.irreversibility_index,
+                        other.irreversibility_index,
+                    )
+                    + rheology_distance
+                ) / 2.0
+                if (
+                    self.has_rheological_memory
+                    or other.has_rheological_memory
+                )
+                else self._bounded_scalar_distance(
                     self.irreversibility_index,
                     other.irreversibility_index,
                 )
@@ -1432,6 +1691,23 @@ class StructuralSignature:
             "dominant_time_scale": (
                 self.dominant_time_scale
             ),
+            "has_rheological_memory": (
+                self.has_rheological_memory
+            ),
+            "rheology_change_count": (
+                self.rheology_change_count
+            ),
+            "rheology_fraction": self.rheology_fraction,
+            "rheological_memory_index": (
+                self.rheological_memory_index
+            ),
+            "rheological_retention_index": (
+                self.rheological_retention_index
+            ),
+            "rheological_relaxation_index": (
+                self.rheological_relaxation_index
+            ),
+            "dominant_rheology": self.dominant_rheology,
         }
 
     def to_dict(self) -> dict[str, Any]:
@@ -1454,6 +1730,9 @@ class StructuralSignature:
             ),
             "target_profile": _mapping_to_dict(
                 self.target_profile
+            ),
+            "rheology_profile": _mapping_to_dict(
+                self.rheology_profile
             ),
             "total_changes": self.total_changes,
             "root_count": self.root_count,
@@ -1496,6 +1775,33 @@ class StructuralSignature:
                 self.beneficial_fraction
             ),
             "mixed_fraction": self.mixed_fraction,
+            "rheology_change_count": (
+                self.rheology_change_count
+            ),
+            "total_abs_creep_strain": (
+                self.total_abs_creep_strain
+            ),
+            "mean_abs_creep_strain": (
+                self.mean_abs_creep_strain
+            ),
+            "max_abs_creep_strain": (
+                self.max_abs_creep_strain
+            ),
+            "mean_abs_residual_strain": (
+                self.mean_abs_residual_strain
+            ),
+            "max_abs_residual_strain": (
+                self.max_abs_residual_strain
+            ),
+            "rheological_memory_index": (
+                self.rheological_memory_index
+            ),
+            "rheological_retention_index": (
+                self.rheological_retention_index
+            ),
+            "rheological_relaxation_index": (
+                self.rheological_relaxation_index
+            ),
             "metadata": dict(self.metadata),
         }
 
@@ -1546,6 +1852,10 @@ class StructuralSignature:
             ),
             target_profile=data.get(
                 "target_profile",
+                {},
+            ),
+            rheology_profile=data.get(
+                "rheology_profile",
                 {},
             ),
             total_changes=int(
@@ -1641,6 +1951,48 @@ class StructuralSignature:
                     0.0,
                 )
             ),
+            rheology_change_count=int(
+                data.get("rheology_change_count", 0)
+            ),
+            total_abs_creep_strain=float(
+                data.get("total_abs_creep_strain", 0.0)
+            ),
+            mean_abs_creep_strain=float(
+                data.get("mean_abs_creep_strain", 0.0)
+            ),
+            max_abs_creep_strain=float(
+                data.get("max_abs_creep_strain", 0.0)
+            ),
+            mean_abs_residual_strain=float(
+                data.get(
+                    "mean_abs_residual_strain",
+                    0.0,
+                )
+            ),
+            max_abs_residual_strain=float(
+                data.get(
+                    "max_abs_residual_strain",
+                    0.0,
+                )
+            ),
+            rheological_memory_index=float(
+                data.get(
+                    "rheological_memory_index",
+                    0.0,
+                )
+            ),
+            rheological_retention_index=float(
+                data.get(
+                    "rheological_retention_index",
+                    0.0,
+                )
+            ),
+            rheological_relaxation_index=float(
+                data.get(
+                    "rheological_relaxation_index",
+                    0.0,
+                )
+            ),
             metadata=data.get(
                 "metadata",
                 {},
@@ -1687,6 +2039,82 @@ class StructuralSignature:
             total_functional_weight,
         )
 
+        rheology_memories = [
+            change.rheology_memory
+            for change in pattern.changes
+            if getattr(
+                change,
+                "rheology_memory",
+                None,
+            ) is not None
+        ]
+        rheology_change_count = len(rheology_memories)
+
+        abs_creep_values = [
+            abs(memory.creep_strain)
+            for memory in rheology_memories
+        ]
+        abs_residual_values = [
+            abs(memory.residual_strain)
+            for memory in rheology_memories
+        ]
+        total_abs_creep_strain = sum(abs_creep_values)
+        mean_abs_creep_strain = _safe_ratio(
+            total_abs_creep_strain,
+            float(rheology_change_count),
+        )
+        max_abs_creep_strain = max(
+            abs_creep_values,
+            default=0.0,
+        )
+        mean_abs_residual_strain = _safe_ratio(
+            sum(abs_residual_values),
+            float(rheology_change_count),
+        )
+        max_abs_residual_strain = max(
+            abs_residual_values,
+            default=0.0,
+        )
+
+        rheological_memory_index = _safe_ratio(
+            sum(
+                memory.memory_index
+                for memory in rheology_memories
+            ),
+            float(rheology_change_count),
+        )
+        rheological_retention_index = _safe_ratio(
+            sum(
+                memory.strain_retention_ratio
+                for memory in rheology_memories
+            ),
+            float(rheology_change_count),
+        )
+        rheological_relaxation_index = _safe_ratio(
+            sum(
+                memory.relaxation_index
+                for memory in rheology_memories
+            ),
+            float(rheology_change_count),
+        )
+
+        rheology_scores: dict[str, float] = {}
+        for memory in rheology_memories:
+            weight = max(
+                memory.memory_index,
+                memory.confidence * 1e-12,
+            )
+            model_key = f"model:{memory.model.value}"
+            phase_key = f"phase:{memory.phase.value}"
+            rheology_scores[model_key] = (
+                rheology_scores.get(model_key, 0.0)
+                + weight
+            )
+            rheology_scores[phase_key] = (
+                rheology_scores.get(phase_key, 0.0)
+                + weight
+            )
+
         merged_metadata: dict[str, Any] = {
             "source_pattern_label": pattern.label,
             "source_pattern_description": (
@@ -1724,6 +2152,7 @@ class StructuralSignature:
             "target_profile": _profile_from_ranked(
                 pattern.target_profile()
             ),
+            "rheology_profile": rheology_scores,
             "total_changes": pattern.total_changes,
             "root_count": len(
                 pattern.root_changes
@@ -1767,6 +2196,33 @@ class StructuralSignature:
                 beneficial_fraction
             ),
             "mixed_fraction": mixed_fraction,
+            "rheology_change_count": (
+                rheology_change_count
+            ),
+            "total_abs_creep_strain": (
+                total_abs_creep_strain
+            ),
+            "mean_abs_creep_strain": (
+                mean_abs_creep_strain
+            ),
+            "max_abs_creep_strain": (
+                max_abs_creep_strain
+            ),
+            "mean_abs_residual_strain": (
+                mean_abs_residual_strain
+            ),
+            "max_abs_residual_strain": (
+                max_abs_residual_strain
+            ),
+            "rheological_memory_index": (
+                rheological_memory_index
+            ),
+            "rheological_retention_index": (
+                rheological_retention_index
+            ),
+            "rheological_relaxation_index": (
+                rheological_relaxation_index
+            ),
             "metadata": merged_metadata,
         }
 
