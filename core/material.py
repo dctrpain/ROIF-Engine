@@ -23,6 +23,16 @@ class MaterialParameters:
     density:
         Material density for future mass-distribution models.
 
+    rheology_enabled:
+        Enables the finite-creep Standard Linear Solid branch.
+
+    relaxed_stiffness:
+        Long-time equilibrium stiffness. When rheology is enabled,
+        it must satisfy 0 < relaxed_stiffness <= stiffness.
+
+    creep_time_constant:
+        Positive characteristic time of delayed viscoelastic strain.
+
     Biological parameters
     ---------------------
     recovery_rate:
@@ -68,10 +78,20 @@ class MaterialParameters:
     reference_force: float = 1.0
     reference_strain: float = 1.0
 
+    # Optional finite-creep Standard Linear Solid branch.
+    # Appended to preserve positional compatibility with the legacy API.
+    rheology_enabled: bool = False
+    relaxed_stiffness: float | None = None
+    creep_time_constant: float = 1.0
+
     def __post_init__(self) -> None:
         self.validate()
 
     def validate(self) -> None:
+        self.rheology_enabled = bool(
+            self.rheology_enabled
+        )
+
         finite_fields = (
             "stiffness",
             "damping",
@@ -89,6 +109,7 @@ class MaterialParameters:
             "failure_threshold",
             "reference_force",
             "reference_strain",
+            "creep_time_constant",
         )
 
         for name in finite_fields:
@@ -124,6 +145,7 @@ class MaterialParameters:
             "failure_threshold",
             "reference_force",
             "reference_strain",
+            "creep_time_constant",
         )
 
         for name in nonnegative_fields:
@@ -159,13 +181,82 @@ class MaterialParameters:
                 "reference_strain must be positive"
             )
 
-    def snapshot(self) -> dict[str, float]:
+        if self.rheology_enabled:
+            if self.relaxed_stiffness is None:
+                raise ValueError(
+                    "relaxed_stiffness must be provided "
+                    "when rheology_enabled is True"
+                )
+
+            self.relaxed_stiffness = float(
+                self.relaxed_stiffness
+            )
+
+            if not np.isfinite(
+                self.relaxed_stiffness
+            ):
+                raise ValueError(
+                    "MaterialParameters.relaxed_stiffness "
+                    "must be finite"
+                )
+
+            if self.relaxed_stiffness <= 0.0:
+                raise ValueError(
+                    "relaxed_stiffness must be positive"
+                )
+
+            if (
+                self.relaxed_stiffness
+                > self.stiffness
+            ):
+                raise ValueError(
+                    "relaxed_stiffness cannot exceed stiffness"
+                )
+
+            if self.creep_time_constant <= 0.0:
+                raise ValueError(
+                    "creep_time_constant must be positive"
+                )
+        elif self.relaxed_stiffness is not None:
+            self.relaxed_stiffness = float(
+                self.relaxed_stiffness
+            )
+
+            if not np.isfinite(
+                self.relaxed_stiffness
+            ):
+                raise ValueError(
+                    "MaterialParameters.relaxed_stiffness "
+                    "must be finite"
+                )
+
+            if self.relaxed_stiffness <= 0.0:
+                raise ValueError(
+                    "relaxed_stiffness must be positive"
+                )
+
+            if (
+                self.relaxed_stiffness
+                > self.stiffness
+            ):
+                raise ValueError(
+                    "relaxed_stiffness cannot exceed stiffness"
+                )
+
+    def snapshot(self) -> dict[str, Any]:
         self.validate()
 
-        return {
-            name: float(value)
-            for name, value in asdict(self).items()
-        }
+        snapshot: dict[str, Any] = {}
+
+        for name, value in asdict(self).items():
+            if isinstance(value, bool):
+                snapshot[name] = bool(value)
+            elif value is None:
+                snapshot[name] = None
+            else:
+                snapshot[name] = float(value)
+
+        return snapshot
 
 
 @dataclass
@@ -198,6 +289,10 @@ class MaterialState:
     length_velocity: float = 0.0
     extension: float = 0.0
     strain: float = 0.0
+
+    # Delayed reversible extension of the SLS rheological branch.
+    creep_strain: float = 0.0
+    rheology_time: float = 0.0
 
     passive_force_component: float = 0.0
     damping_force_component: float = 0.0
@@ -250,6 +345,8 @@ class MaterialState:
             "length_velocity",
             "extension",
             "strain",
+            "creep_strain",
+            "rheology_time",
             "passive_force_component",
             "damping_force_component",
             "active_force_component",
@@ -282,6 +379,11 @@ class MaterialState:
         self.history = max(
             0.0,
             self.history,
+        )
+
+        self.rheology_time = max(
+            0.0,
+            self.rheology_time,
         )
 
         self.normalized_stimulus = max(
@@ -329,6 +431,12 @@ class MaterialState:
             ),
             "extension": float(self.extension),
             "strain": float(self.strain),
+            "creep_strain": float(
+                self.creep_strain
+            ),
+            "rheology_time": float(
+                self.rheology_time
+            ),
             "passive_force_component": float(
                 self.passive_force_component
             ),
@@ -552,6 +660,33 @@ class Material:
             )
         )
 
+    def effective_relaxed_stiffness(self) -> float:
+        """
+        Long-time SLS stiffness after viscoelastic relaxation.
+
+        When rheology is disabled, this equals effective_stiffness().
+        """
+        if not self.parameters.rheology_enabled:
+            return self.effective_stiffness()
+
+        if self.state.failed:
+            return 0.0
+
+        relaxed = self.parameters.relaxed_stiffness
+
+        if relaxed is None:
+            return self.effective_stiffness()
+
+        scale = (
+            self.integrity()
+            * max(
+                self.state.remodeling,
+                self.epsilon,
+            )
+        )
+
+        return float(relaxed * scale)
+
     def effective_damping(self) -> float:
         if self.state.failed:
             return 0.0
@@ -664,9 +799,37 @@ class Material:
             name="extension",
         )
 
-        return float(
+        instantaneous_stiffness = (
             self.effective_stiffness()
-            * extension
+        )
+
+        if not self.parameters.rheology_enabled:
+            return float(
+                instantaneous_stiffness
+                * extension
+            )
+
+        relaxed_stiffness = (
+            self.effective_relaxed_stiffness()
+        )
+
+        branch_stiffness = max(
+            0.0,
+            instantaneous_stiffness
+            - relaxed_stiffness,
+        )
+
+        delayed_extension = (
+            self.state.creep_strain
+        )
+
+        return float(
+            relaxed_stiffness * extension
+            + branch_stiffness
+            * (
+                extension
+                - delayed_extension
+            )
         )
 
     def damping_force(
@@ -987,6 +1150,7 @@ class Material:
 
         This is the only base method that advances:
 
+        - rheological memory;
         - loading history;
         - fatigue;
         - damage;
@@ -1065,6 +1229,11 @@ class Material:
             self.state.total_force_component = (
                 force
             )
+
+        self.update_rheology(
+            dt=dt,
+            extension=self.state.extension,
+        )
 
         stimulus = self.normalized_stimulus(
             force=force,
@@ -1281,6 +1450,55 @@ class Material:
     # =========================================================
     # Biological operators
     # =========================================================
+
+    def update_rheology(
+        self,
+        *,
+        dt: float,
+        extension: float,
+    ) -> None:
+        """
+        Advance the delayed reversible extension of the SLS branch.
+
+        Exact exponential integration is used for the first-order internal
+        variable:
+
+            q_dot = (extension - q) / tau
+
+        where q is MaterialState.creep_strain. This update is unconditionally
+        stable for positive tau and is called exactly once per physical step.
+        """
+        dt = self._validate_dt(dt)
+        extension = self._validate_scalar(
+            extension,
+            name="extension",
+        )
+
+        if not self.parameters.rheology_enabled:
+            self.state.creep_strain = 0.0
+            self.state.rheology_time = 0.0
+            return
+
+        tau = self.parameters.creep_time_constant
+
+        if tau <= 0.0:
+            raise ValueError(
+                "creep_time_constant must be positive"
+            )
+
+        blend = float(
+            1.0 - np.exp(-dt / tau)
+        )
+
+        self.state.creep_strain += (
+            blend
+            * (
+                extension
+                - self.state.creep_strain
+            )
+        )
+
+        self.state.rheology_time += dt
 
     def update_history(
         self,
@@ -1574,15 +1792,46 @@ class Material:
             name="extension",
         )
 
-        return float(
-            max(
-                0.0,
-                0.5
-                * self.effective_stiffness()
-                * extension
-                * extension,
-            )
+        instantaneous_stiffness = (
+            self.effective_stiffness()
         )
+
+        if not self.parameters.rheology_enabled:
+            return float(
+                max(
+                    0.0,
+                    0.5
+                    * instantaneous_stiffness
+                    * extension
+                    * extension,
+                )
+            )
+
+        relaxed_stiffness = (
+            self.effective_relaxed_stiffness()
+        )
+        branch_stiffness = max(
+            0.0,
+            instantaneous_stiffness
+            - relaxed_stiffness,
+        )
+        branch_extension = (
+            extension
+            - self.state.creep_strain
+        )
+
+        energy = (
+            0.5
+            * relaxed_stiffness
+            * extension
+            * extension
+            + 0.5
+            * branch_stiffness
+            * branch_extension
+            * branch_extension
+        )
+
+        return float(max(0.0, energy))
 
     # =========================================================
     # Runtime control
@@ -1678,6 +1927,33 @@ class Material:
         except ValueError:
             self.parameters.density = previous
             raise
+
+    @property
+    def rheology_enabled(self) -> bool:
+        return bool(
+            self.parameters.rheology_enabled
+        )
+
+    @property
+    def relaxed_stiffness(self) -> float | None:
+        value = self.parameters.relaxed_stiffness
+        return (
+            None
+            if value is None
+            else float(value)
+        )
+
+    @property
+    def creep_time_constant(self) -> float:
+        return float(
+            self.parameters.creep_time_constant
+        )
+
+    @property
+    def creep_strain(self) -> float:
+        return float(
+            self.state.creep_strain
+        )
 
     @property
     def damage(self) -> float:
@@ -1856,6 +2132,8 @@ class Material:
             f"name={self.name!r}, "
             f"stiffness={self.stiffness:.6g}, "
             f"damping={self.damping:.6g}, "
+            f"rheology={self.rheology_enabled}, "
+            f"creep_strain={self.creep_strain:.6g}, "
             f"damage={self.damage:.3f}, "
             f"fatigue={self.fatigue:.3f}, "
             f"remodeling={self.remodeling:.3f}, "

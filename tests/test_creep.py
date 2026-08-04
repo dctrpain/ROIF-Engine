@@ -1,68 +1,68 @@
+from __future__ import annotations
+
 """
-ROIF Engine
-Future specification test: true creep under constant external load.
+Regression test for sustained-load creep in the ROIF material model.
 
-The current base Material behaves as an elastic spring with viscous damping.
-It approaches the ordinary static extension F / k and does not contain an
-internal creep strain, Maxwell branch, SLS branch, or another long-term
-rheological state.
+This test verifies that an explicitly enabled Standard Linear Solid (SLS)
+material continues deforming beyond the instantaneous elastic equilibrium
+under a constant tensile load.
 
-This test is intentionally marked xfail. It must remain XFAIL until true
-creep is implemented.
+For the configured system:
 
-Run:
-    python -m pytest tests\test_creep.py -v
+    F = 1
+    K0 = 10
 
-Expected current result:
-    XFAIL
+the instantaneous elastic equilibrium is:
+
+    F / K0 = 0.1
+
+With relaxed stiffness:
+
+    K_inf = 5
+
+the long-time SLS equilibrium is approximately:
+
+    F / K_inf = 0.2
+
+The test requires only that the final extension exceeds 0.12, so it checks
+true delayed creep without depending on an exact integration trajectory.
 """
 
 import math
 
-import pytest
-
-from core.node import Node
 from core.element import Element
 from core.material import Material, MaterialParameters
 from core.network import Network
+from core.node import Node
 
 
 REST_LENGTH = 1.0
-STIFFNESS = 10.0
-DAMPING = 2.0
 MASS = 1.0
 
+STIFFNESS = 10.0
+RELAXED_STIFFNESS = 5.0
+DAMPING = 2.0
+CREEP_TIME_CONSTANT = 0.5
+
 EXTERNAL_FORCE = 1.0
+
 DT = 0.002
-STEPS = 6000
+STEPS = 7000
 
-ELASTIC_EQUILIBRIUM_EXTENSION = EXTERNAL_FORCE / STIFFNESS
-REQUIRED_CREEP_EXTENSION = ELASTIC_EQUILIBRIUM_EXTENSION * 1.20
-
-
-@pytest.mark.xfail(
-    reason=(
-        "True creep is not implemented yet: Material has no internal "
-        "creep strain or Maxwell/SLS rheological branch."
-    ),
-    strict=True,
+ELASTIC_EQUILIBRIUM_EXTENSION = (
+    EXTERNAL_FORCE / STIFFNESS
 )
-def test_constant_load_produces_extension_beyond_elastic_equilibrium():
+REQUIRED_CREEP_EXTENSION = (
+    ELASTIC_EQUILIBRIUM_EXTENSION * 1.20
+)
+
+
+def test_constant_load_produces_extension_beyond_elastic_equilibrium() -> None:
     """
-    Future creep requirement:
+    A creep-capable material must deform beyond F / K0 under sustained load.
 
-        fixed -------- free mass  -> constant external force
-
-    A purely elastic-damped material settles near:
-
-        extension = F / k = 0.1
-
-    A true creep-capable material must continue deforming beyond that static
-    elastic equilibrium under the same sustained load.
-
-    This specification requires at least 20% additional extension:
-
-        final extension > 0.12
+    Rheology is enabled explicitly, and material evolution is enabled in the
+    network step so that the internal SLS state advances once per timestep.
     """
 
     fixed = Node(
@@ -76,10 +76,13 @@ def test_constant_load_produces_extension_beyond_elastic_equilibrium():
     )
 
     material = Material(
-        name="future_creep_material",
+        name="sls_creep_material",
         parameters=MaterialParameters(
             stiffness=STIFFNESS,
+            relaxed_stiffness=RELAXED_STIFFNESS,
             damping=DAMPING,
+            creep_time_constant=CREEP_TIME_CONSTANT,
+            rheology_enabled=True,
             recovery_rate=0.0,
             fatigue_rate=0.0,
             remodeling_rate=0.0,
@@ -102,26 +105,41 @@ def test_constant_load_produces_extension_beyond_elastic_equilibrium():
         rest_length=REST_LENGTH,
     )
 
-    network = Network()
+    network = Network(
+        global_damping=0.0,
+        record_history=False,
+    )
     network.add_node(fixed)
     network.add_node(free)
     network.add_element(element)
 
     constant_load = {
-        free: (EXTERNAL_FORCE, 0.0, 0.0),
+        free: (
+            EXTERNAL_FORCE,
+            0.0,
+            0.0,
+        ),
     }
 
     for _ in range(STEPS):
         network.step(
             dt=DT,
             external_forces=constant_load,
-            update_materials=False,
+            update_materials=True,
         )
 
-    final_extension = free.position[0] - REST_LENGTH
+    final_extension = float(
+        free.position[0] - REST_LENGTH
+    )
 
     assert math.isfinite(final_extension)
+    assert math.isfinite(
+        float(material.state.creep_strain)
+    )
+    assert material.state.rheology_time > 0.0
+    assert material.state.creep_strain > 0.0
 
-    # This is the future capability requirement.
-    # The present elastic-damped model settles near 0.1 and therefore XFAILs.
-    assert final_extension > REQUIRED_CREEP_EXTENSION
+    assert (
+        final_extension
+        > REQUIRED_CREEP_EXTENSION
+    )
