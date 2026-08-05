@@ -212,7 +212,7 @@ License to be determined.
 
 Project Architect
 
-**Vitalii Shapoval**
+**Vitalii Shapovalov**
 
 Founder of the Recursive Organic Integration Framework (ROIF).
 
