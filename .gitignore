@@ -72,3 +72,7 @@ Thumbs.db
 # --------------------------------------------------
 *_backup.py
 *_before_*.py
+# Generated experiment artifacts
+experiments/results/logs/
+output/*.roifrec
+output/example_28_rheological_memory.json
