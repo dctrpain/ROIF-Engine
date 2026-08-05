@@ -32,7 +32,7 @@ from pathlib import Path
 from typing import Any
 
 
-PACKAGE_VERSION = "1.0.0"
+PACKAGE_VERSION = "1.1.0"
 
 EXPERIMENTS = (
     {
@@ -66,6 +66,17 @@ EXPERIMENTS = (
         ),
     },
     {
+        "id": "example_28",
+        "title": "Rheological memory becomes structural history",
+        "level": "L1",
+        "data_type": "synthetic_computational",
+        "command": (
+            sys.executable,
+            "-m",
+            "examples.example_28_rheological_memory",
+        ),
+    },
+    {
         "id": "sls_material",
         "title": "SLS material creep and rheological memory",
         "level": "L0",
@@ -76,6 +87,21 @@ EXPERIMENTS = (
             "pytest",
             "tests/test_creep.py",
             "tests/test_material_creep.py",
+            "-q",
+        ),
+    },
+    {
+        "id": "rheological_history_contract",
+        "title": "Rheological memory integration contract",
+        "level": "L0",
+        "data_type": "computational",
+        "command": (
+            sys.executable,
+            "-m",
+            "pytest",
+            "tests/test_rheology_memory.py",
+            "tests/test_irreversible_change.py",
+            "tests/test_structural_signature.py",
             "-q",
         ),
     },
@@ -240,8 +266,12 @@ def validate_required_files(root: Path) -> list[str]:
         root / "examples" / "example_25_inverse_history_reconstruction.py",
         root / "examples" / "example_26_inverse_history_robustness.py",
         root / "examples" / "example_27_history_pipeline.py",
+        root / "examples" / "example_28_rheological_memory.py",
         root / "tests" / "test_creep.py",
         root / "tests" / "test_material_creep.py",
+        root / "tests" / "test_rheology_memory.py",
+        root / "tests" / "test_irreversible_change.py",
+        root / "tests" / "test_structural_signature.py",
     )
 
     for path in required:
@@ -328,6 +358,8 @@ def build_markdown_report(
         "- **Project stage:** research prototype",
         "- **Validation scope:** controlled synthetic and computational validation",
         "- **Clinical validation:** not performed",
+        "- **Package version:** 1.1.0",
+        "- **Reference milestone:** rheological memory integrated into structural history",
         f"- **Commit:** `{environment['repository']['commit'] or 'unavailable'}`",
         f"- **Generated:** `{environment['generated_at_utc']}`",
         "",
@@ -389,7 +421,7 @@ def build_markdown_report(
             "## Required publication label",
             "",
             (
-                "> Controlled synthetic validation of a research prototype. "
+                "> Controlled synthetic and computational validation of a research prototype. "
                 "Randomized comparative, external, and clinical validation "
                 "have not yet been completed."
             ),
@@ -477,8 +509,13 @@ def main() -> int:
             else "failed"
         ),
         "required_publication_label": (
-            "Controlled synthetic validation of a research prototype."
+            "Controlled synthetic and computational validation of a research prototype."
         ),
+        "reference_verification": {
+            "focused_rheology_contract": "230 passed",
+            "full_engine_regression": "4534 passed",
+            "reference_commit": "74affb3",
+        },
         "results": [
             asdict(result)
             for result in results

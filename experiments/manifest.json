@@ -1,16 +1,22 @@
 {
   "package": {
     "name": "ROIF Engine Experimental Package",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "project_stage": "research_prototype",
     "release_date": "2026-08-04",
-    "evidence_level": "L1-L2",
+    "evidence_level": "L0-L2",
     "engine_validation": {
       "unit_level": "L0",
       "pipeline_level": "L1",
       "robustness_level": "L2",
       "external_validation": false,
       "clinical_validation": false
+    },
+    "reference_commit": "74affb3",
+    "full_regression": {
+      "command": "python -m pytest -q",
+      "result": "4534 passed",
+      "duration_seconds": 117.98
     }
   },
   "experiments": [
@@ -59,9 +65,59 @@
       ],
       "level": "L0",
       "verification": {
-        "full_regression": "4441 passed"
+        "material_contract": "21 passed",
+        "full_regression": "4534 passed"
       },
-      "supported_claim": "Implementation satisfies the current computational specification."
+      "supported_claim": "Implementation satisfies the current computational specification.",
+      "limitations": [
+        "Synthetic computational material model.",
+        "No tissue-specific parameter identification.",
+        "No external experimental validation."
+      ]
+    },
+    {
+      "id": "example_28",
+      "title": "Rheological memory becomes structural history",
+      "file": "examples/example_28_rheological_memory.py",
+      "level": "L1",
+      "data": "synthetic_computational",
+      "pipeline": [
+        "Material SLS",
+        "RheologicalMemory",
+        "IrreversibleChange",
+        "HistoryPattern",
+        "StructuralSignature"
+      ],
+      "verification": {
+        "focused_contract": "230 passed",
+        "full_regression": "4534 passed"
+      },
+      "supported_claim": "A retained SLS creep state can be converted into immutable rheological-memory revisions and propagated into structural history and a comparable StructuralSignature.",
+      "limitations": [
+        "Controlled synthetic loading and recovery only.",
+        "Does not validate biological tissue parameters.",
+        "Does not establish clinical or causal validity."
+      ]
+    },
+    {
+      "id": "rheological_history_contract",
+      "title": "Rheological memory integration contract",
+      "tests": [
+        "tests/test_rheology_memory.py",
+        "tests/test_irreversible_change.py",
+        "tests/test_structural_signature.py"
+      ],
+      "level": "L0",
+      "data": "computational",
+      "verification": {
+        "focused_contract": "230 passed",
+        "full_regression": "4534 passed"
+      },
+      "supported_claim": "The implemented RheologicalMemory → IrreversibleChange → StructuralSignature contract satisfies its current unit, serialization, comparison, and backward-compatibility tests.",
+      "limitations": [
+        "Contract verification is not external validation.",
+        "Passing tests does not establish real-world predictive accuracy."
+      ]
     }
   ],
   "reproducibility": {
@@ -70,11 +126,17 @@
     "examples": [
       "python examples/example_25_inverse_history_reconstruction.py",
       "python examples/example_26_inverse_history_robustness.py",
-      "python examples/example_27_history_pipeline.py"
-    ]
+      "python examples/example_27_history_pipeline.py",
+      "python -m examples.example_28_rheological_memory"
+    ],
+    "focused_rheology_test_command": "python -m pytest tests/test_rheology_memory.py tests/test_irreversible_change.py tests/test_structural_signature.py -v",
+    "reference_results": {
+      "rheological_history_contract": "230 passed",
+      "full_regression": "4534 passed"
+    }
   },
   "publication_notice": {
-    "required_label": "Controlled synthetic validation of a research prototype.",
+    "required_label": "Controlled synthetic and computational validation of a research prototype.",
     "must_report": [
       "project stage",
       "evidence level",
@@ -96,5 +158,12 @@
       "calibration analysis",
       "runtime benchmarks"
     ]
-  }
+  },
+  "release_notes": [
+    "Added Example 28: rheological memory becomes structural history.",
+    "Added immutable RheologicalMemory revision chain.",
+    "Integrated rheological memory into IrreversibleChange.",
+    "Integrated rheological profile and indices into StructuralSignature.",
+    "Updated reference regression result to 4534 passed."
+  ]
 }

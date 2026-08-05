@@ -1,4 +1,4 @@
-# ROIF Engine — Experimental Package
+# ROIF Engine — Experimental Package v1.1
 
 ## Release status
 
@@ -6,7 +6,7 @@
 **Validation stage:** controlled synthetic and computational validation  
 **Clinical status:** not clinically validated  
 **Decision status:** research support only; not a diagnostic or treatment system  
-**Release scope:** reproducible experiments for architecture, consistency, robustness, and material-memory verification
+**Release scope:** reproducible experiments for architecture, consistency, robustness, material rheology, and structural-memory propagation
 
 This package documents experiments performed at the current development level of the ROIF Engine. The results demonstrate that the implemented computational pipeline behaves consistently under explicitly defined synthetic conditions. They do **not** establish unique real-world causal identification, clinical efficacy, or generalization to arbitrary biological systems.
 
@@ -25,7 +25,7 @@ The package uses the following internal evidence levels.
 | **L4 — External domain validation** | Validation on independently generated simulations, external datasets, or prospective expert-labelled cases. | Not yet performed |
 | **L5 — Clinical validation** | Prospective clinical evaluation with predefined endpoints and governance. | Not yet performed |
 
-The experiments currently released belong primarily to **L1–L2**. The SLS material-memory implementation is verified at **L0**, with system-level regression coverage.
+The experiments currently released belong primarily to **L1–L2**. The SLS material model and the rheological-history integration contract are verified at **L0**, with system-level regression coverage.
 
 ---
 
@@ -99,6 +99,49 @@ The experiment also demonstrates candidate-specific future-plane influence and r
 
 ---
 
+### Example 28 — Rheological memory becomes structural history
+
+**Purpose:** demonstrate that a material state can retain and propagate its own
+history instead of being reset at every analysis cycle.
+
+```text
+Material SLS state
+→ RheologicalMemory revision
+→ retained post-unloading trace
+→ IrreversibleChange
+→ HistoryPattern
+→ StructuralSignature
+→ comparison with a no-memory reference
+```
+
+The example applies a controlled synthetic loading-and-recovery sequence. It
+records the loaded memory, creates a child revision after unloading, preserves
+the parent link, converts the residual trace into an `IrreversibleChange`, and
+aggregates it into a rheological `StructuralSignature`.
+
+**Current evidence level:** **L1 — controlled memory-propagation consistency**
+
+**Focused contract verification:**
+
+```text
+230 passed
+```
+
+**Full engine regression at release:**
+
+```text
+4534 passed
+```
+
+**Supported claim:** within the implemented synthetic SLS scenario, retained
+creep state can be represented as immutable rheological memory and propagated
+through the ROIF structural-history pipeline.
+
+**Not supported:** tissue-specific validity, unique real-world causal
+identification, clinical interpretation, or intervention efficacy.
+
+---
+
 ### SLS material creep and rheological memory
 
 **Purpose:** verify that material history is represented as an evolving physical state rather than only as an external event record.
@@ -121,7 +164,7 @@ Implemented capabilities include:
 The implementation passed the full engine regression suite at the time of release:
 
 ```text
-4441 passed
+4534 passed
 ```
 
 **Supported claim:** the implemented SLS/internal-variable model satisfies the repository's current computational specification without breaking existing tests.
@@ -150,12 +193,23 @@ Run the main demonstrations:
 python examples\example_25_inverse_history_reconstruction.py
 python examples\example_26_inverse_history_robustness.py
 python examples\example_27_history_pipeline.py
+python -m examples.example_28_rheological_memory
 ```
 
 Run the rheology specification:
 
 ```powershell
 python -m pytest tests\test_creep.py tests\test_material_creep.py -v
+```
+
+Run the complete rheological-history integration contract:
+
+```powershell
+python -m pytest `
+    tests\test_rheology_memory.py `
+    tests\test_irreversible_change.py `
+    tests\test_structural_signature.py `
+    -v
 ```
 
 ---
@@ -188,9 +242,21 @@ Preferred wording:
 
 ---
 
+
+## Package v1.1 reference state
+
+- **Reference commit:** `74affb3`
+- **Focused rheological-history contract:** `230 passed`
+- **Full engine regression:** `4534 passed`
+- **Example 28 output:** `output/example_28_rheological_memory.json`
+- **Project stage:** research prototype
+- **Clinical validation:** not performed
+
+---
+
 ## Current release statement
 
-> These experiments were conducted at the research-prototype stage of the ROIF Engine. The released evidence covers unit verification, controlled synthetic pipeline consistency, and controlled robustness to predefined perturbations. Randomized comparative validation, external validation, and clinical validation have not yet been completed.
+> These experiments were conducted at the research-prototype stage of the ROIF Engine. The released evidence covers unit verification, controlled synthetic pipeline consistency, controlled robustness to predefined perturbations, and controlled propagation of rheological memory into structural history. Randomized comparative validation, external validation, and clinical validation have not yet been completed.
 
 ---
 
