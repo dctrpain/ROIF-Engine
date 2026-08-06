@@ -1,227 +1,272 @@
 # ROIF Engine
-Model the mechanics. Understand the biology.
 
-**Recursive Organic Integration Framework Engine**
-
-> A biomechanical simulation engine for modeling pre-stressed biological structures, tissue adaptation, and cascading mechanical interactions.
-
----
-
-# Vision
-
-ROIF Engine is an open biomechanical simulation engine created to model living biological structures as dynamic pre-stressed systems rather than collections of isolated parts.
-
-The project combines principles from:
-
-- biomechanics
-- tensegrity
-- viscoelasticity
-- tissue remodeling
-- mechanobiology
-- fatigue and recovery
-- active muscle mechanics
-
-The long-term goal is to provide a computational foundation for the Recursive Organic Integration Framework (ROIF).
+> **Recursive Organic Integration Framework**
+>
+> Universal Cascade Analysis and Active Exploration Engine
 
 ---
 
-# Why ROIF Engine?
+## Overview
 
-Conventional biomechanical simulators usually focus on rigid bodies or finite-element analysis of isolated tissues.
+ROIF Engine is a domain-independent framework for analyzing, exploring, and reasoning about cascade dynamics in **pre-stressed complex systems**.
 
-ROIF Engine is designed around a different idea:
+Unlike traditional graph analysis engines, ROIF is designed to operate on **incomplete causal graphs**.
 
-> Every biological tissue exists inside a continuously pre-stressed network where local mechanical changes propagate through the entire system.
+Rather than assuming that the entire system is already known, ROIF actively identifies the most informative observation, proposes the next probe, reduces uncertainty, updates the graph, and only then performs causal inference.
 
-The engine therefore models:
-
-- muscles
-- tendons
-- fascia
-- ligaments
-- connective tissues
-
-as interacting adaptive elements.
+Medicine serves as the first validation domain, not the architectural boundary.
 
 ---
 
-# Current Features
+# Why ROIF?
 
-## Core Engine
+Most diagnostic systems answer the question:
 
-- Node-based biomechanical network
-- Elastic elements
-- Pretension
-- XPBD constraints
-- Stable numerical integration
+> **"Given the graph, what is the cause?"**
 
-## Biological Materials
+ROIF asks a different question:
 
-- Passive elasticity
-- Viscoelastic damping
-- Fatigue accumulation
-- Tissue recovery
-- Remodeling
-- Mechanical failure
-- Damage accumulation
+> **"What is the most informative next observation if the graph is incomplete?"**
 
-## Testing
+This shift transforms ROIF from a passive analysis engine into an active exploration framework.
 
-The engine is fully test-driven.
+---
 
-Current automated tests include:
+# Core Concepts
 
-- single element
-- element chains
-- triangular structures
-- square frames
-- cross bracing
-- energy conservation
-- damping
-- pretension
-- failure
-- remodeling
-- fatigue
-- recovery
-- viscoelastic behavior
+ROIF distinguishes four fundamentally different causal roles.
 
-Creep mechanics is currently marked as expected future functionality (XFAIL).
+| Role | Meaning |
+|-------|---------|
+| **D_origin** | Structural origin of the cascade |
+| **D_fast** | Earliest observable functional failure |
+| **D_root** | Structural mediation node maintaining cascade propagation |
+| **Node*** | Best intervention point |
+
+These roles are intentionally independent.
+
+---
+
+# Active Probe Engine
+
+One of the major architectural advances introduced in **v1.2.0** is the **Active Probe Engine (APE)**.
+
+Instead of assuming a complete graph, ROIF performs active investigation.
+
+```text
+Incomplete Graph
+        │
+        ▼
+Active Probe Engine
+        │
+        ▼
+Probe*
+        │
+        ▼
+Observation
+        │
+        ▼
+Graph Update
+        │
+        ▼
+Cascade Solver
+        │
+        ▼
+D_origin
+D_fast
+D_root
+Node*
+```
+
+The Active Probe Engine consists of:
+
+- Probe Entities
+- Probe Registry
+- Probe Policy
+- Probe Planner
+- Probe Graph Adapter
+- Active Probe Engine
+
+---
+
+# Cascade Solver
+
+The Cascade Solver performs recursive propagation through pre-stressed systems.
+
+Current capabilities include:
+
+- Recursive cascade propagation
+- Capacity tensor analysis
+- Counterfactual simulation
+- Mediation-based root detection
+- Independent intervention ranking
+- Structural history evaluation
+
+---
+
+# Counterfactual Engine
+
+ROIF evaluates alternative intervention scenarios before recommending an action.
+
+Supported analyses include:
+
+- virtual restoration
+- load reduction
+- structural reinforcement
+- outgoing influence modification
+- incoming load reduction
+- recursive scenario comparison
+
+Counterfactual evaluation remains separated from causal inference.
+
+---
+
+# Validation
+
+ROIF is developed using a validation-first approach.
+
+Current validation includes:
+
+- Unit tests
+- Integration tests
+- End-to-End tests
+- Clinical validation
+- Active Probe validation
+- Counterfactual validation
+
+Current regression suite:
+
+> **6000+ automated tests**
+
+---
+
+# Repository Structure
+
+```text
+roif/
+    active_probe_engine.py
+    probe_entities.py
+    probe_registry.py
+    probe_policy.py
+    probe_planner.py
+    probe_graph_adapter.py
+
+    solver.py
+    network.py
+    node.py
+    element.py
+    material.py
+
+validation/
+    clinical/
+
+tests/
+
+docs/
+```
+
+---
+
+# Scientific Background
+
+ROIF is developed alongside ongoing research into recursive cascade dynamics in pre-stressed systems.
+
+The architecture supports concepts including:
+
+- recursive cascade dynamics
+- tensor-based propagation
+- structural mediation
+- counterfactual reasoning
+- active exploration
+- uncertainty reduction
+- graph reconstruction
+
+Current scientific terminology includes:
+
+- D_origin
+- D_fast
+- D_root
+- Node*
+- Tensor W
+- Spectral Coherence (η)
+
+---
+
+# Roadmap
+
+Current development path:
+
+```text
+v1.0
+    Cascade Engine
+
+↓
+
+v1.1
+    Dynamic System Layer
+
+↓
+
+v1.2
+    Active Probe Engine
+
+↓
+
+v1.3
+    Graph Learning
+
+↓
+
+v1.4
+    Recursive Active Exploration
+
+↓
+
+v1.5
+    Knowledge Integration
+
+↓
+
+v2.0
+    Recursive Active Inference Engine
+```
+
+See **ROADMAP.md** for the complete development plan.
 
 ---
 
 # Current Status
 
-Version:
+Current Release:
 
-v0.1.0-alpha
+**ROIF Engine v1.2.0**
 
 Implemented:
 
-- Node
-- Element
-- Material
-- Network
-- Solver
-- XPBD
-- Pretension
-- Failure
-- Remodeling
-- Fatigue
-- Recovery
-- Viscoelastic force
-
-Current test status:
-
-13 PASSED
-
-1 XFAILED (Creep not implemented yet)
+- Stable Cascade Solver
+- Counterfactual Engine
+- Mediation-based D_root
+- Independent Node*
+- Active Probe Engine
+- Clinical validation pipeline
+- End-to-End validation
+- 6000+ automated tests
 
 ---
 
-# Long-Term Roadmap
+# Design Principles
 
-## Phase 1
+Every architectural decision should satisfy the following principles:
 
-Core biomechanical engine
-
-✅ Completed
-
----
-
-## Phase 2
-
-Advanced tissue mechanics
-
-- Maxwell model
-- Standard Linear Solid
-- Creep
-- Stress relaxation
-- Nonlinear elasticity
-
----
-
-## Phase 3
-
-Active biomechanics
-
-- Active muscle contraction
-- Tendon dynamics
-- Fascial adaptation
-- Ligament plasticity
-
----
-
-## Phase 4
-
-Whole-body biomechanics
-
-- Multi-body simulation
-- Joint mechanics
-- Neural activation
-- Sensorimotor control
-
----
-
-## Phase 5
-
-ROIF Clinical Simulator
-
-- Patient-specific models
-- Cascade analysis
-- Tissue adaptation prediction
-- Clinical decision support
-
----
-
-# Scientific Direction
-
-ROIF Engine is intended as a research platform.
-
-The project explores:
-
-- biomechanical adaptation
-- mechanobiology
-- tissue homeostasis
-- structural stability
-- cascade mechanics
-- pre-stressed biological systems
-
----
-
-# Development Philosophy
-
-The project follows several engineering principles:
-
-- test-first development
-- reproducibility
-- deterministic simulations
-- modular architecture
-- scientific transparency
-
-Every implemented feature is accompanied by automated tests.
+- Domain independent
+- Mathematically formalizable
+- Compatible with recursive cascade dynamics
+- Compatible with Active Probe Engine
+- Scientifically defensible
+- Suitable for peer-reviewed publication
 
 ---
 
 # License
 
-License to be determined.
-
----
-
-# Authors
-
-Project Architect
-
-**Vitalii Shapovalov**
-
-Founder of the Recursive Organic Integration Framework (ROIF).
-
-GitHub:
-
-https://github.com/dctrpain
-
----
-
-# Repository
-
-https://github.com/dctrpain/ROIF-Engine
+See the LICENSE file for licensing information.

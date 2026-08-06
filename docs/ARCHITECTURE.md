@@ -1,208 +1,413 @@
 # ROIF Engine Architecture
 
+> Recursive Organic Integration Framework  
+> Architecture specification for ROIF Engine v1.2.0
+
 ## Overview
 
-ROIF Engine is a modular biomechanical simulation engine designed to model adaptive pre-stressed biological systems.
+ROIF Engine is a domain-independent framework for simulation, cascade analysis, counterfactual evaluation, and active exploration of incomplete pre-stressed complex systems.
+
+Medicine and biomechanics are the first validation domains, not architectural boundaries.
 
 The architecture emphasizes:
 
 - modularity;
-- extensibility;
 - deterministic simulation;
 - scientific reproducibility;
-- separation of mechanics from material behavior.
+- separation of mechanics from material behavior;
+- separation of inference from intervention;
+- explicit handling of incomplete graphs;
+- auditable safety and authorization boundaries.
 
 ---
 
-# High-Level Architecture
+## High-Level Architecture
 
+```text
+External System
+      |
+      v
+Graph Representation
+      |
+      +---------------------------+
+      |                           |
+      v                           v
+Known Graph                Incomplete Graph
+      |                           |
+      |                           v
+      |                IncompleteGraphSnapshot
+      |                           |
+      |                           v
+      |                  Probe Graph Adapter
+      |                           |
+      |                           v
+      |              ProbeInformationEstimate
+      |                           |
+      |                           v
+      |                Active Probe Engine
+      |                           |
+      |                           v
+      |                        Probe*
+      |                           |
+      |                           v
+      |         BASELINE -> PERTURBATION
+      |                           |
+      |                           v
+      |                    REASSESSMENT
+      |                           |
+      |                           v
+      |                     ProbeResult
+      |                           |
+      |                           v
+      |                GraphUpdateProposal
+      |                           |
+      |                           v
+      |                Explicit Authorization
+      |                           |
+      +-------------+-------------+
+                    |
+                    v
+             Authorized Graph
+                    |
+                    v
+             Cascade Solver
+                    |
+          D_origin / D_fast / D_root / Node*
 ```
-                 +----------------------+
-                 |      Simulation      |
-                 +----------+-----------+
-                            |
-                     +------+------+
-                     |   Network    |
-                     +------+------+
-                            |
-          +-----------------+-----------------+
-          |                                   |
-      +---+---+                           +---+---+
-      | Node  |                           |Element|
-      +-------+                           +---+---+
-                                              |
-                                        +-----+------+
-                                        |  Material  |
-                                        +-----+------+
-                                              |
-                 +----------------------------+----------------------------+
-                 |             |              |            |               |
-              Muscle        Tendon        Ligament      Fascia      Future Models
+
+A `GraphUpdateProposal` is not an automatic graph mutation.
+
+---
+
+## Core Mechanical Layer
+
+### Node
+
+Stores local state:
+
+- position;
+- velocity;
+- accumulated forces;
+- mass;
+- fixed/free state.
+
+Nodes contain no constitutive material behavior.
+
+### Element
+
+Represents an interaction between nodes.
+
+Responsibilities:
+
+- compute current length;
+- compute extension and strain;
+- request material forces;
+- apply forces to connected nodes.
+
+### Material
+
+Defines constitutive behavior independently from topology.
+
+Responsibilities may include:
+
+- elasticity;
+- damping;
+- fatigue;
+- recovery;
+- remodeling;
+- failure;
+- history-dependent behavior.
+
+Current models include muscle, tendon, ligament, fascia, and generic materials.
+
+### Network
+
+Owns the global system state.
+
+Responsibilities:
+
+- node and element management;
+- topology management;
+- force accumulation;
+- simulation stepping;
+- solver interaction;
+- state snapshots.
+
+### Solver
+
+Responsible for numerical evolution.
+
+Current capabilities include:
+
+- explicit integration;
+- XPBD constraints;
+- deterministic stepping;
+- recursive cascade propagation;
+- history-aware computation.
+
+---
+
+## Dynamic History Layer
+
+ROIF does not treat the system as memoryless.
+
+The history layer supports:
+
+- rheological memory;
+- fatigue accumulation;
+- recovery;
+- remodeling;
+- persistent geometry changes;
+- structural adaptation.
+
+---
+
+## Active Probe Engine
+
+The Active Probe Engine (APE) was introduced in v1.2.0.
+
+Its purpose is to reduce graph uncertainty before causal inference.
+
+A Probe is a controlled experiment:
+
+```text
+Perturbation
+      |
+      v
+Measurement
+      |
+      v
+Information about the graph
+```
+
+Each Probe follows:
+
+```text
+BASELINE -> PERTURBATION -> REASSESSMENT
+```
+
+The difference between baseline and reassessment is represented by `ObservationDelta`.
+
+APE components:
+
+- `probe_entities.py`;
+- `probe_registry.py`;
+- `probe_policy.py`;
+- `probe_planner.py`;
+- `active_probe_engine.py`;
+- `probe_graph_adapter.py`.
+
+### Probe Registry
+
+Stores reusable `ProbeDefinition` objects.
+
+It handles registration, lookup, filtering, uniqueness, and immutable snapshots.
+
+### Probe Policy
+
+Evaluates admissibility.
+
+```text
+REJECT > REQUIRE_AUTHORIZATION > ALLOW
+```
+
+Policy may evaluate:
+
+- cost and duration;
+- method and perturbation restrictions;
+- risk and cascade risk;
+- uncertainty;
+- reversibility;
+- resources;
+- human authorization.
+
+### Non-Fonit Gate
+
+A mandatory veto rejects Probes capable of uncontrolled, external, or large-scale cascade effects.
+
+Human authorization does not automatically override this veto.
+
+### Probe Planner
+
+Ranks admissible candidates using:
+
+- information gain;
+- uncertainty reduction;
+- hypothesis discrimination;
+- graph coverage;
+- novelty;
+- feasibility;
+- confidence;
+- cost;
+- duration;
+- risk;
+- redundancy;
+- disruption.
+
+The Planner selects `Probe*`, but does not execute it.
+
+### Probe Lifecycle
+
+```text
+IDLE -> PLANNED -> RUNNING -> COMPLETED / CANCELLED
+```
+
+The Active Probe Engine stores observations, derives deltas, and creates `ProbeResult`.
+
+It does not physically apply perturbations, mutate the graph, or call the Cascade Solver.
+
+---
+
+## Graph Adaptation Layer
+
+`probe_graph_adapter.py` performs:
+
+```text
+IncompleteGraphSnapshot -> ProbeInformationEstimate
+```
+
+and:
+
+```text
+ProbeResult -> GraphUpdateProposal
+```
+
+The adapter never applies the proposal automatically.
+
+```text
+GraphUpdateProposal != Graph Mutation
 ```
 
 ---
 
-# Core Components
+## Causal Roles
 
-## Node
+ROIF separates four roles.
 
-Represents a point in space.
+### D_origin
 
-Stores:
+Structural origin of the cascade.
 
-- position
-- velocity
-- accumulated forces
-- mass
-- fixed/free state
+### D_fast
 
-Nodes contain no constitutive behavior.
+Earliest channel that loses functional support or reserve.
 
----
+### D_root
 
-## Element
+Principal structural mediator of cascade propagation.
 
-Represents a mechanical connection between two nodes.
+D_root must both receive upstream influence and transmit influence downstream.
 
-Responsibilities:
+The v1.2.0 detector uses mediation characteristics such as incoming strength, outgoing strength, balance, throughput, downstream reach, and tensor sensitivity.
 
-- compute current length
-- compute extension
-- compute strain
-- request material forces
-- apply forces to connected nodes
+D_root is not defined by intervention utility.
 
-Elements do not define constitutive equations.
+### Node*
 
----
+Optimal intervention point under current constraints.
 
-## Material
+Its evaluation may include gain, cost, collateral effects, uncertainty, safety, reversibility, and confidence.
 
-Defines constitutive mechanical behavior.
+```text
+D_origin != D_fast != D_root != Node*
+```
 
-Responsibilities:
-
-- elastic response
-- damping
-- fatigue
-- recovery
-- remodeling
-- failure
-
-Material models are independent from network topology.
+Roles may coincide in a particular system, but coincidence is never assumed.
 
 ---
 
-## Network
+## Counterfactual Engine
 
-Represents the complete biomechanical system.
+The Counterfactual Engine evaluates hypothetical interventions without mutating the original system.
 
-Responsibilities:
+Supported concepts include:
 
-- node management
-- element management
-- simulation stepping
-- force accumulation
-- solver interaction
+- virtual restoration;
+- outgoing influence modification;
+- incoming load reduction;
+- structural reinforcement;
+- scenario comparison;
+- recursive cascade simulation.
 
-Network owns the global simulation state.
-
----
-
-## Solver
-
-Responsible for numerical integration.
-
-Current implementation:
-
-- explicit integration
-- XPBD constraints
-
-Future versions may include:
-
-- implicit solvers
-- adaptive time stepping
-- sparse solvers
+Counterfactual utility belongs to `Node*` evaluation and must not define `D_root`.
 
 ---
 
-# Design Principles
+## Validation Layer
 
-## Separation of Responsibilities
+Validation includes:
 
-Each class has a single primary responsibility.
+- unit tests;
+- integration tests;
+- end-to-end tests;
+- role-separation tests;
+- Active Probe tests;
+- graph-adapter tests;
+- clinical validation.
 
-| Class | Responsibility |
-|--------|----------------|
-| Node | State |
-| Element | Mechanics |
-| Material | Constitutive behavior |
-| Network | Simulation |
-| Solver | Numerical integration |
+The first clinical validation package is located in:
 
----
+```text
+validation/clinical/
+```
 
-## Material Independence
-
-Mechanical behavior is encapsulated inside Material classes.
-
-This allows different constitutive models to be attached to the same network topology without modifying the solver.
+External validation labels must not be supplied to the Solver as hidden answers.
 
 ---
 
-## Extensibility
+## Safety Boundaries
 
-New materials can be added by implementing the Material interface.
+ROIF preserves:
 
-Examples include:
+- explicit authorization;
+- preference for reversible Probes;
+- cascade-risk evaluation;
+- Non-Fonit veto;
+- proposal-only graph updates;
+- separation of inference and intervention;
+- auditability.
 
-- Muscle
-- Tendon
-- Fascia
-- Ligament
-- Cartilage
-- Bone
-
----
-
-## Testing Strategy
-
-Every new feature must be accompanied by automated tests.
-
-Regression testing is considered a core architectural principle.
+In clinical use, the physician remains the external decision authority.
 
 ---
 
-# Current Architecture
+## Current Release
+
+**ROIF Engine v1.2.0**
 
 Implemented:
 
-- Node
-- Element
-- Material
-- Network
-- Solver
-- XPBD constraints
-
-Current status:
-
-Stable for alpha development.
-
----
-
-# Future Evolution
-
-The architecture is intentionally modular to support:
-
-- active muscle mechanics;
-- mechanobiology;
-- tissue growth;
-- healing;
-- patient-specific simulations;
-- whole-body biomechanical models.
+- stable mechanical and cascade solver;
+- material and constraint architecture;
+- dynamic history and rheological memory;
+- Counterfactual Engine;
+- mediation-based D_root;
+- independent Node*;
+- Active Probe Engine;
+- incomplete graph adapter;
+- clinical validation pipeline;
+- more than 6000 automated tests.
 
 ---
 
-# Guiding Principle
+## Future Evolution
 
-The engine separates **structure**, **mechanics**, and **material behavior**, allowing biological complexity to emerge from modular interactions rather than being hard-coded into the simulation core.
+The next stage is Graph Learning:
+
+- observation assimilation;
+- confidence propagation;
+- incremental graph updates;
+- graph uncertainty tensor;
+- Probe history;
+- multi-step Probe planning;
+- adaptive graph reconstruction.
+
+The long-term target is ROIF Engine v2.0: a Recursive Active Inference Engine.
+
+---
+
+## Guiding Principle
+
+ROIF separates structure, mechanics, material behavior, active exploration, graph adaptation, causal inference, and intervention planning.
+
+Complex behavior should emerge from modular interactions rather than being hard-coded into a monolithic system.

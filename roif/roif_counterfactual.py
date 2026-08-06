@@ -1093,6 +1093,42 @@ def _scenario_matrix_history(
             steps=steps,
             direction=CascadeDirection.GENERIC,
         )
+
+        matrix_actions = {
+            CounterfactualAction.REMOVE_OUTGOING_INFLUENCE,
+            CounterfactualAction.REDUCE_OUTGOING_INFLUENCE,
+            CounterfactualAction.REDUCE_INCOMING_LOAD,
+        }
+
+        has_matrix_action = any(
+            intervention.action in matrix_actions
+            for intervention in scenario.interventions
+        )
+
+        if has_matrix_action:
+            scenario_matrix = apply_scenario_to_matrix(
+                rebuilt_tensor,
+                scenario,
+            )
+            scenario_history = simulate_matrix_cascade(
+                scenario_matrix,
+                trajectory.initial_state,
+                steps=steps,
+                dissipation=full_config.dissipation,
+                retention=full_config.retention,
+                clip_min=(
+                    full_config.lower_bound
+                    if full_config.clip_state
+                    else None
+                ),
+                clip_max=(
+                    full_config.upper_bound
+                    if full_config.clip_state
+                    else None
+                ),
+            )
+            return scenario_matrix, scenario_history
+
         scenario_trajectory = run_cascade(
             modified_system,
             initial_state=trajectory.initial_state,
@@ -1129,31 +1165,49 @@ def _collateral_effect(
     intervention_indices: frozenset[int],
     epsilon: float,
 ) -> float:
-    difference = np.abs(
-        baseline_history - scenario_history
+    """Return harmful change outside directly intervened channels.
+
+    A reduction of downstream cascade activity is an intended benefit,
+    not collateral damage. Only increases in absolute external-channel
+    burden are therefore penalised.
+    """
+
+    if baseline_history.shape != scenario_history.shape:
+        raise ROIFCounterfactualError(
+            "baseline_history and scenario_history must match."
+        )
+
+    channel_count = baseline_history.shape[1]
+    external_indices = tuple(
+        index
+        for index in range(channel_count)
+        if index not in intervention_indices
     )
 
-    baseline_external = np.array(
-        baseline_history,
-        dtype=float,
-        copy=True,
+    if not external_indices:
+        return 0.0
+
+    baseline_external = np.abs(
+        baseline_history[:, external_indices]
+    )
+    scenario_external = np.abs(
+        scenario_history[:, external_indices]
     )
 
-    for index in intervention_indices:
-        difference[:, index] = 0.0
-        baseline_external[:, index] = 0.0
-
-    denominator = max(
-        float(np.sum(np.abs(baseline_external))),
-        epsilon,
-    )
-
-    return max(
+    harmful_increase = np.maximum(
+        scenario_external - baseline_external,
         0.0,
-        min(
-            1.0,
-            float(np.sum(difference)) / denominator,
-        ),
+    )
+
+    harmful_total = float(np.sum(harmful_increase))
+    baseline_total = float(np.sum(baseline_external))
+
+    if harmful_total <= epsilon:
+        return 0.0
+
+    return min(
+        1.0,
+        harmful_total / max(baseline_total, epsilon),
     )
 
 

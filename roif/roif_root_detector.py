@@ -1,4 +1,4 @@
-﻿"""
+"""
 ROIF Engine
 Root and Role Detector
 
@@ -2912,10 +2912,88 @@ def fast_score(
         "unsupported FastDetectionMode."
     )
 
+def mediation_balance(
+    incoming_strength_value: float,
+    outgoing_strength_value: float,
+    *,
+    epsilon: float = 1e-12,
+) -> float:
+    """
+    Return the directional balance of cascade mediation.
+
+    The value approaches zero for a pure source or terminal channel and
+    reaches one when incoming and outgoing structural strengths are balanced.
+    """
+
+    incoming = max(0.0, float(incoming_strength_value))
+    outgoing = max(0.0, float(outgoing_strength_value))
+
+    total = incoming + outgoing
+
+    if total <= epsilon:
+        return 0.0
+
+    return min(
+        1.0,
+        4.0 * incoming * outgoing / (total * total),
+    )
+
+
+def mediation_throughput(
+    incoming_strength_value: float,
+    outgoing_strength_value: float,
+) -> float:
+    """
+    Return the structural throughput of a candidate channel.
+
+    Both incoming and outgoing influence must be present.
+    """
+
+    incoming = max(0.0, float(incoming_strength_value))
+    outgoing = max(0.0, float(outgoing_strength_value))
+
+    return float((incoming * outgoing) ** 0.5)
+
+
+def propagation_gain(
+    incoming_strength_value: float,
+    outgoing_strength_value: float,
+    *,
+    epsilon: float = 1e-12,
+    maximum_gain: float = 4.0,
+) -> float:
+    """
+    Return the local cascade propagation gain.
+
+    Values:
+
+        < 1.0  attenuation
+        = 1.0  approximately neutral transmission
+        > 1.0  amplification
+
+    The upper bound protects the detector from numerical instability when
+    incoming strength is very small. Pure source channels remain excluded by
+    zero mediation balance and zero throughput.
+    """
+
+    incoming = max(0.0, float(incoming_strength_value))
+    outgoing = max(0.0, float(outgoing_strength_value))
+
+    if outgoing <= epsilon:
+        return 0.0
+
+    gain = outgoing / max(incoming, epsilon)
+
+    return min(
+        max(0.0, gain),
+        max(1.0, float(maximum_gain)),
+    )
+
 
 def root_score(
     *,
-    intervention: CandidateIntervention,
+    incoming_strength_value: float,
+    outgoing_strength_value: float,
     tensor_sensitivity_value: float,
     downstream_reach_value: float,
     exposure_value: float,
@@ -2927,58 +3005,69 @@ def root_score(
     weights: RootDetectorWeights,
     mode: RootDetectionMode,
 ) -> float:
-    """Calculate D_root score."""
+    """
+    Calculate D_root as an amplifying cascade-mediation channel.
 
-    restoration_component = (
-        weights.cascade_reduction
-        * max(
-            0.0,
-            intervention.relative_reduction,
-        )
+    D_root is neither:
+
+    - the earliest cascade origin;
+    - the first channel that lost function;
+    - the optimal intervention target.
+
+    It is the channel that receives upstream influence, transmits it
+    downstream, and locally amplifies cascade propagation.
+
+    Several arguments remain in the signature for backward API compatibility,
+    but origin-, failure-, and persistence-related features are intentionally
+    excluded from D_root scoring.
+    """
+
+    del (
+        exposure_value,
+        early_activity_value,
+        plane_contribution_value,
+        geometry_deficit_value,
+        material_deficit_value,
+        history_effect_value,
+    )
+
+    balance = mediation_balance(
+        incoming_strength_value,
+        outgoing_strength_value,
+    )
+
+    throughput = mediation_throughput(
+        incoming_strength_value,
+        outgoing_strength_value,
+    )
+
+    gain = propagation_gain(
+        incoming_strength_value,
+        outgoing_strength_value,
+    )
+
+    mediation_component = (
+        balance
+        * throughput
+        * gain
+        * max(0.0, downstream_reach_value)
     )
 
     sensitivity_component = (
         weights.tensor_sensitivity
-        * tensor_sensitivity_value
+        * max(0.0, tensor_sensitivity_value)
     )
 
-    structural_component = (
-        weights.downstream_reach
-        * downstream_reach_value
-        + weights.trajectory_exposure
-        * exposure_value
-        + weights.early_activity
-        * early_activity_value
-        + weights.plane_contribution
-        * plane_contribution_value
-        + weights.geometry_deficit
-        * geometry_deficit_value
-        + weights.material_deficit
-        * material_deficit_value
-        + weights.history_effect
-        * history_effect_value
-    )
+    if mode is RootDetectionMode.VIRTUAL_RESTORATION:
+        return mediation_component
 
-    if (
-        mode
-        is RootDetectionMode.VIRTUAL_RESTORATION
-    ):
-        return restoration_component
-
-    if (
-        mode
-        is RootDetectionMode.TRAJECTORY_SENSITIVITY
-    ):
+    if mode in {
+        RootDetectionMode.TRAJECTORY_SENSITIVITY,
+        RootDetectionMode.HYBRID,
+    }:
         return (
-            sensitivity_component
-            + structural_component
-        )
-
-    if mode is RootDetectionMode.HYBRID:
-        return (
-            restoration_component
+            mediation_component
             + sensitivity_component
-            + structural_component
         )
 
     raise ROIFRootDetectorError(
@@ -2989,58 +3078,72 @@ def root_score(
 def node_star_score(
     *,
     intervention: CandidateIntervention,
-    root_score_value: float,
     confidence: float,
     weights: RootDetectorWeights,
     policy: InterventionPolicy,
 ) -> float:
     """
-    Calculate intervention utility for Node*.
+    Calculate Node* as targeted counterfactual intervention utility.
 
-    Node* is intentionally distinct from D_root: the strongest causal root may
-    be expensive, uncertain, irreversible, or unsafe to intervene upon.
+    Node* is independent of D_root.
+
+    The score rewards retained reduction of cascade burden after accounting
+    for collateral influence, intervention cost, uncertainty, safety risk,
+    and irreversibility.
     """
-
-    gain = (
-        weights.intervention_gain
-        * max(
-            0.0,
-            intervention.relative_reduction,
-        )
-    )
-
-    causal_value = (
-        0.50
-        * max(
-            0.0,
-            root_score_value,
-        )
-    )
-
-    penalties = (
-        weights.intervention_cost
-        * intervention.intervention_cost
-        + weights.collateral_effect
-        * intervention.collateral_effect
-        + weights.uncertainty
-        * intervention.uncertainty
-        + weights.safety_risk
-        * intervention.safety_risk
-        + weights.irreversibility
-        * intervention.irreversibility
-    )
 
     confidence_factor = max(
         0.0,
         min(
             1.0,
-            confidence,
+            float(confidence),
         ),
     )
 
+    relative_gain = max(
+        0.0,
+        intervention.relative_reduction,
+    )
+
+    collateral_fraction = max(
+        0.0,
+        min(
+            1.0,
+            intervention.collateral_effect,
+        ),
+    )
+
+    retained_gain = (
+        weights.intervention_gain
+        * relative_gain
+        * (1.0 - collateral_fraction)
+    )
+
+    penalties = (
+        weights.intervention_cost
+        * max(
+            0.0,
+            intervention.intervention_cost,
+        )
+        + weights.uncertainty
+        * max(
+            0.0,
+            intervention.uncertainty,
+        )
+        + weights.safety_risk
+        * max(
+            0.0,
+            intervention.safety_risk,
+        )
+        + weights.irreversibility
+        * max(
+            0.0,
+            intervention.irreversibility,
+        )
+    )
+
     score = (
-        gain
-        + causal_value
+        retained_gain
         - penalties
     ) * confidence_factor
 
@@ -3426,7 +3529,8 @@ def evaluate_candidate(
     )
 
     root_raw = root_score(
-        intervention=intervention,
+        incoming_strength_value=incoming_value,
+        outgoing_strength_value=outgoing_value,
         tensor_sensitivity_value=sensitivity_value,
         downstream_reach_value=reach_value,
         exposure_value=normalized_exposure,
@@ -3441,7 +3545,6 @@ def evaluate_candidate(
 
     node_raw = node_star_score(
         intervention=intervention,
-        root_score_value=root_raw,
         confidence=confidence,
         weights=config.weights,
         policy=config.intervention_policy,
@@ -4126,5 +4229,8 @@ __all__ = [
     "validate_detector_inputs",
     "virtual_intervention_matrix",
 ]
+
+
+
 
 
