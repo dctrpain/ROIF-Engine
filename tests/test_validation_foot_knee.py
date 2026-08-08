@@ -376,4 +376,3 @@ def test_validation_pipeline_is_deterministic(
     assert repeated.decision == solution.decision
     assert repeated.root_result == solution.root_result
     assert metrics_snapshot(repeated) == metrics_snapshot(solution)
-

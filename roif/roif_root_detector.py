@@ -1,4 +1,4 @@
-"""
+﻿"""
 ROIF Engine
 Root and Role Detector
 
@@ -49,6 +49,8 @@ from typing import Any
 import math
 
 import numpy as np
+
+from roif.utilization import compute_utilization
 
 from .roif_entities import (
     FunctionalChannel,
@@ -104,7 +106,8 @@ class FastDetectionMode(str, Enum):
 
     MINIMUM_RESERVE = "minimum_reserve"
     EARLIEST_THRESHOLD = "earliest_threshold"
-    PEAK_DEFICIT = "peak_deficit"
+    PEAK_DEFICIT = "peak_deficit"
+    CAPACITY_EXCEEDANCE = "capacity_exceedance"
     HYBRID = "hybrid"
 
 
@@ -2880,6 +2883,7 @@ def origin_score(
 def fast_score(
     *,
     reserve_deficit_value: float,
+    utilization_value: float,
     peak_deficit: float,
     first_threshold: int | None,
     trajectory_steps: int,
@@ -2900,6 +2904,33 @@ def fast_score(
 
     if mode is FastDetectionMode.PEAK_DEFICIT:
         return peak_deficit
+
+
+    if mode is FastDetectionMode.CAPACITY_EXCEEDANCE:
+        # Physical failure criterion:
+        #
+        #     utilization = |demand| / capacity
+        #
+        # A channel at or above capacity outranks a channel
+        # that remains physically below capacity.
+        #
+        # RootCandidate requires finite scores.
+        if math.isinf(utilization_value):
+            return 2.0
+
+        if utilization_value >= 1.0:
+            return 1.0 + min(
+                1.0,
+                utilization_value - 1.0,
+            )
+
+        return max(
+            0.0,
+            min(
+                1.0,
+                utilization_value,
+            ),
+        )
 
     if mode is FastDetectionMode.HYBRID:
         return (
@@ -3456,6 +3487,16 @@ def evaluate_candidate(
         state
     )
 
+
+    # Physical utilization:
+    #
+    #     u = |load| / capacity
+    #
+    # Independent from cascade trajectory amplitude.
+    physical_utilization = compute_utilization(
+        channel.capacity_state.load,
+        channel.capacity_state.capacity,
+    )
     activation_deficit_value = (
         activation_deficit(state)
         if config.include_activation_contribution
@@ -3496,7 +3537,8 @@ def evaluate_candidate(
     )
 
     fast_raw = fast_score(
-        reserve_deficit_value=reserve_deficit_value,
+        reserve_deficit_value=reserve_deficit_value,
+        utilization_value=physical_utilization,
         peak_deficit=peak_value,
         first_threshold=first_threshold,
         trajectory_steps=trajectory.step_count,
@@ -3613,7 +3655,9 @@ def evaluate_candidate(
         intervention=intervention,
         evidence=evidence,
         metadata={
-            "first_event_index": first_event,
+            "first_event_index": first_event,
+            "physical_utilization": physical_utilization,
+            "capacity_exceeded": physical_utilization >= 1.0,
             "upstream_activity_score": upstream_score,
             "normalized_exposure": normalized_exposure,
             "event_counts": {
@@ -4229,6 +4273,9 @@ __all__ = [
     "validate_detector_inputs",
     "virtual_intervention_matrix",
 ]
+
+
+
 
 
 
