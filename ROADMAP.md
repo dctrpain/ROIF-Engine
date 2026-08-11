@@ -1,687 +1,1491 @@
-# ROIF Engine Roadmap
+# ROIF Engine Development Roadmap
 
 > **Recursive Organic Integration Framework**
 >
-> Universal Cascade Analysis and Active Exploration Engine
+> Roadmap for the evolution of ROIF from cascade analysis toward recursive, predictive, experience-dependent control in partially observable pre-stressed systems.
 
 ---
 
-# Vision
+# Roadmap Status
 
-ROIF is evolving from a cascade analysis engine into a universal framework for **active exploration**, **causal reconstruction**, and **decision support** in incomplete dynamic pre-stressed complex systems.
+ROIF development proceeds through experimentally testable architectural layers.
 
-The architecture is intentionally domain-independent.
+The roadmap distinguishes three states:
 
-Medicine is the first validation domain—not the architectural boundary.
+* **IMPLEMENTED** — present in the engine and covered by tests;
+* **IN VALIDATION** — implemented experimentally but still requiring broader cross-domain validation;
+* **PLANNED / RESEARCH** — architectural direction not yet claimed as an implemented capability.
 
----
-
-# Development Timeline
-
-| Version  | Status     | Focus                                    |
-| -------- | ---------- | ---------------------------------------- |
-| v1.0     | ✅ Released | Cascade Simulation Engine                |
-| v1.1     | ✅ Released | Dynamic Memory & Counterfactual Analysis |
-| **v1.2** | ✅ Current  | Active Probe Engine                      |
-| v1.3     | 🔄 Planned | Dynamic Probe Intelligence               |
-| v1.4     | 🔄 Planned | Graph Learning                           |
-| v1.5     | 🔄 Planned | Recursive Active Exploration             |
-| v1.6     | 🔄 Planned | Knowledge Integration                    |
-| v2.0     | 🎯 Vision  | Recursive Active Inference Engine        |
+The roadmap must describe the actual state of the repository rather than anticipated capabilities.
 
 ---
 
-# v1.0 — Cascade Engine ✅
+# Architectural Direction
 
-## Objective
-
-Create a deterministic engine capable of simulating cascade propagation in pre-stressed systems.
-
-### Delivered
-
-* Graph representation
-* Nodes
-* Elements
-* Materials
-* Constraints
-* Capacity Tensor
-* Cascade Solver
-* Recursive propagation
-* Structural remodeling
-* History Engine foundation
-
-### Scientific Result
-
-ROIF became capable of describing cascade propagation instead of isolated local failures.
-
----
-
-# v1.1 — Dynamic System Layer ✅
-
-## Objective
-
-Move from static analysis to dynamic system behavior.
-
-### Delivered
-
-* History Engine
-* Rheological Memory
-* Counterfactual Engine
-* Recursive intervention simulation
-* End-to-End pipeline
-* Solver stabilization
-
-### Scientific Result
-
-ROIF can compare intervention scenarios instead of evaluating only the observed system.
-
----
-
-# v1.2 — Active Probe Engine ✅
-
-## Objective
-
-Allow ROIF to reason with incomplete graphs.
-
-### Delivered
-
-#### Active Probe Engine
-
-* Probe Entities
-* Probe Registry
-* Probe Policy
-* Probe Planner
-* Probe Graph Adapter
-* Active Probe Engine
-
-#### Root Detection
-
-Complete separation of:
-
-* D_origin
-* D_fast
-* D_root
-* Node*
-
-D_root is now based on **structural mediation** rather than intervention effectiveness.
-
-D_origin, D_fast, D_root, and Node* represent different causal or control roles and are not assumed to coincide.
-
-#### Counterfactual Analysis
-
-* Improved counterfactual evaluation
-* Structural intervention comparison
-* Independent Node* evaluation
-* Improved collateral-effect handling
-
-#### Validation
-
-* Clinical validation pipeline
-* Foot–Knee validation case
-* End-to-End Active Probe tests
-* Root-role separation tests
-* Extensive regression testing
-* More than 6,000 automated tests
-
-### Scientific Result
-
-ROIF no longer assumes that the causal graph is complete.
-
-Instead it can perform:
+ROIF began as a biomechanical simulation engine and progressively evolved toward a domain-independent architecture for:
 
 ```text
-Incomplete Graph
-        │
-        ▼
-Probe Selection
-        │
-        ▼
-Observation
-        │
-        ▼
-Graph Update Proposal
-        │
-        ▼
-Explicit Authorization
-        │
-        ▼
-Updated Graph
-        │
-        ▼
-Cascade Solver
-        │
-        ▼
+Pre-Stressed Dynamics
+        ↓
+Cascade Propagation
+        ↓
+Counterfactual Reasoning
+        ↓
+Active Exploration
+        ↓
+Directional / Temporal Evidence
+        ↓
+Active Cascade
+        ↓
+Predictive Control
+        ↓
+Prediction Error
+        ↓
+Experience-Dependent Adaptation
+```
+
+The long-term objective is not merely to reconstruct a graph.
+
+The objective is to build an auditable architecture capable of **observing, probing, predicting, acting, comparing outcomes with predictions, and adapting future control under explicit safety constraints**.
+
+---
+
+# v0.x — Mechanical Foundation ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Create a deterministic mechanical foundation for pre-stressed adaptive systems.
+
+## Implemented
+
+* Node;
+* Element;
+* Material;
+* Network;
+* Solver;
+* XPBD constraints;
+* muscle material;
+* tendon material;
+* ligament material;
+* fascia material;
+* pre-stress representation;
+* deterministic mechanical simulation.
+
+## Result
+
+ROIF obtained a domain-neutral mechanical substrate capable of representing loaded and pre-stressed structures.
+
+---
+
+# v0.3 — Dynamic History ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Allow physical system state to depend on previous loading history.
+
+## Implemented
+
+* fatigue;
+* recovery;
+* remodeling;
+* rheological memory;
+* irreversible structural adaptation;
+* history-dependent mechanical state.
+
+## Important Boundary
+
+This layer represents **physical and structural memory**.
+
+It describes how the plant itself changes because of previous loading.
+
+It must remain conceptually separate from future controller memory generated by prediction, action, and outcome.
+
+---
+
+# v0.4 — Recursive Cascade Dynamics ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Move from isolated mechanical response toward recursive system-wide propagation.
+
+## Implemented
+
+* graph-based propagation;
+* recursive cascade simulation;
+* tensor-based interactions;
+* Capacity Tensor;
+* vector-aware transport;
+* network-wide state evolution;
+* utilization analysis.
+
+## Result
+
+ROIF became capable of representing cascades rather than only local deformation.
+
+---
+
+# v0.5 — Counterfactual Engine ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Evaluate virtual interventions without modifying the original system.
+
+## Implemented
+
+* virtual restoration;
+* load reduction;
+* structural reinforcement;
+* intervention comparison;
+* recursive scenario simulation;
+* intervention utility estimation.
+
+## Result
+
+ROIF became capable of asking:
+
+> What would happen if this part of the system were changed?
+
+This created the basis for intervention-oriented reasoning.
+
+---
+
+# v1.0 — Explicit Causal Roles ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Separate causal and intervention roles that cannot be represented by one numerical score.
+
+## Implemented Roles
+
+```text
 D_origin
 D_fast
 D_root
 Node*
 ```
 
-This represents the first transition from passive cascade analysis toward **active exploration of incomplete causal structure**.
+### D_origin
 
-A Graph Update Proposal is not an automatic graph mutation.
+Structural origin of the cascade.
 
----
+### D_fast
 
-# v1.3 — Dynamic Probe Intelligence 🔄
+Earliest observable functional failure.
 
-## Objective
+### D_root
 
-Extend Active Probe selection from topology-aware exploration to **state-aware exploration of dynamic pre-stressed graphs**.
+Structural mediator maintaining cascade propagation.
 
-The information value of a Probe must depend not only on where it is applied in the graph, but also on the physical and dynamical state of the system at the moment of application.
+### Node*
 
-### Core Principle
+Best intervention candidate under the current counterfactual conditions.
 
-The same Probe applied to the same graph node under different vector pre-stress and dynamic states may produce:
-
-* different responses;
-* different information value;
-* different propagation patterns;
-* different cascade risk.
-
-Therefore Probe selection must consider both:
-
-1. graph topology and uncertainty;
-2. current dynamic state of the pre-stressed system.
-
-### Planned
-
-* Dynamic Probe Context
-* Vector Pretension Field
-* Node position state
-* Node displacement
-* Node velocity
-* Node acceleration where available
-* Direction-sensitive Probe scoring
-* State-dependent information gain
-* History-aware Probe selection
-* Local reserve awareness
-* Dynamic cascade-risk estimation
-* Probe Response Tensor research
-
-### Vector Pretension
-
-Probe evaluation should progressively incorporate both the magnitude and direction of pre-stress.
-
-A perturbation aligned with the existing tension field may produce a fundamentally different response from the same perturbation applied against or across that field.
-
-Conceptually:
-
-```text
-Graph topology
-      +
-Graph uncertainty
-      +
-Vector pretension field
-      +
-Node dynamics
-      +
-System history
-      +
-Probe direction
-      ↓
-Dynamic Probe Evaluation
-      ↓
-Probe*
-```
-
-### Dynamic State
-
-A future Dynamic Probe Context may include:
-
-```text
-G(t)   — graph state
-T(t)   — vector pretension field
-x(t)   — node positions
-v(t)   — node velocities
-a(t)   — node accelerations
-H(t)   — system history
-```
-
-Probe selection can then be expressed conceptually as:
-
-```text
-Probe* =
-best admissible Probe
-given
-G(t), T(t), x(t), v(t), H(t)
-```
-
-The exact mathematical formulation remains a research and validation task.
-
-### Safety
-
-The existing Non-Fonit Gate remains a hard constraint.
-
-High information value must never override unacceptable cascade risk.
-
-Dynamic Probe evaluation should therefore estimate risk in relation to the **current state and direction of loading**, rather than treating Probe risk as purely static.
-
-### Expected Result
-
-ROIF will select Probes according to both **where the uncertainty exists** and **how the system is dynamically loaded when that uncertainty is tested**.
-
----
-
-# v1.4 — Graph Learning 🔄
-
-## Objective
-
-Learn from observations produced by Active Probes.
-
-### Planned
-
-* Graph confidence propagation
-* Observation assimilation
-* Recursive graph refinement
-* Confidence Tensor
-* Graph uncertainty estimation
-* Probe history
-* Incremental graph updates
-* Edge confidence revision
-* Competing graph hypotheses
-* Graph versioning
-
-### Expected Result
-
-The internal graph becomes progressively more accurate after each observation.
-
-Instead of treating every Probe independently, ROIF begins accumulating evidence about causal structure.
-
-Conceptually:
-
-```text
-Graph(t)
-    │
-    ▼
-Dynamic Probe
-    │
-    ▼
-Observation
-    │
-    ▼
-Evidence
-    │
-    ▼
-Graph(t+1)
-```
-
-Graph learning must remain explicit, auditable, and uncertainty-aware.
-
----
-
-# v1.5 — Recursive Active Exploration 🔄
-
-## Objective
-
-Replace isolated Probes with adaptive investigation strategies.
-
-### Planned
-
-* Multi-step Probe planning
-* Probe sequences
-* Conditional Probe branches
-* Recursive uncertainty reduction
-* Graph reconstruction
-* Structural ambiguity estimation
-* Probe sequence optimization
-* Cumulative information gain
-* Adaptive replanning
-* Investigation stopping criteria
-
-### Expected Result
-
-ROIF will actively plan the next sequence of observations instead of selecting only one Probe.
-
-The exploration cycle becomes recursive:
-
-```text
-Probe₁
-   │
-   ▼
-Observation
-   │
-   ▼
-Graph Update
-   │
-   ▼
-Probe₂
-   │
-   ▼
-Observation
-   │
-   ▼
-Graph Update
-   │
-   ▼
-Probe₃
-```
-
-Each new observation changes the conditions under which the next Probe is selected.
-
----
-
-# v1.6 — Knowledge Integration 🔄
-
-## Objective
-
-Introduce reusable domain knowledge without making the core architecture domain-dependent.
-
-### Planned
-
-* Knowledge Base integration
-* Domain-independent Probe libraries
-* Structural templates
-* Learned exploration policies
-* Reusable graph patterns
-* Cross-domain transfer
-* Evidence-linked domain modules
-
-### Expected Result
-
-Experience gained in one system can contribute to exploration of another system while preserving explicit separation between general ROIF architecture and domain-specific knowledge.
-
----
-
-# v2.0 — Recursive Active Inference Engine 🎯
-
-## Objective
-
-Transform ROIF into a universal engine for recursive active inference in incomplete dynamic pre-stressed systems.
-
-### Major Capabilities
-
-* Active graph reconstruction
-* Dynamic state-aware Probe selection
-* Vector-aware perturbation analysis
-* Recursive uncertainty reduction
-* Graph learning
-* Autonomous Probe planning
-* Counterfactual exploration
-* Multi-level causal reasoning
-* Adaptive intervention planning
-* Human-in-the-loop decision support
-
-### Target Architecture
-
-```text
-Incomplete Dynamic Graph
-          │
-          ▼
-Represent Uncertainty
-          │
-          ▼
-Dynamic System State
-          │
-          ├── Vector Pretension
-          ├── Node Dynamics
-          └── System History
-          │
-          ▼
-Active Probe Engine
-          │
-          ▼
-Probe*
-          │
-          ▼
-Safe Perturbation
-          │
-          ▼
-Observation
-          │
-          ▼
-Graph Learning
-          │
-          ▼
-Updated Graph
-          │
-          ▼
-Cascade Solver
-          │
-          ▼
-D_origin
-D_fast
-D_root
-Node*
-          │
-          ▼
-Counterfactual Analysis
-          │
-          ▼
-Next Probe
-          │
-          └───────────────┐
-                          │
-                          ▼
-                        Repeat
-```
-
-### Scientific Goal
-
-ROIF becomes a universal framework for analysing and actively exploring partially observable dynamic complex systems.
-
-The engine should not merely compute consequences on a fixed graph.
-
-It should progressively improve its representation of the system through controlled observation, safe perturbation, and recursive inference.
-
----
-
-# Validation Strategy
-
-The architecture is validated progressively across multiple domains.
-
-1. Medicine
-2. Biomechanics
-3. Engineering Systems
-4. Material Science
-5. Robotics
-6. Industrial Diagnostics
-
-Each new domain should ideally require **no redesign of the core architecture**.
-
-Domain-specific models may change.
-
-The fundamental inference architecture should remain reusable.
-
----
-
-# Research Questions
-
-Development toward v2.0 should make several questions experimentally and mathematically testable.
-
-### Active Exploration
-
-Does Active Probe selection reduce graph uncertainty more efficiently than passive observation?
-
-### Dynamic Probe Intelligence
-
-Does knowledge of vector pre-stress and node dynamics improve Probe selection compared with topology-only selection?
-
-### Directionality
-
-Does Probe direction relative to the local pre-stress field predict differences in system response?
-
-### Causal Roles
-
-Can ROIF reliably distinguish D_origin, D_fast, D_root, and Node* under incomplete observations?
-
-### Graph Learning
-
-Can repeated Probe observations reconstruct hidden causal structure?
-
-### Recursive Exploration
-
-Can adaptive Probe sequences reduce structural uncertainty more efficiently than isolated Probes?
-
-### Safety
-
-Can information gain be maximized while preserving hard cascade-risk constraints?
-
-These are research questions, not assumed properties of ROIF.
-
----
-
-# Design Principles
-
-Every new module should satisfy the following principles:
-
-* Domain independent
-* Mathematically formalizable
-* Compatible with recursive cascade dynamics
-* Compatible with pre-stressed systems
-* Compatible with Active Probe Engine
-* Explicit about uncertainty
-* Scientifically defensible
-* Experimentally testable
-* Suitable for peer-reviewed publication
-
----
-
-# Architectural Invariants
-
-Future development should preserve several fundamental boundaries.
-
-### Causal Roles Remain Separate
+## Architectural Invariant
 
 ```text
 D_origin ≠ D_fast ≠ D_root ≠ Node*
 ```
 
-They may coincide in a particular system, but coincidence must never be assumed by the architecture.
+The roles may coincide in a particular system.
 
-### D_root Is Structural
+The architecture must never assume that they do.
 
-D_root represents structural mediation of cascade propagation.
+---
 
-It must not be defined by intervention utility.
+# v1.1 — Structural Mediation ✅
 
-### Node* Is Intervention-Oriented
+## Status
 
-Node* represents an optimal intervention candidate under the current constraints.
+**IMPLEMENTED**
 
-### Probe* Is Information-Oriented
+## Objective
 
-Probe* represents an optimal admissible experiment for reducing relevant uncertainty.
+Separate structural mediation from intervention utility.
 
-Therefore:
+## Implemented
+
+D_root evaluation based on characteristics including:
+
+* incoming influence;
+* outgoing influence;
+* directional balance;
+* mediation throughput;
+* downstream reach;
+* tensor sensitivity.
+
+Node* remains intervention-oriented.
+
+## Architectural Invariant
 
 ```text
-D_root ≠ Node* ≠ Probe*
+D_root ≠ Node*
 ```
 
-unless the system itself causes those roles to coincide.
+unless the system itself causes the two roles to coincide.
 
-### Graph Proposal Is Not Graph Mutation
+---
+
+# v1.2 — Active Probe Engine ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Allow ROIF to investigate incomplete causal graphs rather than assuming that the entire graph is already known.
+
+## Implemented
+
+* Probe Entities;
+* Probe Registry;
+* Probe Policy;
+* Probe Planner;
+* Probe Graph Adapter;
+* Active Probe Engine;
+* Graph Update Proposals;
+* explicit authorization boundary.
+
+## Probe Cycle
+
+```text
+BASELINE
+    ↓
+PERTURBATION
+    ↓
+REASSESSMENT
+    ↓
+EVIDENCE
+    ↓
+GRAPH UPDATE PROPOSAL
+```
+
+## Architectural Invariant
 
 ```text
 GraphUpdateProposal ≠ Graph Mutation
 ```
 
-Evidence must remain distinguishable from accepted structural knowledge.
-
-### Safety Has Priority
-
-The Non-Fonit Gate remains a hard veto.
-
-Expected information gain does not override unacceptable cascade risk.
+Observed evidence must remain distinguishable from accepted structural knowledge.
 
 ---
 
-# Current Status
+# v1.3 — Vector Probe and Active Cascade ✅
 
-Current Release:
+## Status
 
-**ROIF Engine v1.2.0**
+**IMPLEMENTED**
 
-Implemented:
+## Objective
 
-* Stable Cascade Solver
-* Pre-stressed system mechanics
-* Multiplicative cascade mechanisms
-* Capacity Tensor
-* Dynamic History
-* Rheological Memory
-* Counterfactual Engine
-* Mediation-based D_root
-* Independent Node*
-* Active Probe Engine
-* Probe Registry
-* Probe Policy
-* Probe Planner
-* Probe Graph Adapter
-* Incomplete graph exploration
-* Clinical validation pipeline
-* Foot–Knee validation
-* End-to-End Active Probe validation
-* More than **6000 automated tests**
+Separate passive cascade amplitude from evidence produced by active perturbation.
 
----
+## Problem
 
-# Next Development Milestone
+A large response does not necessarily confirm a proposed causal direction.
 
-The next development milestone is:
+A response may be:
 
-**v1.3 — Dynamic Probe Intelligence**
+* aligned;
+* orthogonal;
+* reversed;
+* delayed;
+* insufficient.
 
-The central transition is:
+Therefore:
 
 ```text
-v1.2
+High Amplitude ≠ Directional Confirmation
+```
 
-Where should ROIF probe
-an incomplete graph?
+## Implemented
 
+* `vector_probe.py`;
+* `active_cascade.py`;
+* `active_cascade_ape.py`;
+* directional alignment evaluation;
+* explicit SUPPORTS / CONTRADICTS / INSUFFICIENT evidence;
+* authorized active-cascade transitions;
+* rejected-relation tracking;
+* utilization-sensitive active evidence;
+* deterministic active-probe pipelines.
+
+## Active Cascade Cycle
+
+```text
+Passive Cascade
+      ↓
+Candidate Relation
+      ↓
+Active Probe
+      ↓
+Observed Response
+      ↓
+Vector Evidence
+      ↓
+Authorization
+      ↓
+Active Cascade Transition
+```
+
+## Result
+
+ROIF can now distinguish between a branch that is merely loud and a branch whose active response actually supports the investigated relation.
+
+---
+
+# v1.3.1 — Directional and Temporal Adversarial Validation ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Test whether the Active Probe architecture resists misleading observations.
+
+## Implemented Mechanical Controls
+
+### 03C — Misleading High-Amplitude Branch
+
+The louder branch is orthogonal to the investigated direction.
+
+Expected behavior:
+
+```text
+higher scalar amplitude
+        ≠
+directional support
+```
+
+### 03D — Misleading Reverse-Direction Response
+
+The louder response points in the reverse direction.
+
+Expected behavior:
+
+```text
+reverse response
+      ↓
+CONTRADICTS
+      ↓
+explicit rejection
+```
+
+### 03E — Delayed Misleading Response
+
+The first visible response is not the correct final branch.
+
+Expected behavior:
+
+```text
+first response
+      ≠
+final causal decision
+```
+
+The temporal gate prevents premature confirmation.
+
+## Result
+
+Amplitude, response order, and passive propagation are no longer sufficient by themselves to authorize a causal transition.
+
+---
+
+# v1.3.2 — Cross-Domain Mixed-System Validation ✅
+
+## Status
+
+**IMPLEMENTED / IN VALIDATION**
+
+## Objective
+
+Test whether ROIF architecture can represent a system containing both a physical plant and a living controller.
+
+## Benchmark
+
+### 04A — Sailing Yacht–Crew Coupled System
+
+The benchmark separates:
+
+```text
+ENVIRONMENT
+    ↓
+PHYSICAL PLANT
+    ↓
+SYSTEM ERROR
+    ↓
+LIVING CONTROLLER
+    ↓
+CONTROL ACTION
+    ↓
+PHYSICAL PLANT
+```
+
+### Mechanical Plant Channels
+
+* wind disturbance;
+* sail load;
+* heel/yaw response;
+* course error;
+* rudder action;
+* sail-trim action.
+
+### Living Controller Channels
+
+* helmsman control demand;
+* sail-trimmer control demand.
+
+## Scientific Boundary
+
+The benchmark does not claim that the crew is a complete mathematical model of human cognition.
+
+Its purpose is narrower:
+
+> test whether the same ROIF architecture can represent a dynamically coupled physical plant and adaptive living controller.
+
+---
+
+# v1.4 — Predictive Control ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Move from reactive exploration toward prediction-based stabilization.
+
+## Implemented Core
+
+`roif/predictive_control.py`
+
+## Implemented Concepts
+
+* PredictiveState;
+* DisturbanceEstimate;
+* ControlReserve;
+* StabilizationDemand;
+* ControlCandidate;
+* PredictedOutcome;
+* PredictionError;
+* candidate ranking;
+* uncertainty-aware action selection;
+* reversible information probes;
+* control admissibility;
+* stabilization margin;
+* deterministic decision logic.
+
+## Decision Space
+
+```text
+ACTION
+PROBE
+HOLD
+NO_SAFE_ACTION
+```
+
+## Predictive Cycle
+
+```text
+Current State
+      +
+Disturbance
+      +
+Control Reserve
+      ↓
+Stabilization Demand
+      ↓
+Candidate Actions
+      ↓
+Predicted Outcomes
+      ↓
+Ranking
+      ↓
+Decision
+```
+
+## Important Principle
+
+Observed stability does not imply sufficient reserve.
+
+Therefore:
+
+```text
+System Still Stabilized
+        ≠
+Adequate Control Reserve
+```
+
+The stabilization margin remains explicitly auditable.
+
+---
+
+# v1.4.1 — Yacht–Crew Predictive Stabilization ✅
+
+## Status
+
+**IMPLEMENTED / IN VALIDATION**
+
+## Objective
+
+Apply the domain-independent Predictive Control layer to the 04A mixed yacht–crew benchmark.
+
+## Candidate Actions
+
+* helm correction;
+* sail-trim correction;
+* coupled helm + trim correction;
+* small information probe;
+* hold current control.
+
+## Current Benchmark Result
+
+The predictive controller evaluates all candidate actions and selects the coupled helm–trim action in the default 04A stressed state.
+
+The coupled action produces the lowest predicted residual error among the available candidates.
+
+## Reserve-Pressure Contract
+
+The benchmark also preserves a critical state:
+
+```text
+StabilizationDemand > AvailableControlReserve
+```
+
+while an action may still remain temporarily admissible under the configured threshold.
+
+This distinction allows ROIF to represent a system that remains externally stabilized while its internal compensatory reserve is under pressure.
+
+---
+
+# v1.4.2 — Prediction–Observation Boundary ✅
+
+## Status
+
+**IMPLEMENTED**
+
+## Objective
+
+Provide a formal comparison between predicted and subsequently observed system states.
+
+## Implemented
+
+```text
+Prediction
+    ↓
+Action / Probe
+    ↓
+Observation
+    ↓
+Prediction Error
+```
+
+PredictionError provides an explicit quantitative boundary between:
+
+```text
+what the controller expected
+```
+
+and
+
+```text
+what the system actually did
+```
+
+## Result
+
+ROIF now has the minimum architectural prerequisite for experience-dependent control.
+
+Persistent experience memory is not yet implemented.
+
+---
+
+# v1.5 — Experience Trace 🔄
+
+## Status
+
+**NEXT IMPLEMENTATION TARGET**
+
+## Objective
+
+Create the smallest auditable representation of one completed predictive-control experience.
+
+## Proposed Cycle
+
+```text
+State(t)
+    ↓
+Prediction
+    ↓
+Selected Action / Probe
+    ↓
+Observed State(t+1)
+    ↓
+Prediction Error
+    ↓
+Experience Trace
+```
+
+## Planned
+
+An Experience Trace should preserve at minimum:
+
+* initial predictive state;
+* disturbance estimate;
+* stabilization demand;
+* available control reserve;
+* candidate actions;
+* selected action;
+* predicted outcome;
+* observed outcome;
+* prediction error;
+* action cost;
+* stabilization result;
+* uncertainty before action;
+* uncertainty after observation;
+* timestamp / sequence identity;
+* provenance metadata.
+
+## Design Requirement
+
+An Experience Trace is a **record**.
+
+It must not automatically modify future predictions.
+
+Therefore:
+
+```text
+Experience Trace ≠ Learning
+```
+
+This boundary preserves auditability.
+
+---
+
+# v1.6 — Persistent Controller Memory 🔬
+
+## Status
+
+**PLANNED / RESEARCH**
+
+## Objective
+
+Determine whether repeated Experience Traces should modify the controller's prior expectations.
+
+## Working Research Concept
+
+**Memory Scar**
+
+This is provisional terminology.
+
+It refers to a persistent controller-state modification produced by previous prediction–action–outcome cycles.
+
+## Critical Distinction
+
+### Rheological / Structural Memory
+
+```text
+previous physical loading
         ↓
-
-v1.3
-
-Where, when, and in what direction
-should ROIF probe
-a dynamically loaded,
-pre-stressed graph?
+physical system changes
 ```
 
-This establishes the dynamic exploration layer required before ROIF proceeds to persistent Graph Learning and Recursive Active Exploration.
+### Controller Memory
+
+```text
+previous prediction + action + outcome
+        ↓
+future expectation changes
+```
+
+These are different mechanisms and must remain different architectural layers.
+
+## Research Questions
+
+* Which Experience Traces should persist?
+* How should trace strength decay?
+* Should repeated successful actions increase prior preference?
+* Should repeated prediction errors increase uncertainty?
+* How should contradictory experiences interact?
+* How should context specificity be represented?
+* When should old experience be ignored?
+* How should harmful learned responses be prevented?
+
+No biological interpretation is assumed at this stage.
 
 ---
 
-# Development Direction
+# v1.7 — Predictive Preload 🔬
+
+## Status
+
+**PLANNED / RESEARCH**
+
+## Objective
+
+Allow persistent controller memory to modify the initial conditions of future predictive-control cycles.
+
+## Working Research Concept
+
+**Predictive Preload**
+
+Conceptually:
 
 ```text
-v1.0
-Cascade Simulation
-        │
-        ▼
-v1.1
-Dynamic Memory &
-Counterfactual Analysis
-        │
-        ▼
-v1.2
-Active Probe Engine
-        │
-        ▼
-v1.3
-Dynamic Probe Intelligence
-        │
-        ▼
-v1.4
-Graph Learning
-        │
-        ▼
-v1.5
-Recursive Active Exploration
-        │
-        ▼
-v1.6
-Knowledge Integration
-        │
-        ▼
-v2.0
-Recursive Active Inference Engine
+Current Physical State
+        +
+Current Disturbance
+        +
+Current Control Reserve
+        +
+Relevant Previous Experience
+        ↓
+Predictive Preload
+        ↓
+Candidate Evaluation
 ```
 
-ROIF development therefore follows a progression from:
+The controller would therefore no longer begin each event from an experience-free state.
 
-**simulation → cascade analysis → counterfactual reasoning → active exploration → dynamic exploration → learning → recursive active inference.**
+## Research Hypothesis
+
+Repeated experience may alter:
+
+* candidate prior preference;
+* predicted action effectiveness;
+* expected uncertainty;
+* expected risk;
+* probe threshold;
+* stabilization demand estimate;
+* reserve allocation.
+
+These mechanisms remain hypotheses until formally defined and validated.
+
+---
+
+# v1.8 — Experience-Dependent Action Selection 🔬
+
+## Status
+
+**PLANNED / RESEARCH**
+
+## Objective
+
+Test whether previous experience can improve future stabilization without creating unsafe or rigid control behavior.
+
+## Target Cycle
+
+```text
+Disturbance
+    ↓
+Current State
+    ↓
+Memory Retrieval
+    ↓
+Predictive Preload
+    ↓
+Candidate Prediction
+    ↓
+Action / Probe
+    ↓
+Observation
+    ↓
+Prediction Error
+    ↓
+Experience Trace
+    ↓
+Memory Update
+    └───────────────┐
+                    │
+                    ▼
+                 Repeat
+```
+
+## Required Controls
+
+The architecture must test:
+
+* useful prior experience;
+* irrelevant prior experience;
+* contradictory prior experience;
+* outdated experience;
+* repeated successful stabilization;
+* repeated failed stabilization;
+* context change;
+* reserve depletion;
+* recovery;
+* misleading memory.
+
+---
+
+# v1.9 — Adaptive Stabilization 🔬
+
+## Status
+
+**PLANNED / RESEARCH**
+
+## Objective
+
+Test whether repeated prediction–action cycles can produce improved stabilization behavior over time.
+
+## Required Benchmark
+
+The first target should remain the yacht–crew system because it provides a measurable intermediate domain between pure mechanics and biological control.
+
+Proposed sequence:
+
+```text
+Repeated Wind / Wave Disturbances
+          ↓
+Predictive Actions
+          ↓
+Prediction Errors
+          ↓
+Experience Traces
+          ↓
+Controller Memory
+          ↓
+Modified Predictive Preload
+          ↓
+Future Stabilization
+```
+
+## Measurable Questions
+
+Does repeated experience reduce:
+
+* residual course error?
+* heel/yaw error?
+* unnecessary helm activity?
+* unnecessary sail-trim activity?
+* control cost?
+* uncertainty?
+* probe frequency?
+* reserve consumption?
+
+Does it improve:
+
+* stabilization speed?
+* action selection?
+* reserve preservation?
+* robustness to repeated disturbances?
+
+These must be experimentally measured rather than assumed.
+
+---
+
+# v2.0 — Recursive Predictive Active Inference Engine 🎯
+
+## Status
+
+**LONG-TERM TARGET**
+
+## Objective
+
+Integrate cascade analysis, active exploration, predictive stabilization, and experience-dependent adaptation into one auditable recursive architecture.
+
+## Target Capabilities
+
+* recursive cascade analysis;
+* incomplete-graph exploration;
+* Active Probe;
+* vector-sensitive evidence;
+* temporal evidence;
+* active cascade updates;
+* counterfactual analysis;
+* predictive control;
+* finite control reserve;
+* prediction–observation comparison;
+* Experience Trace;
+* persistent controller memory;
+* experience-dependent priors;
+* adaptive Probe selection;
+* graph learning;
+* recursive uncertainty reduction;
+* adaptive stabilization;
+* human-in-the-loop oversight.
+
+---
+
+# Target v2.0 Architecture
+
+```text
+                 ┌─────────────────────┐
+                 │  PRE-STRESSED       │
+                 │  COMPLEX SYSTEM     │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │ PASSIVE CASCADE     │
+                 │ + CAPACITY TENSOR   │
+                 └──────────┬──────────┘
+                            │
+                            ▼
+                 ┌─────────────────────┐
+                 │ CURRENT STATE       │
+                 │ + UNCERTAINTY       │
+                 └──────────┬──────────┘
+                            │
+                 ┌──────────┴──────────┐
+                 │                     │
+                 ▼                     ▼
+        ┌─────────────────┐   ┌─────────────────┐
+        │ ACTIVE PROBE    │   │ COUNTERFACTUAL  │
+        │ Probe*          │   │ ANALYSIS        │
+        └────────┬────────┘   └────────┬────────┘
+                 │                     │
+                 ▼                     │
+        ┌─────────────────┐            │
+        │ VECTOR /        │            │
+        │ TEMPORAL        │            │
+        │ EVIDENCE        │            │
+        └────────┬────────┘            │
+                 │                     │
+                 ▼                     │
+        ┌─────────────────┐            │
+        │ ACTIVE CASCADE  │◄───────────┘
+        └────────┬────────┘
+                 │
+                 ▼
+        ┌──────────────────────┐
+        │ PREDICTIVE CONTROL   │
+        │                      │
+        │ Stabilization Demand │
+        │ Control Reserve      │
+        │ Candidate Actions    │
+        │ Predicted Outcomes   │
+        └──────────┬───────────┘
+                   │
+                   ▼
+        ┌──────────────────────┐
+        │ ACTION / PROBE /     │
+        │ HOLD / NO SAFE       │
+        │ ACTION               │
+        └──────────┬───────────┘
+                   │
+                   ▼
+        ┌──────────────────────┐
+        │ OBSERVED OUTCOME     │
+        └──────────┬───────────┘
+                   │
+                   ▼
+        ┌──────────────────────┐
+        │ PREDICTION ERROR     │
+        └──────────┬───────────┘
+                   │
+                   ▼
+        ┌──────────────────────┐
+        │ EXPERIENCE TRACE     │
+        └──────────┬───────────┘
+                   │
+                   ▼
+        ┌──────────────────────┐
+        │ CONTROLLER MEMORY    │
+        │     [RESEARCH]       │
+        └──────────┬───────────┘
+                   │
+                   ▼
+        ┌──────────────────────┐
+        │ PREDICTIVE PRELOAD   │
+        │     [RESEARCH]       │
+        └──────────┬───────────┘
+                   │
+                   └──────────────► NEXT CYCLE
+```
+
+---
+
+# Graph Learning Track
+
+Graph learning remains an important ROIF objective.
+
+It is not removed from the roadmap.
+
+However, it is now treated as a parallel research track rather than the only immediate successor to Active Probe.
+
+## Planned
+
+* graph confidence propagation;
+* observation assimilation;
+* recursive graph refinement;
+* confidence representation;
+* graph uncertainty estimation;
+* Probe history;
+* incremental graph updates;
+* edge confidence revision;
+* competing graph hypotheses;
+* graph versioning.
+
+## Architectural Boundary
+
+Learning about **graph structure** and learning about **control outcomes** are different problems.
+
+```text
+Graph Learning
+    =
+What relations probably exist?
+
+Controller Learning
+    =
+Given the current situation,
+what action is likely to work?
+```
+
+ROIF should eventually support both without collapsing them into one mechanism.
+
+---
+
+# Recursive Active Exploration Track
+
+Adaptive multi-step probing also remains part of the roadmap.
+
+## Planned
+
+* multi-step Probe planning;
+* Probe sequences;
+* conditional Probe branches;
+* recursive uncertainty reduction;
+* structural ambiguity estimation;
+* cumulative information gain;
+* adaptive replanning;
+* investigation stopping criteria.
+
+Future probe selection may depend on both:
+
+```text
+structural uncertainty
+```
+
+and
+
+```text
+experience-dependent predictive state
+```
+
+---
+
+# Knowledge Integration Track
+
+Reusable domain knowledge remains a later architectural track.
+
+## Planned
+
+* Knowledge Base integration;
+* domain-independent Probe libraries;
+* structural templates;
+* reusable graph patterns;
+* evidence-linked domain modules;
+* cross-domain transfer.
+
+Knowledge integration must not silently convert external assumptions into solver ground truth.
+
+---
+
+# Cross-Domain Validation Strategy
+
+ROIF should be tested progressively across systems with different control structures.
+
+## Current / Planned Domains
+
+1. Mechanical systems;
+2. Biomechanics;
+3. Clinical validation;
+4. Sailing / marine control;
+5. Robotics;
+6. Engineering systems;
+7. Material science;
+8. Industrial diagnostics.
+
+The architecture should ideally remain unchanged while domain-specific state variables, constraints, disturbances, and control models change.
+
+---
+
+# Validation Ladder
+
+```text
+LEVEL 1
+Pure Mechanical Ground Truth
+        ↓
+LEVEL 2
+Adversarial Mechanical Controls
+        ↓
+LEVEL 3
+Clinical / Biomechanical Validation
+        ↓
+LEVEL 4
+Mixed Physical + Living Controller
+        ↓
+LEVEL 5
+Predictive Mixed-System Control
+        ↓
+LEVEL 6
+Repeated-Event Experience
+        ↓
+LEVEL 7
+Experience-Dependent Stabilization
+        ↓
+LEVEL 8
+Robotics Transfer
+```
+
+Current development has reached **Level 5**.
+
+Levels 6–8 remain future work.
+
+---
+
+# Robotics Transfer Track
+
+Robotics is a major future validation target.
+
+The objective is not to reproduce biological consciousness.
+
+The objective is to test whether the same architecture can support:
+
+* pre-stressed mechanical systems;
+* finite stabilization reserve;
+* disturbance prediction;
+* active probing;
+* predictive candidate evaluation;
+* experience-dependent control;
+* adaptive stabilization.
+
+The yacht–crew benchmark provides an intermediate test environment because it combines a physical plant, environmental disturbance, finite control resources, and an adaptive controller.
+
+---
+
+# Research Questions
+
+The roadmap should make the following questions experimentally testable.
+
+## Active Exploration
+
+Does Active Probe selection reduce relevant uncertainty more efficiently than passive observation?
+
+## Directionality
+
+Can vector response distinguish causal support from high-amplitude but misaligned response?
+
+## Temporal Evidence
+
+Can temporal observation windows prevent premature causal confirmation?
+
+## Causal Roles
+
+Can ROIF reliably distinguish:
+
+```text
+D_origin
+D_fast
+D_root
+Node*
+Probe*
+```
+
+under incomplete observation?
+
+## Predictive Control
+
+Does candidate-outcome prediction improve stabilization compared with purely reactive action selection?
+
+## Control Reserve
+
+Can declining stabilization reserve be detected before external stabilization fails?
+
+## Prediction Error
+
+Does explicit prediction–observation comparison provide a useful learning signal?
+
+## Experience
+
+Can repeated Experience Traces improve future predictions?
+
+## Controller Memory
+
+Can persistent experience improve stabilization without producing rigid or unsafe learned behavior?
+
+## Graph Learning
+
+Can repeated Probe observations reconstruct hidden causal structure?
+
+## Recursive Exploration
+
+Can adaptive Probe sequences reduce structural uncertainty more efficiently than isolated Probes?
+
+## Cross-Domain Transfer
+
+Can the same core architecture operate across mechanical, clinical, sailing, and robotic systems without redesign?
+
+## Safety
+
+Can information gain and stabilization benefit be optimized while preserving hard cascade-risk constraints?
+
+These are research questions, not assumed properties of ROIF.
+
+---
+
+# Architectural Invariants
+
+Future development must preserve the following boundaries.
+
+## Causal Roles Remain Separate
+
+```text
+D_origin ≠ D_fast ≠ D_root ≠ Node*
+```
+
+unless the observed system causes roles to coincide.
+
+---
+
+## Probe* Remains Information-Oriented
+
+```text
+D_root ≠ Node* ≠ Probe*
+```
+
+unless the system itself causes coincidence.
+
+---
+
+## Passive Amplitude Is Not Active Evidence
+
+```text
+Large Passive Response
+        ≠
+Causal Confirmation
+```
+
+---
+
+## Prediction Is Not Observation
+
+```text
+PredictedOutcome ≠ ObservedOutcome
+```
+
+The difference must remain explicitly measurable.
+
+---
+
+## Experience Is Not Learning
+
+```text
+ExperienceTrace ≠ Memory Update
+```
+
+Recording an event does not automatically authorize persistent adaptation.
+
+---
+
+## Structural Memory Is Not Controller Memory
+
+```text
+RheologicalMemory ≠ ControllerMemory
+```
+
+The first changes the modeled physical system.
+
+The second changes future controller expectations.
+
+---
+
+## Graph Learning Is Not Controller Learning
+
+```text
+GraphLearning ≠ ControllerLearning
+```
+
+One concerns structural belief.
+
+The other concerns expected action outcome.
+
+---
+
+## Graph Proposal Is Not Graph Mutation
+
+```text
+GraphUpdateProposal ≠ Graph Mutation
+```
+
+Evidence does not automatically modify accepted system structure.
+
+---
+
+## Stability Is Not Reserve
+
+```text
+Observed Stability ≠ Adequate Control Reserve
+```
+
+A compensating controller may preserve the regulated output while approaching exhaustion.
+
+---
+
+## Safety Has Priority
+
+The **Non-Fonit Gate** remains a hard veto.
+
+```text
+Information Gain
+Predictive Benefit
+Control Utility
+        ↓
+cannot override
+        ↓
+Unacceptable Cascade Risk
+```
+
+---
+
+# Research Boundary
+
+ROIF currently implements:
+
+* cascade dynamics;
+* active exploration;
+* vector-sensitive evidence;
+* temporal controls;
+* active cascade;
+* predictive candidate evaluation;
+* finite control reserve;
+* prediction error.
+
+ROIF does **not** currently claim to implement:
+
+* consciousness;
+* instinct;
+* biological self-preservation;
+* human cognition;
+* autonomous psychological learning.
+
+Possible connections between persistent prediction-error history, learned stabilization, biological reflex organization, and higher-order adaptive behavior remain research hypotheses.
+
+They must be formalized and experimentally tested before stronger claims are made.
+
+---
+
+# Immediate Development Sequence
+
+The next implementation sequence is:
+
+```text
+1. experience_trace.py
+        ↓
+2. test_experience_trace.py
+        ↓
+3. Yacht 04B repeated-event benchmark
+        ↓
+4. Persistent memory representation
+        ↓
+5. Predictive preload
+        ↓
+6. Experience-dependent candidate selection
+        ↓
+7. Repeated-disturbance validation
+        ↓
+8. Robotics transfer benchmark
+```
+
+The first step should remain deliberately small:
+
+> **Record one complete prediction → action → observation → error cycle without allowing that record to modify the controller.**
+
+Only after that layer is independently validated should persistent memory be introduced.
+
+---
+
+# Current Development Position
+
+```text
+Mechanical Core                         ✅
+Dynamic History                        ✅
+Recursive Cascade                      ✅
+Counterfactual Engine                  ✅
+Explicit Causal Roles                  ✅
+Structural D_root                      ✅
+Active Probe Engine                    ✅
+Vector Probe                           ✅
+Active Cascade                         ✅
+Adversarial Directional Validation     ✅
+Temporal Probe Validation              ✅
+04A Yacht–Crew Coupled Benchmark       ✅
+Predictive Control                     ✅
+04A Predictive Stabilization           ✅
+Prediction Error                       ✅
+
+──────────────── CURRENT FRONTIER ────────────────
+
+Experience Trace                       NEXT
+Persistent Controller Memory           RESEARCH
+Predictive Preload                     RESEARCH
+Experience-Dependent Control           RESEARCH
+Adaptive Stabilization                 RESEARCH
+Graph Learning                         RESEARCH TRACK
+Recursive Active Exploration           RESEARCH TRACK
+Robotics Transfer                      FUTURE VALIDATION
+```
+
+---
+
+# Long-Term Scientific Goal
+
+ROIF aims to become a universal framework for analyzing and actively controlling partially observable dynamic pre-stressed systems.
+
+The engine should eventually be able to:
+
+```text
+Observe
+   ↓
+Infer
+   ↓
+Probe
+   ↓
+Predict
+   ↓
+Act
+   ↓
+Observe Outcome
+   ↓
+Measure Prediction Error
+   ↓
+Learn Under Authorization
+   ↓
+Adapt
+   ↓
+Repeat
+```
+
+while preserving:
+
+* explicit uncertainty;
+* causal-role separation;
+* finite control reserve;
+* auditability;
+* reproducibility;
+* human oversight;
+* hard safety constraints.
+
+The transition from **Predictive Control** to **Experience Trace** is the current development frontier.

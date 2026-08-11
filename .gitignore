@@ -76,3 +76,11 @@ Thumbs.db
 experiments/results/logs/
 output/*.roifrec
 output/example_28_rheological_memory.json
+# --------------------------------------------------
+# Local development / repair scripts
+# --------------------------------------------------
+
+fix_*.ps1
+update_*.ps1
+install_*.ps1
+apply_recursive_retrieval.ps1

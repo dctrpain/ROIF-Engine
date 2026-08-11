@@ -1,0 +1,4 @@
+cycle_index,source_revision,target_revision,source_trace_count,target_trace_count,committed_trace_id,integration_relation,cluster_hint,consolidation_score,commitment_confidence
+1,0,1,0,1,trace_001,first_trace,create_new_cluster_candidate,0.7094859382841263,0.7407675212413798
+2,1,2,1,2,trace_002,reinforcement_present,same_cluster_candidate,0.7094859382841263,0.7407675212413798
+3,2,3,2,3,trace_003,reinforcement_present,same_cluster_candidate,0.7094859382841263,0.7407675212413798

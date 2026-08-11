@@ -1,0 +1,389 @@
+{
+  "benchmark_version": "roif_e2e_benchmark_v1",
+  "history_dependence_rows": [
+    {
+      "convergence_score": 1.0,
+      "divergence_score": 0.0,
+      "feedback_gain": 0.0,
+      "final_dominant": "adaptation_attractor",
+      "final_vector": [
+        0.9181320217426382,
+        0.7386206199619478,
+        0.7395446879461249,
+        0.2848396439534281,
+        0.3365008100845843,
+        0.08215278641803372,
+        0.340965385114793,
+        0.12428339975833036,
+        0.8757166002416696
+      ],
+      "history_label": "sens_history",
+      "regime": "convergent",
+      "terminal_drift": 0.0
+    },
+    {
+      "convergence_score": 1.0,
+      "divergence_score": 0.0,
+      "feedback_gain": 0.0,
+      "final_dominant": "adaptation_attractor",
+      "final_vector": [
+        0.9181320217426382,
+        0.7386206199619478,
+        0.7395446879461249,
+        0.2848396439534281,
+        0.3365008100845843,
+        0.08215278641803372,
+        0.340965385114793,
+        0.12428339975833036,
+        0.8757166002416696
+      ],
+      "history_label": "adapt_history",
+      "regime": "convergent",
+      "terminal_drift": 0.0
+    },
+    {
+      "convergence_score": 0.9990560517777213,
+      "divergence_score": 0.0009439482222786492,
+      "feedback_gain": 1.0,
+      "final_dominant": "adaptation_attractor",
+      "final_vector": [
+        0.9240231043273603,
+        0.7456041292478597,
+        0.7389956371457694,
+        0.2864830494294653,
+        0.35622668995543905,
+        0.06303746949556259,
+        0.36773622208238166,
+        0.06792374298445972,
+        0.9320762570155402
+      ],
+      "history_label": "sens_history",
+      "regime": "convergent",
+      "terminal_drift": 0.0028398867850828063
+    },
+    {
+      "convergence_score": 0.999998969199502,
+      "divergence_score": 1.0308004979216652e-06,
+      "feedback_gain": 1.0,
+      "final_dominant": "adaptation_attractor",
+      "final_vector": [
+        0.9240239856195419,
+        0.7456051739645216,
+        0.7389955550090535,
+        0.2864832952790823,
+        0.35622964090094944,
+        0.06303460988884178,
+        0.3677402269370029,
+        0.06791531171157283,
+        0.9320846882884272
+      ],
+      "history_label": "adapt_history",
+      "regime": "convergent",
+      "terminal_drift": 3.0924110568087912e-06
+    },
+    {
+      "convergence_score": 0.756898149733595,
+      "divergence_score": 0.24310185026640496,
+      "feedback_gain": 5.0,
+      "final_dominant": "adaptation_attractor",
+      "final_vector": [
+        0.9285309296615128,
+        0.7509478737341387,
+        0.7385755063681093,
+        0.28774057463516817,
+        0.3713208292314518,
+        0.048410529768569244,
+        0.3882211253855418,
+        0.02479763076728033,
+        0.9752023692327196
+      ],
+      "history_label": "sens_history",
+      "regime": "switching",
+      "terminal_drift": 0.0668247093592965
+    },
+    {
+      "convergence_score": 0.9999986322660851,
+      "divergence_score": 1.3677339148661833e-06,
+      "feedback_gain": 5.0,
+      "final_dominant": "adaptation_attractor",
+      "final_vector": [
+        0.9285608249661937,
+        0.7509833127446839,
+        0.7385727201160537,
+        0.2877489143769242,
+        0.3714209315777275,
+        0.048313525828249736,
+        0.3883569785697731,
+        0.024511624063635586,
+        0.9754883759363644
+      ],
+      "history_label": "adapt_history",
+      "regime": "convergent",
+      "terminal_drift": 4.103218580892881e-06
+    },
+    {
+      "convergence_score": 0.6666598250470851,
+      "divergence_score": 0.33334017495291485,
+      "feedback_gain": 20.0,
+      "final_dominant": "adaptation_attractor",
+      "final_vector": [
+        0.9279872889604848,
+        0.7503034217460312,
+        0.7386261738571,
+        0.2875889179418155,
+        0.36950048619480874,
+        0.05017452885407816,
+        0.3857506598358119,
+        0.02999861087197491,
+        0.970001389128025
+      ],
+      "history_label": "sens_history",
+      "regime": "switching",
+      "terminal_drift": 0.5000461823540046
+    },
+    {
+      "convergence_score": 0.9999986517679967,
+      "divergence_score": 1.3482320032250545e-06,
+      "feedback_gain": 20.0,
+      "final_dominant": "adaptation_attractor",
+      "final_vector": [
+        0.930317278684543,
+        0.7530654785734533,
+        0.7384090180619782,
+        0.2882389033759966,
+        0.37730229456128656,
+        0.042614205032277086,
+        0.39633882833317463,
+        0.007707729824895588,
+        0.9922922701751045
+      ],
+      "history_label": "adapt_history",
+      "regime": "convergent",
+      "terminal_drift": 4.04471236920466e-06
+    }
+  ],
+  "memory_cycle_rows": [
+    {
+      "cluster_hint": "create_new_cluster_candidate",
+      "commitment_confidence": 0.7407675212413798,
+      "committed_trace_id": "trace_001",
+      "consolidation_score": 0.7094859382841263,
+      "cycle_index": 1,
+      "integration_relation": "first_trace",
+      "source_revision": 0,
+      "source_trace_count": 0,
+      "target_revision": 1,
+      "target_trace_count": 1
+    },
+    {
+      "cluster_hint": "same_cluster_candidate",
+      "commitment_confidence": 0.7407675212413798,
+      "committed_trace_id": "trace_002",
+      "consolidation_score": 0.7094859382841263,
+      "cycle_index": 2,
+      "integration_relation": "reinforcement_present",
+      "source_revision": 1,
+      "source_trace_count": 1,
+      "target_revision": 2,
+      "target_trace_count": 2
+    },
+    {
+      "cluster_hint": "same_cluster_candidate",
+      "commitment_confidence": 0.7407675212413798,
+      "committed_trace_id": "trace_003",
+      "consolidation_score": 0.7094859382841263,
+      "cycle_index": 3,
+      "integration_relation": "reinforcement_present",
+      "source_revision": 2,
+      "source_trace_count": 2,
+      "target_revision": 3,
+      "target_trace_count": 3
+    }
+  ],
+  "propagation_rows": [
+    {
+      "coupling": 0.02,
+      "final_total": 0.5300000000000001,
+      "first_crossing_step": null,
+      "model": "additive",
+      "peak_total": 0.5300000000000001,
+      "steps": 12,
+      "threshold_crossed": false
+    },
+    {
+      "coupling": 0.02,
+      "final_total": 0.337533140918756,
+      "first_crossing_step": null,
+      "model": "multiplicative",
+      "peak_total": 0.337533140918756,
+      "steps": 12,
+      "threshold_crossed": false
+    },
+    {
+      "coupling": 0.05,
+      "final_total": 0.8900000000000003,
+      "first_crossing_step": null,
+      "model": "additive",
+      "peak_total": 0.8900000000000003,
+      "steps": 12,
+      "threshold_crossed": false
+    },
+    {
+      "coupling": 0.05,
+      "final_total": 0.42824315522525763,
+      "first_crossing_step": null,
+      "model": "multiplicative",
+      "peak_total": 0.42824315522525763,
+      "steps": 12,
+      "threshold_crossed": false
+    },
+    {
+      "coupling": 0.1,
+      "final_total": 1.4900000000000004,
+      "first_crossing_step": 8,
+      "model": "additive",
+      "peak_total": 1.4900000000000004,
+      "steps": 12,
+      "threshold_crossed": true
+    },
+    {
+      "coupling": 0.1,
+      "final_total": 0.6536170216329409,
+      "first_crossing_step": null,
+      "model": "multiplicative",
+      "peak_total": 0.6536170216329409,
+      "steps": 12,
+      "threshold_crossed": false
+    },
+    {
+      "coupling": 0.2,
+      "final_total": 2.6900000000000004,
+      "first_crossing_step": 5,
+      "model": "additive",
+      "peak_total": 2.6900000000000004,
+      "steps": 12,
+      "threshold_crossed": true
+    },
+    {
+      "coupling": 0.2,
+      "final_total": 1.6570470544428628,
+      "first_crossing_step": 10,
+      "model": "multiplicative",
+      "peak_total": 1.6570470544428628,
+      "steps": 12,
+      "threshold_crossed": true
+    }
+  ],
+  "stabilization_rows": [
+    {
+      "convergence_score": 0.6517661433433659,
+      "exposure_count": 2,
+      "final_dominant": "sensitization_attractor",
+      "mean_recursive_drift": 0.04679330412852652,
+      "recursive_drift_slope": 0.0,
+      "regime": "persistent",
+      "switch_rate": 0.0,
+      "terminal_drift": 0.04679330412852652
+    },
+    {
+      "convergence_score": 0.9866776358248431,
+      "exposure_count": 3,
+      "final_dominant": "sensitization_attractor",
+      "mean_recursive_drift": 0.04421213256201431,
+      "recursive_drift_slope": -0.005162343133024404,
+      "regime": "convergent",
+      "switch_rate": 0.0,
+      "terminal_drift": 0.04163096099550211
+    },
+    {
+      "convergence_score": 0.8792398539007381,
+      "exposure_count": 4,
+      "final_dominant": "adaptation_attractor",
+      "mean_recursive_drift": 0.03941142794297464,
+      "recursive_drift_slope": -0.008491642711815607,
+      "regime": "convergent",
+      "switch_rate": 0.3333333333333333,
+      "terminal_drift": 0.029810018704895302
+    },
+    {
+      "convergence_score": 0.9303762200220896,
+      "exposure_count": 6,
+      "final_dominant": "adaptation_attractor",
+      "mean_recursive_drift": 0.0289406900309215,
+      "recursive_drift_slope": -0.009979765789126897,
+      "regime": "convergent",
+      "switch_rate": 0.2,
+      "terminal_drift": 0.008950745035602592
+    },
+    {
+      "convergence_score": 0.9517460660049223,
+      "exposure_count": 8,
+      "final_dominant": "adaptation_attractor",
+      "mean_recursive_drift": 0.021547116521392216,
+      "recursive_drift_slope": -0.008226431545655291,
+      "regime": "convergent",
+      "switch_rate": 0.14285714285714285,
+      "terminal_drift": 0.0019082937772523132
+    }
+  ],
+  "summary": {
+    "additive_vs_multiplicative": {
+      "mean_final_additive": 1.4000000000000004,
+      "mean_final_multiplicative": 0.7691100930549544,
+      "note": "This control is a matched synthetic comparison; it does not establish that biological cascades are multiplicative."
+    },
+    "benchmark_version": "roif_e2e_benchmark_v1",
+    "causal_truth_claimed": false,
+    "claim_scope": "computational_model_only",
+    "clinical_validation_claimed": false,
+    "history_dependence": {
+      "nonzero_history_effect_count": 3,
+      "pair_distances_by_feedback_gain": {
+        "0.0": 0.0,
+        "1.0": 1.3305349030197861e-05,
+        "20.0": 0.03517712645530465,
+        "5.0": 0.00045134573011839567
+      }
+    },
+    "memory_state_transition": {
+      "cycles": 3,
+      "final_revision": 3,
+      "final_trace_count": 3,
+      "integration_relations": [
+        "first_trace",
+        "reinforcement_present",
+        "reinforcement_present"
+      ]
+    },
+    "recursive_stabilization": {
+      "convergence_scores": [
+        0.6517661433433659,
+        0.9866776358248431,
+        0.8792398539007381,
+        0.9303762200220896,
+        0.9517460660049223
+      ],
+      "exposure_counts": [
+        2,
+        3,
+        4,
+        6,
+        8
+      ],
+      "final_regimes": [
+        "persistent",
+        "convergent",
+        "convergent",
+        "convergent",
+        "convergent"
+      ],
+      "terminal_drifts": [
+        0.04679330412852652,
+        0.04163096099550211,
+        0.029810018704895302,
+        0.008950745035602592,
+        0.0019082937772523132
+      ]
+    }
+  }
+}

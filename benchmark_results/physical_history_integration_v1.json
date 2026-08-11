@@ -1,0 +1,153 @@
+{
+  "benchmark_version": "roif_physical_history_integration_v1",
+  "biological_truth_claimed": false,
+  "causal_truth_claimed": false,
+  "claim_scope": "computational_model_only",
+  "clinical_validation_claimed": false,
+  "global_redistribution": {
+    "all_node_deltas": {
+      "A": -0.25,
+      "B": -0.1333430947366333,
+      "C": -0.10000732105247498
+    },
+    "directly_perturbed_nodes": [
+      "A"
+    ],
+    "downstream_changed_nodes": {
+      "B": -0.1333430947366333,
+      "C": -0.10000732105247498
+    },
+    "global_redistribution_detected": true,
+    "prestress_change_norm": 0.30046937477559266
+  },
+  "order_dependence": {
+    "ab_final_revision": 2,
+    "ab_signature": [
+      "AB::image_2",
+      2,
+      [
+        [
+          "global_load",
+          0.5
+        ]
+      ],
+      [
+        [
+          "A",
+          -0.04999999999999999
+        ],
+        [
+          "B",
+          0.1666569052633667
+        ],
+        [
+          "C",
+          0.03227268818127499
+        ]
+      ],
+      [
+        [
+          "A_B",
+          0.711163171928711
+        ],
+        [
+          "B_C",
+          0.8818667282249998
+        ]
+      ],
+      [
+        [
+          "AB::step_1::A::trace",
+          0.4167835870428668,
+          1.0,
+          3
+        ],
+        [
+          "AB::step_2::B::trace",
+          0.2673078202057453,
+          1.0,
+          2
+        ],
+        [
+          "baseline_trace",
+          0.0,
+          1.0,
+          0
+        ]
+      ]
+    ],
+    "ba_final_revision": 2,
+    "ba_signature": [
+      "BA::image_2",
+      2,
+      [
+        [
+          "global_load",
+          0.5
+        ]
+      ],
+      [
+        [
+          "A",
+          -0.04999999999999999
+        ],
+        [
+          "B",
+          0.16665690526336674
+        ],
+        [
+          "C",
+          0.04408688021865674
+        ]
+      ],
+      [
+        [
+          "A_B",
+          0.711163171928711
+        ],
+        [
+          "B_C",
+          0.8818667282249998
+        ]
+      ],
+      [
+        [
+          "BA::step_1::B::trace",
+          0.26730782020574534,
+          1.0,
+          2
+        ],
+        [
+          "BA::step_2::A::trace",
+          0.4141076214822651,
+          1.0,
+          3
+        ],
+        [
+          "baseline_trace",
+          0.0,
+          1.0,
+          0
+        ]
+      ]
+    ],
+    "final_state_distance": 0.011814192037381752,
+    "path_dependent": true
+  },
+  "repeated_event_state_dependence": {
+    "final_revision": 2,
+    "final_trace_count": 3,
+    "first_response": {
+      "connection_change_norm": 0.28883682807128896,
+      "prestress_change_norm": 0.30046937477559266,
+      "trace_magnitude": 0.4167835870428668
+    },
+    "response_distance": 0.06723725281827213,
+    "same_event_different_response": true,
+    "second_response": {
+      "connection_change_norm": 0.34317676177246104,
+      "prestress_change_norm": 0.2644589062160868,
+      "trace_magnitude": 0.4332537396233776
+    }
+  }
+}
