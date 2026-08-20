@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
 
-RUNNER_VERSION = "roif_entropy_reproducibility_v1"
+RUNNER_VERSION = "roif_entropy_reproducibility_v2"
 CLAIM_SCOPE = "computational_model_only"
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -93,12 +93,34 @@ def rel(path: Path) -> str:
 def git_value(*args: str) -> str | None:
     try:
         p = subprocess.run(
-            ["git", *args], cwd=ROOT, text=True,
-            capture_output=True, check=False,
+            ["git", *args],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
         )
     except OSError:
         return None
-    return p.stdout.strip() or None if p.returncode == 0 else None
+
+    if p.returncode != 0:
+        return None
+
+    value = p.stdout.strip()
+    return value or None
+
+
+def is_git_tracked(path: Path) -> bool:
+    try:
+        p = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", rel(path)],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+    except OSError:
+        return False
+    return p.returncode == 0
 
 
 def sha256_file(path: Path) -> str:
@@ -145,39 +167,126 @@ def validate_inputs() -> list[str]:
         for _, module in BENCHMARK_MODULES
         if not module_path(module).is_file()
     ]
+
     builder = ROOT / "experiments" / "build_entropy_figures.py"
     if not builder.is_file():
         missing.append(rel(builder))
+
     for item in FOCUSED_TEST_FILES:
         if not (ROOT / item).is_file():
             missing.append(item)
+
     return missing
 
 
 def run_step(step_id: str, kind: str, command: Sequence[str]) -> StepResult:
     out = LOGS_DIR / f"{step_id}.stdout.txt"
     err = LOGS_DIR / f"{step_id}.stderr.txt"
+
     started = time.perf_counter()
     p = subprocess.run(
-        list(command), cwd=ROOT, text=True,
-        capture_output=True, check=False, env=os.environ.copy(),
+        list(command),
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+        env=os.environ.copy(),
     )
     duration = time.perf_counter() - started
+
     out.write_text(p.stdout, encoding="utf-8")
     err.write_text(p.stderr, encoding="utf-8")
+
     return StepResult(
-        step_id, kind, list(command), p.returncode, duration,
-        "passed" if p.returncode == 0 else "failed",
-        rel(out), rel(err),
+        step_id=step_id,
+        kind=kind,
+        command=list(command),
+        return_code=p.returncode,
+        duration_seconds=duration,
+        status="passed" if p.returncode == 0 else "failed",
+        stdout_log=rel(out),
+        stderr_log=rel(err),
     )
 
 
-def validate_artifacts() -> tuple[bool, list[dict[str, object]]]:
+def snapshot_artifacts() -> dict[str, dict[str, object]]:
+    snapshot: dict[str, dict[str, object]] = {}
+
+    for name in EXPECTED_ARTIFACTS:
+        path = ROOT / name
+        exists = path.is_file()
+
+        record: dict[str, object] = {
+            "path": name,
+            "exists": exists,
+            "tracked": is_git_tracked(path),
+        }
+
+        if exists:
+            record["size_bytes"] = path.stat().st_size
+            record["sha256"] = sha256_file(path)
+
+        snapshot[name] = record
+
+    return snapshot
+
+
+def compare_artifact_snapshots(
+    before: dict[str, dict[str, object]],
+    after: dict[str, dict[str, object]],
+) -> tuple[bool, list[dict[str, object]]]:
     all_ok = True
-    records = []
+    records: list[dict[str, object]] = []
+
+    for name in EXPECTED_ARTIFACTS:
+        b = before[name]
+        a = after[name]
+
+        before_exists = bool(b.get("exists"))
+        after_exists = bool(a.get("exists"))
+        tracked = bool(b.get("tracked") or a.get("tracked"))
+
+        if before_exists and after_exists:
+            same_hash = b.get("sha256") == a.get("sha256")
+            status = "REPRODUCED_EXACTLY" if same_hash else "CHANGED"
+        elif before_exists and not after_exists:
+            same_hash = False
+            status = "MISSING"
+        elif not before_exists and after_exists:
+            same_hash = False
+            status = "NEW"
+        else:
+            same_hash = False
+            status = "MISSING"
+
+        # Reviewer-grade reproducibility requires tracked expected artifacts to
+        # remain byte-identical after rerunning the benchmark chain.
+        if tracked and status != "REPRODUCED_EXACTLY":
+            all_ok = False
+
+        records.append(
+            {
+                "path": name,
+                "tracked": tracked,
+                "status": status,
+                "before_sha256": b.get("sha256"),
+                "after_sha256": a.get("sha256"),
+                "before_size_bytes": b.get("size_bytes"),
+                "after_size_bytes": a.get("size_bytes"),
+            }
+        )
+
+    return all_ok, records
+
+
+def validate_artifact_content() -> tuple[bool, list[dict[str, object]]]:
+    all_ok = True
+    records: list[dict[str, object]] = []
+
     for name in EXPECTED_ARTIFACTS:
         path = ROOT / name
         rec: dict[str, object] = {"path": name, "exists": path.is_file()}
+
         if not path.is_file():
             rec["valid"] = False
             rec["error"] = "missing"
@@ -195,76 +304,117 @@ def validate_artifacts() -> tuple[bool, list[dict[str, object]]]:
                 rec["valid"] = False
                 rec["error"] = f"{type(exc).__name__}: {exc}"
                 all_ok = False
+
         records.append(rec)
+
     return all_ok, records
 
 
 def markdown_report(
     env: dict[str, object],
     steps: list[StepResult],
-    artifacts_ok: bool,
-    artifacts: list[dict[str, object]],
+    artifacts_valid: bool,
+    artifact_content: list[dict[str, object]],
+    artifacts_exact: bool,
+    artifact_comparison: list[dict[str, object]],
     full_tests: bool,
 ) -> str:
     passed = sum(x.status == "passed" for x in steps)
+
     lines = [
-        "# ROIF Manuscript Reproducibility Report", "",
+        "# ROIF Manuscript Reproducibility Report",
+        "",
         f"- Runner: `{RUNNER_VERSION}`",
         f"- Claim scope: `{CLAIM_SCOPE}`",
         f"- Generated: `{env['generated_at_utc']}`",
         f"- Commit: `{env['repository']['commit']}`",
-        f"- Git state: `{env['repository']['describe']}`", "",
-        "## Summary", "",
+        f"- Git state: `{env['repository']['describe']}`",
+        "",
+        "## Summary",
+        "",
         f"- Executed steps: **{len(steps)}**",
         f"- Passed steps: **{passed}**",
         f"- Failed steps: **{len(steps) - passed}**",
-        f"- Expected artifacts valid: **{artifacts_ok}**",
-        f"- Full repository tests requested: **{full_tests}**", "",
+        f"- Expected artifact content valid: **{artifacts_valid}**",
+        f"- Tracked artifact equality before/after run: **{artifacts_exact}**",
+        f"- Full repository tests requested: **{full_tests}**",
+        "",
         "| Step | Kind | Status | Duration, s |",
         "|---|---|---|---:|",
     ]
+
     for x in steps:
         lines.append(
-            f"| `{x.step_id}` | {x.kind} | **{x.status.upper()}** | "
-            f"{x.duration_seconds:.3f} |"
+            f"| `{x.step_id}` | {x.kind} | "
+            f"**{x.status.upper()}** | {x.duration_seconds:.3f} |"
         )
+
     lines += [
-        "", "## Artifact verification", "",
+        "",
+        "## Artifact equality",
+        "",
+        "| Artifact | Tracked | Status | Before SHA-256 | After SHA-256 |",
+        "|---|---|---|---|---|",
+    ]
+
+    for a in artifact_comparison:
+        lines.append(
+            f"| `{a['path']}` | {a['tracked']} | **{a['status']}** | "
+            f"`{a.get('before_sha256') or ''}` | "
+            f"`{a.get('after_sha256') or ''}` |"
+        )
+
+    lines += [
+        "",
+        "## Artifact content validation",
+        "",
         "| Artifact | Exists | Valid | SHA-256 |",
         "|---|---|---|---|",
     ]
-    for a in artifacts:
+
+    for a in artifact_content:
         lines.append(
             f"| `{a['path']}` | {a.get('exists', False)} | "
             f"{a.get('valid', False)} | `{a.get('sha256', '')}` |"
         )
+
     lines += [
-        "", "## Scientific interpretation boundary", "",
+        "",
+        "## Scientific interpretation boundary",
+        "",
         "A successful run reproduces the computational benchmark paths and "
-        "publication assets implemented in this repository.", "",
-        "It does **not** by itself establish:", "",
+        "publication assets implemented in this repository and leaves the "
+        "tracked expected benchmark artifacts byte-identical.",
+        "",
+        "It does **not** by itself establish:",
+        "",
         "- biological or clinical validity;",
         "- a general history-conditioned operator over the complete `SystemImage`;",
         "- complete future Temporal-Image prediction;",
         "- objective-independent whole-system predictive stabilization;",
         "- biological learning;",
-        "- universal stability.", "",
+        "- universal stability.",
+        "",
         "The predictive benchmark reproduced here is the restricted tested "
         "prestress-preconfiguration mechanism. The Temporal Image benchmark "
         "reproduces trajectory/reconstruction behavior rather than ordinary "
-        "whole-system future forecasting.", "",
+        "whole-system future forecasting.",
+        "",
     ]
+
     return "\n".join(lines)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--full-tests", action="store_true",
+        "--full-tests",
+        action="store_true",
         help="Also run the complete repository pytest suite.",
     )
     parser.add_argument(
-        "--stop-on-failure", action="store_true",
+        "--stop-on-failure",
+        action="store_true",
         help="Stop benchmark execution after the first failed step.",
     )
     args = parser.parse_args()
@@ -286,20 +436,27 @@ def main() -> int:
 
     env = environment()
     write_json(RESULTS_DIR / "environment.json", env)
+
+    before = snapshot_artifacts()
+    write_json(RESULTS_DIR / "artifact_snapshot_before.json", before)
+
     steps: list[StepResult] = []
 
     def execute(step_id: str, kind: str, command: Sequence[str]) -> bool:
         print(f"[RUN]  {step_id}")
         result = run_step(step_id, kind, command)
         steps.append(result)
+
         print(
             f"[{'PASS' if result.status == 'passed' else 'FAIL'}] "
             f"{step_id} ({result.duration_seconds:.3f} s)"
         )
+
         if result.status == "failed":
             print(f"       stdout: {result.stdout_log}")
             print(f"       stderr: {result.stderr_log}")
             return False
+
         return True
 
     for step_id, module in BENCHMARK_MODULES:
@@ -328,30 +485,50 @@ def main() -> int:
             [sys.executable, "-m", "pytest", "-q"],
         )
 
-    artifacts_ok, artifacts = validate_artifacts()
+    after = snapshot_artifacts()
+    write_json(RESULTS_DIR / "artifact_snapshot_after.json", after)
+
+    artifacts_exact, artifact_comparison = compare_artifact_snapshots(before, after)
+    artifacts_valid, artifact_content = validate_artifact_content()
+
     report_payload = {
         "runner_version": RUNNER_VERSION,
         "claim_scope": CLAIM_SCOPE,
         "environment": env,
         "steps": [asdict(x) for x in steps],
-        "artifacts_ok": artifacts_ok,
-        "artifacts": artifacts,
+        "artifacts_valid": artifacts_valid,
+        "artifacts_exact": artifacts_exact,
+        "artifact_content": artifact_content,
+        "artifact_comparison": artifact_comparison,
         "full_tests_requested": bool(args.full_tests),
     }
+
     write_json(RESULTS_DIR / "reproduction_report.json", report_payload)
+
     (RESULTS_DIR / "reproduction_report.md").write_text(
-        markdown_report(env, steps, artifacts_ok, artifacts, bool(args.full_tests))
-        + "\n",
+        markdown_report(
+            env,
+            steps,
+            artifacts_valid,
+            artifact_content,
+            artifacts_exact,
+            artifact_comparison,
+            bool(args.full_tests),
+        ) + "\n",
         encoding="utf-8",
     )
 
-    success = artifacts_ok and not any(x.status == "failed" for x in steps)
+    failed_steps = any(x.status == "failed" for x in steps)
+    success = (not failed_steps) and artifacts_valid and artifacts_exact
+
     print()
     print("=" * 88)
+    print(f"ARTIFACT EQUALITY: {'PASS' if artifacts_exact else 'FAIL'}")
     print(f"REPRODUCIBILITY RESULT: {'PASS' if success else 'FAIL'}")
     print("Report: reproducibility_results/reproduction_report.md")
     print("JSON  : reproducibility_results/reproduction_report.json")
     print("=" * 88)
+
     return 0 if success else 1
 
 

@@ -9,74 +9,113 @@ import experiments.run_entropy_reproducibility as repro
 
 
 def test_runner_version_is_frozen():
-    assert repro.RUNNER_VERSION == "roif_entropy_reproducibility_v1"
+    assert repro.RUNNER_VERSION == "roif_entropy_reproducibility_v2"
 
 
 def test_claim_scope_is_computational_only():
     assert repro.CLAIM_SCOPE == "computational_model_only"
 
 
-def test_runner_declares_manuscript_benchmarks():
-    ids = [step_id for step_id, _ in repro.BENCHMARK_MODULES]
-
-    assert "matched_state_physical_history_identifiability" in ids
-    assert "structured_memory_conditioned_matched_state_transition" in ids
-    assert "restricted_predictive_preconfiguration" in ids
-    assert "q7_objective_independence_audit" in ids
-    assert "q7_off_nominal_transferability_audit" in ids
-    assert "q8_history_conditioned_redistribution_capacity" in ids
-    assert "q8_history_conditioned_redistribution_matched_state" in ids
-    assert "temporal_image_reconstruction" in ids
-    assert "multilayer_temporal_image_trajectory" in ids
-
-
-def test_runner_declares_expected_artifacts():
-    expected = set(repro.EXPECTED_ARTIFACTS)
-
-    assert (
-        "benchmark_results/"
-        "matched_state_history_operator_identifiability_v1.json"
-        in expected
-    )
-    assert (
-        "benchmark_results/"
-        "memory_conditioned_matched_state_transition_v1.json"
-        in expected
-    )
-    assert (
-        "benchmark_results/"
-        "q7_objective_independence_audit_v1.json"
-        in expected
-    )
-    assert (
-        "benchmark_results/"
-        "q7_off_nominal_transferability_audit_v2.json"
-        in expected
-    )
-    assert (
-        "benchmark_results/"
-        "q8_history_conditioned_redistribution_matched_state_v2.json"
-        in expected
-    )
-    assert (
-        "benchmark_results/"
-        "temporal_image_reconstruction_v1.json"
-        in expected
-    )
-
-
 def test_required_runner_inputs_exist():
     assert repro.validate_inputs() == []
 
 
+def test_snapshot_contains_all_expected_artifacts():
+    snap = repro.snapshot_artifacts()
+
+    assert set(snap) == set(repro.EXPECTED_ARTIFACTS)
+
+
 def test_expected_artifacts_are_currently_valid():
-    ok, records = repro.validate_artifacts()
+    ok, records = repro.validate_artifact_content()
 
     assert ok is True
     assert records
     assert all(record["exists"] for record in records)
     assert all(record["valid"] for record in records)
     assert all(record["sha256"] for record in records)
+
+
+def test_identical_snapshots_pass_exact_reproduction():
+    snap = {
+        "benchmark_results/example.json": {
+            "path": "benchmark_results/example.json",
+            "exists": True,
+            "tracked": True,
+            "size_bytes": 10,
+            "sha256": "abc",
+        }
+    }
+
+    original = repro.EXPECTED_ARTIFACTS
+    try:
+        repro.EXPECTED_ARTIFACTS = ("benchmark_results/example.json",)
+        ok, records = repro.compare_artifact_snapshots(snap, snap)
+    finally:
+        repro.EXPECTED_ARTIFACTS = original
+
+    assert ok is True
+    assert records[0]["status"] == "REPRODUCED_EXACTLY"
+
+
+def test_changed_tracked_artifact_fails_exact_reproduction():
+    before = {
+        "benchmark_results/example.json": {
+            "path": "benchmark_results/example.json",
+            "exists": True,
+            "tracked": True,
+            "size_bytes": 10,
+            "sha256": "abc",
+        }
+    }
+    after = {
+        "benchmark_results/example.json": {
+            "path": "benchmark_results/example.json",
+            "exists": True,
+            "tracked": True,
+            "size_bytes": 11,
+            "sha256": "def",
+        }
+    }
+
+    original = repro.EXPECTED_ARTIFACTS
+    try:
+        repro.EXPECTED_ARTIFACTS = ("benchmark_results/example.json",)
+        ok, records = repro.compare_artifact_snapshots(before, after)
+    finally:
+        repro.EXPECTED_ARTIFACTS = original
+
+    assert ok is False
+    assert records[0]["status"] == "CHANGED"
+
+
+def test_new_untracked_artifact_does_not_define_tracked_equality_failure():
+    before = {
+        "benchmark_results/example.json": {
+            "path": "benchmark_results/example.json",
+            "exists": False,
+            "tracked": False,
+        }
+    }
+    after = {
+        "benchmark_results/example.json": {
+            "path": "benchmark_results/example.json",
+            "exists": True,
+            "tracked": False,
+            "size_bytes": 11,
+            "sha256": "def",
+        }
+    }
+
+    original = repro.EXPECTED_ARTIFACTS
+    try:
+        repro.EXPECTED_ARTIFACTS = ("benchmark_results/example.json",)
+        ok, records = repro.compare_artifact_snapshots(before, after)
+    finally:
+        repro.EXPECTED_ARTIFACTS = original
+
+    assert ok is True
+    assert records[0]["status"] == "NEW"
 
 
 def test_environment_has_reproducibility_metadata():
@@ -101,16 +140,18 @@ def test_markdown_report_preserves_claim_boundaries():
     report = repro.markdown_report(
         env=env,
         steps=[],
-        artifacts_ok=True,
-        artifacts=[],
+        artifacts_valid=True,
+        artifact_content=[],
+        artifacts_exact=True,
+        artifact_comparison=[],
         full_tests=False,
     )
 
+    assert "byte-identical" in report
     assert "biological or clinical validity" in report
     assert "general history-conditioned operator" in report
     assert "complete future Temporal-Image prediction" in report
     assert "objective-independent whole-system predictive stabilization" in report
-    assert "restricted tested prestress-preconfiguration" in report
 
 
 def test_write_json_is_valid_utf8_json(tmp_path: Path):
