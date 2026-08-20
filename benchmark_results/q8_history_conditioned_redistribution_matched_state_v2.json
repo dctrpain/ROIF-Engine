@@ -1,0 +1,445 @@
+{
+  "benchmark_version": "roif_q8_history_conditioned_redistribution_matched_state_v2",
+  "biological_adaptation_claimed": false,
+  "central_results": {
+    "connection_state_changes_response_at_matched_prestress": true,
+    "connection_state_effect_norm_at_matched_prestress": 1.2602389522599209,
+    "factorial_interaction_detected": false,
+    "factorial_interaction_norm": 1.7554167342883506e-16,
+    "prestress_state_changes_response_at_matched_connections": false,
+    "prestress_state_effect_norm_at_matched_connections": 5.551115123125783e-17
+  },
+  "claim_scope": "computational_model_only",
+  "conditioning_history_trajectory": [
+    {
+      "connection_change_norm": 0.26081319440858036,
+      "cycle": 1,
+      "mean_contractile_capacity_after": 1.102,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.002,
+      "mean_remodeling_bias_after": 0.04000000000000001,
+      "mean_stiffness_after": 1.042,
+      "mean_transfer_gain_after": 1.150580568,
+      "mean_transfer_gain_before": 1.0,
+      "prestress_change_norm": 0.0823422142129951,
+      "source_revision": 0,
+      "target_revision": 1,
+      "trace_magnitude": 0.27350276528603273
+    },
+    {
+      "connection_change_norm": 0.2892416214413378,
+      "cycle": 2,
+      "mean_contractile_capacity_after": 1.2060000000000002,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.006,
+      "mean_remodeling_bias_after": 0.08000000000000002,
+      "mean_stiffness_after": 1.086,
+      "mean_transfer_gain_after": 1.3175742960000003,
+      "mean_transfer_gain_before": 1.150580568,
+      "prestress_change_norm": 0.09824971559523521,
+      "source_revision": 1,
+      "target_revision": 2,
+      "trace_magnitude": 0.30547294837441624
+    },
+    {
+      "connection_change_norm": 0.3211774929286415,
+      "cycle": 3,
+      "mean_contractile_capacity_after": 1.3120000000000003,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.012,
+      "mean_remodeling_bias_after": 0.12000000000000004,
+      "mean_stiffness_after": 1.1320000000000001,
+      "mean_transfer_gain_after": 1.5030062080000006,
+      "mean_transfer_gain_before": 1.3175742960000003,
+      "prestress_change_norm": 0.12183160614457927,
+      "source_revision": 2,
+      "target_revision": 3,
+      "trace_magnitude": 0.34350825640688093
+    },
+    {
+      "connection_change_norm": 0.35698570347822306,
+      "cycle": 4,
+      "mean_contractile_capacity_after": 1.4200000000000006,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.02,
+      "mean_remodeling_bias_after": 0.16000000000000003,
+      "mean_stiffness_after": 1.1800000000000002,
+      "mean_transfer_gain_after": 1.7091120000000004,
+      "mean_transfer_gain_before": 1.5030062080000006,
+      "prestress_change_norm": 0.15635586356287182,
+      "source_revision": 3,
+      "target_revision": 4,
+      "trace_magnitude": 0.3897254784567378
+    },
+    {
+      "connection_change_norm": 0.3970639873811275,
+      "cycle": 5,
+      "mean_contractile_capacity_after": 1.5300000000000005,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.03,
+      "mean_remodeling_bias_after": 0.20000000000000004,
+      "mean_stiffness_after": 1.2300000000000002,
+      "mean_transfer_gain_after": 1.9383570000000008,
+      "mean_transfer_gain_before": 1.7091120000000004,
+      "prestress_change_norm": 0.2062767119092846,
+      "source_revision": 4,
+      "target_revision": 5,
+      "trace_magnitude": 0.44744820029932647
+    }
+  ],
+  "connection_structures": {
+    "B00_baseline_p0_theta0": {
+      "mean_contractile_capacity": 1.0,
+      "mean_effective_transfer_gain": 1.0,
+      "mean_fatigue": 0.0,
+      "mean_reflex_gain": 1.0,
+      "mean_remodeling_bias": 0.0,
+      "mean_stiffness": 1.0,
+      "minimum_effective_transfer_gain": 1.0,
+      "per_connection": {
+        "A_B": {
+          "contractile_capacity": 1.0,
+          "effective_transfer_gain": 1.0,
+          "fatigue": 0.0,
+          "reflex_gain": 1.0,
+          "remodeling_bias": 0.0,
+          "stiffness": 1.0
+        },
+        "B_C": {
+          "contractile_capacity": 1.0,
+          "effective_transfer_gain": 1.0,
+          "fatigue": 0.0,
+          "reflex_gain": 1.0,
+          "remodeling_bias": 0.0,
+          "stiffness": 1.0
+        },
+        "C_D": {
+          "contractile_capacity": 1.0,
+          "effective_transfer_gain": 1.0,
+          "fatigue": 0.0,
+          "reflex_gain": 1.0,
+          "remodeling_bias": 0.0,
+          "stiffness": 1.0
+        }
+      }
+    },
+    "C01_baseline_prestress_conditioned_connections": {
+      "mean_contractile_capacity": 1.5300000000000005,
+      "mean_effective_transfer_gain": 1.9383570000000008,
+      "mean_fatigue": 0.0,
+      "mean_reflex_gain": 1.03,
+      "mean_remodeling_bias": 0.20000000000000004,
+      "mean_stiffness": 1.2300000000000002,
+      "minimum_effective_transfer_gain": 1.9383570000000008,
+      "per_connection": {
+        "A_B": {
+          "contractile_capacity": 1.5300000000000005,
+          "effective_transfer_gain": 1.9383570000000008,
+          "fatigue": 0.0,
+          "reflex_gain": 1.03,
+          "remodeling_bias": 0.20000000000000004,
+          "stiffness": 1.2300000000000002
+        },
+        "B_C": {
+          "contractile_capacity": 1.5300000000000005,
+          "effective_transfer_gain": 1.9383570000000008,
+          "fatigue": 0.0,
+          "reflex_gain": 1.03,
+          "remodeling_bias": 0.20000000000000004,
+          "stiffness": 1.2300000000000002
+        },
+        "C_D": {
+          "contractile_capacity": 1.5300000000000005,
+          "effective_transfer_gain": 1.9383570000000008,
+          "fatigue": 0.0,
+          "reflex_gain": 1.03,
+          "remodeling_bias": 0.20000000000000004,
+          "stiffness": 1.2300000000000002
+        }
+      }
+    },
+    "C10_conditioned_prestress_baseline_connections": {
+      "mean_contractile_capacity": 1.0,
+      "mean_effective_transfer_gain": 1.0,
+      "mean_fatigue": 0.0,
+      "mean_reflex_gain": 1.0,
+      "mean_remodeling_bias": 0.0,
+      "mean_stiffness": 1.0,
+      "minimum_effective_transfer_gain": 1.0,
+      "per_connection": {
+        "A_B": {
+          "contractile_capacity": 1.0,
+          "effective_transfer_gain": 1.0,
+          "fatigue": 0.0,
+          "reflex_gain": 1.0,
+          "remodeling_bias": 0.0,
+          "stiffness": 1.0
+        },
+        "B_C": {
+          "contractile_capacity": 1.0,
+          "effective_transfer_gain": 1.0,
+          "fatigue": 0.0,
+          "reflex_gain": 1.0,
+          "remodeling_bias": 0.0,
+          "stiffness": 1.0
+        },
+        "C_D": {
+          "contractile_capacity": 1.0,
+          "effective_transfer_gain": 1.0,
+          "fatigue": 0.0,
+          "reflex_gain": 1.0,
+          "remodeling_bias": 0.0,
+          "stiffness": 1.0
+        }
+      }
+    },
+    "H11_conditioned_prestress_conditioned_connections": {
+      "mean_contractile_capacity": 1.5300000000000005,
+      "mean_effective_transfer_gain": 1.9383570000000008,
+      "mean_fatigue": 0.0,
+      "mean_reflex_gain": 1.03,
+      "mean_remodeling_bias": 0.20000000000000004,
+      "mean_stiffness": 1.2300000000000002,
+      "minimum_effective_transfer_gain": 1.9383570000000008,
+      "per_connection": {
+        "A_B": {
+          "contractile_capacity": 1.5300000000000005,
+          "effective_transfer_gain": 1.9383570000000008,
+          "fatigue": 0.0,
+          "reflex_gain": 1.03,
+          "remodeling_bias": 0.20000000000000004,
+          "stiffness": 1.2300000000000002
+        },
+        "B_C": {
+          "contractile_capacity": 1.5300000000000005,
+          "effective_transfer_gain": 1.9383570000000008,
+          "fatigue": 0.0,
+          "reflex_gain": 1.03,
+          "remodeling_bias": 0.20000000000000004,
+          "stiffness": 1.2300000000000002
+        },
+        "C_D": {
+          "contractile_capacity": 1.5300000000000005,
+          "effective_transfer_gain": 1.9383570000000008,
+          "fatigue": 0.0,
+          "reflex_gain": 1.03,
+          "remodeling_bias": 0.20000000000000004,
+          "stiffness": 1.2300000000000002
+        }
+      }
+    }
+  },
+  "energy_dissipation_tested": false,
+  "experimental_design": "2x2_matched_current_state_layer_decomposition",
+  "factorial_response_analysis": {
+    "connection_effect_detected_at_matched_prestress": true,
+    "connection_state_effect_at_conditioned_prestress": {
+      "norm": 1.2602389522599207,
+      "vector": {
+        "A": 0.0,
+        "B": -0.28150710000000023,
+        "C": -0.6203762683760257,
+        "D": -1.0602307555804114
+      }
+    },
+    "connection_state_effect_at_matched_baseline_prestress": {
+      "norm": 1.2602389522599209,
+      "vector": {
+        "A": 0.0,
+        "B": -0.28150710000000023,
+        "C": -0.6203762683760257,
+        "D": -1.0602307555804116
+      }
+    },
+    "factorial_interaction_detected": false,
+    "factorial_interaction_residual": {
+      "norm": 1.7554167342883506e-16,
+      "vector": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 5.551115123125783e-17,
+        "D": 1.6653345369377348e-16
+      }
+    },
+    "prestress_effect_detected_at_matched_connections": false,
+    "prestress_state_effect_at_conditioned_connections": {
+      "norm": 0.0,
+      "vector": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0
+      }
+    },
+    "prestress_state_effect_at_matched_baseline_connections": {
+      "norm": 5.551115123125783e-17,
+      "vector": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": -5.551115123125783e-17
+      }
+    },
+    "response_vectors": {
+      "R00": {
+        "A": -0.4,
+        "B": -0.30000000000000004,
+        "C": -0.22500000000000003,
+        "D": -0.16875
+      },
+      "R01": {
+        "A": -0.4,
+        "B": -0.5815071000000003,
+        "C": -0.8453762683760258,
+        "D": -1.2289807555804115
+      },
+      "R10": {
+        "A": -0.4,
+        "B": -0.30000000000000004,
+        "C": -0.22500000000000003,
+        "D": -0.16875000000000007
+      },
+      "R11": {
+        "A": -0.4,
+        "B": -0.5815071000000003,
+        "C": -0.8453762683760258,
+        "D": -1.2289807555804115
+      }
+    }
+  },
+  "factors": {
+    "adaptive_connections": [
+      "baseline_theta0",
+      "conditioned_thetaH"
+    ],
+    "prestress": [
+      "baseline_p0",
+      "conditioned_pH"
+    ]
+  },
+  "human_foot_model_claimed": false,
+  "injury_or_failure_threshold_tested": false,
+  "interpretation": "Q8-v2 isolates two current-state contributions to matched-event redistribution in the implemented ROIF model. The connection-only control uses history-conditioned adaptive connections with baseline pre-challenge prestress. The complementary prestress-only control uses history-conditioned prestress with baseline adaptive connections. A response difference between R01 and R00 therefore establishes a connection-state contribution under matched prestress within this computational implementation. A response difference between R10 and R00 establishes a prestress-state contribution under matched adaptive connections. The R11-R10-R01+R00 residual reports interaction between these two current-state layers. Q8-v2 does not interpret increased effective transfer gain, downstream response, or total response as improved stabilization, absorption, or dissipation.",
+  "literal_absorption_tested": false,
+  "matched_challenge_responses": {
+    "B00_baseline_p0_theta0": {
+      "distribution_entropy_normalized": 0.963955662644872,
+      "downstream_absolute_response": 0.6937500000000001,
+      "downstream_fraction_of_response": 0.6342857142857143,
+      "downstream_to_source_ratio": 1.7343750000000002,
+      "node_deltas": {
+        "A": -0.4,
+        "B": -0.30000000000000004,
+        "C": -0.22500000000000003,
+        "D": -0.16875
+      },
+      "peak_absolute_node_response": 0.4,
+      "peak_fraction_of_response": 0.3657142857142857,
+      "prestress_change_norm": 0.5736737422089319,
+      "reached_node_count": 4,
+      "source_absolute_response": 0.4,
+      "source_fraction_of_response": 0.3657142857142857,
+      "total_absolute_response": 1.09375
+    },
+    "C01_baseline_prestress_conditioned_connections": {
+      "distribution_entropy_normalized": 0.9404287897529231,
+      "downstream_absolute_response": 2.6558641239564373,
+      "downstream_fraction_of_response": 0.8691041277443583,
+      "downstream_to_source_ratio": 6.639660309891093,
+      "node_deltas": {
+        "A": -0.4,
+        "B": -0.5815071000000003,
+        "C": -0.8453762683760258,
+        "D": -1.2289807555804115
+      },
+      "peak_absolute_node_response": 1.2289807555804115,
+      "peak_fraction_of_response": 0.4021712699677386,
+      "prestress_change_norm": 1.6502136952742767,
+      "reached_node_count": 4,
+      "source_absolute_response": 0.4,
+      "source_fraction_of_response": 0.13089587225564162,
+      "total_absolute_response": 3.0558641239564377
+    },
+    "C10_conditioned_prestress_baseline_connections": {
+      "distribution_entropy_normalized": 0.9639556626448719,
+      "downstream_absolute_response": 0.6937500000000001,
+      "downstream_fraction_of_response": 0.6342857142857142,
+      "downstream_to_source_ratio": 1.7343750000000002,
+      "node_deltas": {
+        "A": -0.4,
+        "B": -0.30000000000000004,
+        "C": -0.22500000000000003,
+        "D": -0.16875000000000007
+      },
+      "peak_absolute_node_response": 0.4,
+      "peak_fraction_of_response": 0.36571428571428566,
+      "prestress_change_norm": 0.573673742208932,
+      "reached_node_count": 4,
+      "source_absolute_response": 0.4,
+      "source_fraction_of_response": 0.36571428571428566,
+      "total_absolute_response": 1.0937500000000002
+    },
+    "H11_conditioned_prestress_conditioned_connections": {
+      "distribution_entropy_normalized": 0.9404287897529231,
+      "downstream_absolute_response": 2.6558641239564373,
+      "downstream_fraction_of_response": 0.8691041277443583,
+      "downstream_to_source_ratio": 6.639660309891093,
+      "node_deltas": {
+        "A": -0.4,
+        "B": -0.5815071000000003,
+        "C": -0.8453762683760258,
+        "D": -1.2289807555804115
+      },
+      "peak_absolute_node_response": 1.2289807555804115,
+      "peak_fraction_of_response": 0.4021712699677386,
+      "prestress_change_norm": 1.6502136952742767,
+      "reached_node_count": 4,
+      "source_absolute_response": 0.4,
+      "source_fraction_of_response": 0.13089587225564162,
+      "total_absolute_response": 3.0558641239564377
+    }
+  },
+  "matched_connection_prestress_effect_tested": true,
+  "matched_prestress_connection_effect_tested": true,
+  "mechanism_under_test": "history_conditioned_redistribution_reconfiguration",
+  "predictive_preconfiguration_tested": false,
+  "prestress_states": {
+    "B00_baseline_p0_theta0": {
+      "A": 0.2,
+      "B": 0.1,
+      "C": 0.05,
+      "D": 0.0
+    },
+    "C01_baseline_prestress_conditioned_connections": {
+      "A": 0.2,
+      "B": 0.1,
+      "C": 0.05,
+      "D": 0.0
+    },
+    "C10_conditioned_prestress_baseline_connections": {
+      "A": -0.04999999999999999,
+      "B": -0.1856986277000001,
+      "C": -0.28742004113739944,
+      "D": -0.4109294104357234
+    },
+    "H11_conditioned_prestress_conditioned_connections": {
+      "A": -0.04999999999999999,
+      "B": -0.1856986277000001,
+      "C": -0.28742004113739944,
+      "D": -0.4109294104357234
+    }
+  },
+  "q8_v1_parent_version": "roif_q8_history_conditioned_redistribution_capacity_v1",
+  "stabilization_tested": false,
+  "state_control_audit": {
+    "baseline_connections_match_prestress_only_control": true,
+    "baseline_prestress_matches_connection_only_control": true,
+    "baseline_transfer_gains_match_prestress_only_control": true,
+    "baseline_vs_conditioned_connections_differ": true,
+    "baseline_vs_conditioned_prestress_differ": true,
+    "conditioned_connections_match_full_conditioned": true,
+    "conditioned_prestress_matches_full_conditioned": true,
+    "conditioned_transfer_gains_match_full_conditioned": true
+  },
+  "universal_tensegrity_claimed": false
+}

@@ -1,0 +1,212 @@
+{
+  "baseline_matched_challenge": {
+    "distribution_entropy_normalized": 0.963955662644872,
+    "downstream_absolute_response": 0.6937500000000001,
+    "downstream_fraction_of_response": 0.6342857142857143,
+    "downstream_to_source_ratio": 1.7343750000000002,
+    "node_deltas": {
+      "A": -0.4,
+      "B": -0.30000000000000004,
+      "C": -0.22500000000000003,
+      "D": -0.16875
+    },
+    "peak_absolute_node_response": 0.4,
+    "peak_fraction_of_response": 0.3657142857142857,
+    "prestress_change_norm": 0.5736737422089319,
+    "reached_node_count": 4,
+    "source_absolute_response": 0.4,
+    "source_fraction_of_response": 0.3657142857142857,
+    "total_absolute_response": 1.09375
+  },
+  "baseline_structure": {
+    "mean_contractile_capacity": 1.0,
+    "mean_effective_transfer_gain": 1.0,
+    "mean_fatigue": 0.0,
+    "mean_reflex_gain": 1.0,
+    "mean_remodeling_bias": 0.0,
+    "mean_stiffness": 1.0,
+    "minimum_effective_transfer_gain": 1.0,
+    "per_connection": {
+      "A_B": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 1.0,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.0
+      },
+      "B_C": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 1.0,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.0
+      },
+      "C_D": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 1.0,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.0
+      }
+    }
+  },
+  "benchmark_version": "roif_q8_history_conditioned_redistribution_capacity_v1",
+  "biological_adaptation_claimed": false,
+  "central_results": {
+    "distribution_entropy_increased": false,
+    "downstream_response_fraction_increased": true,
+    "mean_effective_transfer_gain_change": 0.9383570000000008,
+    "mean_effective_transfer_gain_relative_change": 0.9383570000000008,
+    "progressive_transfer_gain_increase_across_cycles": true,
+    "source_response_concentration_reduced": true,
+    "transfer_gain_increased_after_history": true
+  },
+  "claim_scope": "computational_model_only",
+  "conditioned_matched_challenge": {
+    "distribution_entropy_normalized": 0.9404287897529231,
+    "downstream_absolute_response": 2.6558641239564373,
+    "downstream_fraction_of_response": 0.8691041277443583,
+    "downstream_to_source_ratio": 6.639660309891093,
+    "node_deltas": {
+      "A": -0.4,
+      "B": -0.5815071000000003,
+      "C": -0.8453762683760258,
+      "D": -1.2289807555804115
+    },
+    "peak_absolute_node_response": 1.2289807555804115,
+    "peak_fraction_of_response": 0.4021712699677386,
+    "prestress_change_norm": 1.6502136952742767,
+    "reached_node_count": 4,
+    "source_absolute_response": 0.4,
+    "source_fraction_of_response": 0.13089587225564162,
+    "total_absolute_response": 3.0558641239564377
+  },
+  "conditioned_structure": {
+    "mean_contractile_capacity": 1.5300000000000005,
+    "mean_effective_transfer_gain": 1.9383570000000008,
+    "mean_fatigue": 0.0,
+    "mean_reflex_gain": 1.03,
+    "mean_remodeling_bias": 0.20000000000000004,
+    "mean_stiffness": 1.2300000000000002,
+    "minimum_effective_transfer_gain": 1.9383570000000008,
+    "per_connection": {
+      "A_B": {
+        "contractile_capacity": 1.5300000000000005,
+        "effective_transfer_gain": 1.9383570000000008,
+        "fatigue": 0.0,
+        "reflex_gain": 1.03,
+        "remodeling_bias": 0.20000000000000004,
+        "stiffness": 1.2300000000000002
+      },
+      "B_C": {
+        "contractile_capacity": 1.5300000000000005,
+        "effective_transfer_gain": 1.9383570000000008,
+        "fatigue": 0.0,
+        "reflex_gain": 1.03,
+        "remodeling_bias": 0.20000000000000004,
+        "stiffness": 1.2300000000000002
+      },
+      "C_D": {
+        "contractile_capacity": 1.5300000000000005,
+        "effective_transfer_gain": 1.9383570000000008,
+        "fatigue": 0.0,
+        "reflex_gain": 1.03,
+        "remodeling_bias": 0.20000000000000004,
+        "stiffness": 1.2300000000000002
+      }
+    }
+  },
+  "conditioning_cycle_count": 5,
+  "conditioning_history_trajectory": [
+    {
+      "connection_change_norm": 0.26081319440858036,
+      "cycle": 1,
+      "mean_contractile_capacity_after": 1.102,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.002,
+      "mean_remodeling_bias_after": 0.04000000000000001,
+      "mean_stiffness_after": 1.042,
+      "mean_transfer_gain_after": 1.150580568,
+      "mean_transfer_gain_before": 1.0,
+      "prestress_change_norm": 0.0823422142129951,
+      "source_revision": 0,
+      "target_revision": 1,
+      "trace_magnitude": 0.27350276528603273
+    },
+    {
+      "connection_change_norm": 0.2892416214413378,
+      "cycle": 2,
+      "mean_contractile_capacity_after": 1.2060000000000002,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.006,
+      "mean_remodeling_bias_after": 0.08000000000000002,
+      "mean_stiffness_after": 1.086,
+      "mean_transfer_gain_after": 1.3175742960000003,
+      "mean_transfer_gain_before": 1.150580568,
+      "prestress_change_norm": 0.09824971559523521,
+      "source_revision": 1,
+      "target_revision": 2,
+      "trace_magnitude": 0.30547294837441624
+    },
+    {
+      "connection_change_norm": 0.3211774929286415,
+      "cycle": 3,
+      "mean_contractile_capacity_after": 1.3120000000000003,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.012,
+      "mean_remodeling_bias_after": 0.12000000000000004,
+      "mean_stiffness_after": 1.1320000000000001,
+      "mean_transfer_gain_after": 1.5030062080000006,
+      "mean_transfer_gain_before": 1.3175742960000003,
+      "prestress_change_norm": 0.12183160614457927,
+      "source_revision": 2,
+      "target_revision": 3,
+      "trace_magnitude": 0.34350825640688093
+    },
+    {
+      "connection_change_norm": 0.35698570347822306,
+      "cycle": 4,
+      "mean_contractile_capacity_after": 1.4200000000000006,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.02,
+      "mean_remodeling_bias_after": 0.16000000000000003,
+      "mean_stiffness_after": 1.1800000000000002,
+      "mean_transfer_gain_after": 1.7091120000000004,
+      "mean_transfer_gain_before": 1.5030062080000006,
+      "prestress_change_norm": 0.15635586356287182,
+      "source_revision": 3,
+      "target_revision": 4,
+      "trace_magnitude": 0.3897254784567378
+    },
+    {
+      "connection_change_norm": 0.3970639873811275,
+      "cycle": 5,
+      "mean_contractile_capacity_after": 1.5300000000000005,
+      "mean_fatigue_after": 0.0,
+      "mean_reflex_gain_after": 1.03,
+      "mean_remodeling_bias_after": 0.20000000000000004,
+      "mean_stiffness_after": 1.2300000000000002,
+      "mean_transfer_gain_after": 1.9383570000000008,
+      "mean_transfer_gain_before": 1.7091120000000004,
+      "prestress_change_norm": 0.2062767119092846,
+      "source_revision": 4,
+      "target_revision": 5,
+      "trace_magnitude": 0.44744820029932647
+    }
+  ],
+  "energy_dissipation_tested": false,
+  "history_conditioned_connection_change_tested": true,
+  "human_foot_model_claimed": false,
+  "injury_or_failure_threshold_tested": false,
+  "interpretation": "This controlled computational benchmark tests whether repeated admissible history changes the adaptive connection state of a prestressed ROIF network and thereby changes redistribution of the same subsequent local perturbation. The implemented engine updates stiffness, contractile capacity, reflex gain, fatigue, and remodeling bias, and derives effective transfer gain from the resulting connection state. Q8-v1 therefore tests history-conditioned strengthening of redistribution capacity and matched-event redistribution geometry. Reduced source concentration and increased downstream distribution, if observed, indicate broader redistribution within this computational network. This benchmark does not yet model physical energy dissipation, literal absorption, injury or failure thresholds, biological tissue adaptation, human-foot biomechanics, predictive preconfiguration, or universal tensegrity stability.",
+  "literal_absorption_tested": false,
+  "matched_challenge_delta": -0.4,
+  "matched_event_redistribution_change_tested": true,
+  "mechanism_under_test": "history_conditioned_redistribution_capacity",
+  "predictive_preconfiguration_tested": false,
+  "universal_tensegrity_claimed": false,
+  "whole_system_stability_claimed": false
+}

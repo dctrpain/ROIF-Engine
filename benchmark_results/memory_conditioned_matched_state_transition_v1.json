@@ -1,0 +1,306 @@
+{
+  "automatic_topology_mapping_tested": false,
+  "benchmark_version": "roif_memory_conditioned_matched_state_transition_v1",
+  "biological_learning_claimed": false,
+  "central_results": {
+    "adaptive_connection_state_equal_across_conditions": true,
+    "matched_current_state_established": true,
+    "memory_derived_semantic_signal_differs": true,
+    "memory_derived_transition_modifier_differs": true,
+    "physical_transition_differs_by_memory_condition": true,
+    "reinforced_transition_distance_from_unreinforced": 0.022876762849865492,
+    "same_physical_probe_applied": true,
+    "source_system_image_remained_immutable": true,
+    "structured_memory_conditions_differ": true
+  },
+  "claim_scope": "computational_model_only",
+  "clinical_validity_claimed": false,
+  "conditioning_memory_derivation_tested": true,
+  "connection_update_memory_modulation_tested": false,
+  "experimental_design": {
+    "different_conditioning_history": true,
+    "matched_current_system_image": true,
+    "modifier_values_set_manually": false,
+    "same_explicit_binding": true,
+    "same_physical_probe_event": true,
+    "same_physical_topology": true,
+    "same_query_cue": true,
+    "same_semantic_attractor": true
+  },
+  "explicit_semantic_physical_binding_used": true,
+  "future_temporal_image_prediction_tested": false,
+  "general_history_conditioned_operator_claimed": false,
+  "interpretation": "This controlled computational benchmark evaluates an end-to-end Memory-2.0-to-SystemEvolution path under matched current physical state. Reinforced and unreinforced conditioning histories are converted into ConditioningMemory objects using the same cue, trajectory and semantic attractor. Existing conditioned-response semantics derive memory-specific response strengths. An explicit semantic-to-physical binding then maps the semantic attractor to the existing A_B PRESTRESS_TRANSFER channel, producing bounded TransitionModifierSet objects without manually specifying their numeric modifier values. The same physical SystemImage and the same subsequent probe event are used in all physical conditions. If the derived memory signals and modifiers differ and the same probe consequently produces different prestress redistribution while adaptive connection state and topology remain matched, the result demonstrates a structured-memory-conditioned contribution to the next physical transition through the implemented PRESTRESS_TRANSFER integration channel. It does not establish a general history-conditioned operator across ROIF, whole-SystemImage memory conditioning, predictive stabilization, Temporal-Image prediction, biological learning, clinical validity, or universal memory dynamics.",
+  "mechanism_under_test": "structured_conditioning_memory_to_prestress_transfer_transition",
+  "memory_conditions": {
+    "reinforced": {
+      "conditioned_response_strength": 0.8839709374999999,
+      "derivation": {
+        "applied_binding_ids": [
+          "sensitization_to_A_B_transfer"
+        ],
+        "derivation_id": "reinforced_derivation",
+        "derivation_mode": "conditioning_memory",
+        "modifier_set_id": "reinforced_derivation::modifier_set",
+        "modifiers": [
+          {
+            "channel": "prestress_transfer",
+            "evidence": [
+              {
+                "attractor_id": "sensitization_attractor",
+                "context_id": null,
+                "cue_id": "matched_memory_probe_cue",
+                "order_index": null,
+                "relation": "conditioned_response",
+                "source_id": "reinforced_memory",
+                "source_kind": "conditioning_memory"
+              }
+            ],
+            "modifier_id": "reinforced_derivation::sensitization_to_A_B_transfer::modifier",
+            "target_id": "A_B",
+            "value": 0.44198546874999994
+          }
+        ],
+        "semantic_signal_by_target": {
+          "sensitization_attractor": 0.8839709374999999
+        }
+      },
+      "memory_id": "reinforced_memory",
+      "observation_count": 5,
+      "predicted_attractor_id": "sensitization_attractor"
+    },
+    "unreinforced": {
+      "conditioned_response_strength": 0.0,
+      "derivation": {
+        "applied_binding_ids": [
+          "sensitization_to_A_B_transfer"
+        ],
+        "derivation_id": "unreinforced_derivation",
+        "derivation_mode": "conditioning_memory",
+        "modifier_set_id": "unreinforced_derivation::modifier_set",
+        "modifiers": [
+          {
+            "channel": "prestress_transfer",
+            "evidence": [
+              {
+                "attractor_id": "sensitization_attractor",
+                "context_id": null,
+                "cue_id": "matched_memory_probe_cue",
+                "order_index": null,
+                "relation": "conditioned_response",
+                "source_id": "unreinforced_memory",
+                "source_kind": "conditioning_memory"
+              }
+            ],
+            "modifier_id": "unreinforced_derivation::sensitization_to_A_B_transfer::modifier",
+            "target_id": "A_B",
+            "value": 0.0
+          }
+        ],
+        "semantic_signal_by_target": {
+          "sensitization_attractor": 0.0
+        }
+      },
+      "memory_id": "unreinforced_memory",
+      "observation_count": 5,
+      "predicted_attractor_id": "sensitization_attractor"
+    }
+  },
+  "physical_results": {
+    "no_memory_control": {
+      "active_transition_modifier_count": 0,
+      "adaptive_connection_signature": [
+        [
+          "A_B",
+          "A",
+          "B",
+          1.1024999999999998,
+          0.71625,
+          1.3475000000000001,
+          0.34,
+          0.12250000000000001
+        ],
+        [
+          "B_C",
+          "B",
+          "C",
+          1.04,
+          0.7712499999999999,
+          1.1300000000000001,
+          0.28500000000000003,
+          0.07
+        ],
+        [
+          "C_D",
+          "C",
+          "D",
+          0.942375,
+          0.758625,
+          1.002375,
+          0.17500000000000002,
+          0.047500000000000014
+        ]
+      ],
+      "connection_change_norm": 0.15982179690654846,
+      "prestress_after": {
+        "A": 0.1,
+        "B": 0.1986895947526565,
+        "C": 0.20841711756100126,
+        "D": -0.07570122244445689
+      },
+      "prestress_before": {
+        "A": 0.0,
+        "B": 0.15128507891007836,
+        "C": 0.18883259872205335,
+        "D": -0.08264825346791976
+      },
+      "prestress_change_norm": 0.11260107788322145,
+      "prestress_delta": {
+        "A": 0.1,
+        "B": 0.04740451584257813,
+        "C": 0.019584518838947906,
+        "D": 0.006947031023462877
+      },
+      "trace_magnitude": 0.19550449996586097,
+      "transition_modifiers_applied": false
+    },
+    "reinforced_memory": {
+      "active_transition_modifier_count": 1,
+      "adaptive_connection_signature": [
+        [
+          "A_B",
+          "A",
+          "B",
+          1.1024999999999998,
+          0.71625,
+          1.3475000000000001,
+          0.34,
+          0.12250000000000001
+        ],
+        [
+          "B_C",
+          "B",
+          "C",
+          1.04,
+          0.7712499999999999,
+          1.1300000000000001,
+          0.28500000000000003,
+          0.07
+        ],
+        [
+          "C_D",
+          "C",
+          "D",
+          0.942375,
+          0.758625,
+          1.002375,
+          0.17500000000000002,
+          0.047500000000000014
+        ]
+      ],
+      "connection_change_norm": 0.15982179690654846,
+      "prestress_after": {
+        "A": 0.1,
+        "B": 0.2196417019082052,
+        "C": 0.21707319030027686,
+        "D": -0.07263073568113086
+      },
+      "prestress_before": {
+        "A": 0.0,
+        "B": 0.15128507891007836,
+        "C": 0.18883259872205335,
+        "D": -0.08264825346791976
+      },
+      "prestress_change_norm": 0.12478184797078742,
+      "prestress_delta": {
+        "A": 0.1,
+        "B": 0.06835662299812684,
+        "C": 0.028240591578223506,
+        "D": 0.010017517786788901
+      },
+      "trace_magnitude": 0.2027646822043788,
+      "transition_modifiers_applied": true
+    },
+    "unreinforced_memory": {
+      "active_transition_modifier_count": 0,
+      "adaptive_connection_signature": [
+        [
+          "A_B",
+          "A",
+          "B",
+          1.1024999999999998,
+          0.71625,
+          1.3475000000000001,
+          0.34,
+          0.12250000000000001
+        ],
+        [
+          "B_C",
+          "B",
+          "C",
+          1.04,
+          0.7712499999999999,
+          1.1300000000000001,
+          0.28500000000000003,
+          0.07
+        ],
+        [
+          "C_D",
+          "C",
+          "D",
+          0.942375,
+          0.758625,
+          1.002375,
+          0.17500000000000002,
+          0.047500000000000014
+        ]
+      ],
+      "connection_change_norm": 0.15982179690654846,
+      "prestress_after": {
+        "A": 0.1,
+        "B": 0.1986895947526565,
+        "C": 0.20841711756100126,
+        "D": -0.07570122244445689
+      },
+      "prestress_before": {
+        "A": 0.0,
+        "B": 0.15128507891007836,
+        "C": 0.18883259872205335,
+        "D": -0.08264825346791976
+      },
+      "prestress_change_norm": 0.11260107788322145,
+      "prestress_delta": {
+        "A": 0.1,
+        "B": 0.04740451584257813,
+        "C": 0.019584518838947906,
+        "D": 0.006947031023462877
+      },
+      "trace_magnitude": 0.19550449996586097,
+      "transition_modifiers_applied": false
+    }
+  },
+  "physical_source": {
+    "binding": {
+      "binding_id": "sensitization_to_A_B_transfer",
+      "channel": "prestress_transfer",
+      "physical_target_id": "A_B",
+      "polarity": 1.0,
+      "scale": 0.5,
+      "semantic_target_id": "sensitization_attractor"
+    },
+    "image_id": "truth_image_4",
+    "probe_event_id": "E5",
+    "revision": 4
+  },
+  "predictive_preconfiguration_tested": false,
+  "prestress_transfer_channel_tested": true,
+  "response_distances": {
+    "reinforced_vs_no_memory": 0.022876762849865492,
+    "reinforced_vs_unreinforced": 0.022876762849865492,
+    "unreinforced_vs_no_memory": 0.0
+  },
+  "stabilization_tested": false,
+  "structured_memory_to_transition_path_tested": true,
+  "universal_memory_dynamics_claimed": false,
+  "whole_system_history_operator_tested": false
+}

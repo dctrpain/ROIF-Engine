@@ -1,0 +1,313 @@
+{
+  "architecture_under_test": "history_conditioned_predictive_preconfiguration",
+  "benchmark_version": "roif_predictive_stabilization_v1",
+  "biological_truth_claimed": false,
+  "central_results": {
+    "history_conditioned_beats_no_control_all_conditions": true,
+    "history_conditioned_beats_opposite_sham_all_conditions": true,
+    "history_conditioned_beats_stale_all_conditions": true,
+    "maximum_relative_improvement_vs_no_control": 0.984960991355722,
+    "mean_relative_improvement_vs_no_control": 0.8186907412265092,
+    "minimum_relative_improvement_vs_no_control": 0.6711112323238057
+  },
+  "challenge_factors": [
+    0.8,
+    1.0,
+    1.2
+  ],
+  "claim_scope": "computational_model_only",
+  "clinical_validation_claimed": false,
+  "conditions": {
+    "challenge_080pct": {
+      "absolute_improvement_vs_no_preconfiguration": 0.08933194348506322,
+      "condition": "challenge_080pct",
+      "history_conditioned_beats_no_preconfiguration": true,
+      "history_conditioned_beats_opposite_sham": true,
+      "history_conditioned_beats_stale_control": true,
+      "history_conditioned_predictive": {
+        "action": [
+          -0.08000000000000002,
+          -0.0379236126740625,
+          -0.015667615071158325,
+          -0.005557624818770302
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.08000000000000002,
+        "euclidean_deviation": 0.0013639767280863022,
+        "peak_abs_node_deviation": 0.001071388557469466,
+        "post_prestress": {
+          "A": 0.0,
+          "B": 0.15235646746754783,
+          "C": 0.18962816189877094,
+          "D": -0.08236605087130602
+        }
+      },
+      "no_preconfiguration": {
+        "euclidean_deviation": 0.09069592021314953,
+        "peak_abs_node_deviation": 0.08000000000000002,
+        "post_prestress": {
+          "A": 0.08000000000000002,
+          "B": 0.1902800801416103,
+          "C": 0.20529577696992926,
+          "D": -0.07680842605253572
+        }
+      },
+      "opposite_same_budget_sham": {
+        "action": [
+          0.08000000000000002,
+          0.0379236126740625,
+          0.015667615071158325,
+          0.005557624818770302
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.08000000000000002,
+        "euclidean_deviation": 0.1807726831186013,
+        "peak_abs_node_deviation": 0.16000000000000003,
+        "post_prestress": {
+          "A": 0.16000000000000003,
+          "B": 0.22820369281567282,
+          "C": 0.2209633920410876,
+          "D": -0.07125080123376543
+        }
+      },
+      "realised_event_id": "E5__realised_0.80",
+      "reference_prestress": {
+        "A": 0.0,
+        "B": 0.15128507891007836,
+        "C": 0.18883259872205335,
+        "D": -0.08264825346791976
+      },
+      "relative_improvement_vs_no_preconfiguration": 0.984960991355722,
+      "stale_history_blind": {
+        "action": [
+          -0.07249417802035227,
+          -0.04704201217927592,
+          -0.02349477675176808,
+          -0.009705692276155394
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.07249417802035227,
+        "euclidean_deviation": 0.013619105602974073,
+        "peak_abs_node_deviation": 0.00804701094774396,
+        "post_prestress": {
+          "A": 0.007505821979647748,
+          "B": 0.1432380679623344,
+          "C": 0.18180100021816117,
+          "D": -0.08651411832869112
+        }
+      }
+    },
+    "challenge_100pct": {
+      "absolute_improvement_vs_no_preconfiguration": 0.09008086230657716,
+      "condition": "challenge_100pct",
+      "history_conditioned_beats_no_preconfiguration": true,
+      "history_conditioned_beats_opposite_sham": true,
+      "history_conditioned_beats_stale_control": true,
+      "history_conditioned_predictive": {
+        "action": [
+          -0.08000000000000002,
+          -0.0379236126740625,
+          -0.015667615071158325,
+          -0.005557624818770302
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.08000000000000002,
+        "euclidean_deviation": 0.022520215576644284,
+        "peak_abs_node_deviation": 0.01999999999999999,
+        "post_prestress": {
+          "A": 0.01999999999999999,
+          "B": 0.160765982078594,
+          "C": 0.19274950248984293,
+          "D": -0.08125884726322719
+        }
+      },
+      "no_preconfiguration": {
+        "euclidean_deviation": 0.11260107788322145,
+        "peak_abs_node_deviation": 0.1,
+        "post_prestress": {
+          "A": 0.1,
+          "B": 0.1986895947526565,
+          "C": 0.20841711756100126,
+          "D": -0.07570122244445689
+        }
+      },
+      "opposite_same_budget_sham": {
+        "action": [
+          0.08000000000000002,
+          0.0379236126740625,
+          0.015667615071158325,
+          0.005557624818770302
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.08000000000000002,
+        "euclidean_deviation": 0.2026819401897986,
+        "peak_abs_node_deviation": 0.18000000000000002,
+        "post_prestress": {
+          "A": 0.18000000000000002,
+          "B": 0.23661320742671899,
+          "C": 0.22408473263215958,
+          "D": -0.07014359762568659
+        }
+      },
+      "realised_event_id": "E5__realised_1.00",
+      "reference_prestress": {
+        "A": 0.0,
+        "B": 0.15128507891007836,
+        "C": 0.18883259872205335,
+        "D": -0.08264825346791976
+      },
+      "relative_improvement_vs_no_preconfiguration": 0.8,
+      "stale_history_blind": {
+        "action": [
+          -0.07249417802035227,
+          -0.04704201217927592,
+          -0.02349477675176808,
+          -0.009705692276155394
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.07249417802035227,
+        "euclidean_deviation": 0.02792135348678248,
+        "peak_abs_node_deviation": 0.027505821979647738,
+        "post_prestress": {
+          "A": 0.027505821979647738,
+          "B": 0.15164758257338057,
+          "C": 0.18492234080923317,
+          "D": -0.08540691472061228
+        }
+      }
+    },
+    "challenge_120pct": {
+      "absolute_improvement_vs_no_preconfiguration": 0.09005317635092779,
+      "condition": "challenge_120pct",
+      "history_conditioned_beats_no_preconfiguration": true,
+      "history_conditioned_beats_opposite_sham": true,
+      "history_conditioned_beats_stale_control": true,
+      "history_conditioned_predictive": {
+        "action": [
+          -0.08000000000000002,
+          -0.0379236126740625,
+          -0.015667615071158325,
+          -0.005557624818770302
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.08000000000000002,
+        "euclidean_deviation": 0.04413199596262078,
+        "peak_abs_node_deviation": 0.03999999999999998,
+        "post_prestress": {
+          "A": 0.03999999999999998,
+          "B": 0.16856417324531053,
+          "C": 0.19543427790350149,
+          "D": -0.08030650228895983
+        }
+      },
+      "no_preconfiguration": {
+        "euclidean_deviation": 0.13418517231354857,
+        "peak_abs_node_deviation": 0.12,
+        "post_prestress": {
+          "A": 0.12,
+          "B": 0.20648778591937303,
+          "C": 0.2111018929746598,
+          "D": -0.07474887747018953
+        }
+      },
+      "opposite_same_budget_sham": {
+        "action": [
+          0.08000000000000002,
+          0.0379236126740625,
+          0.015667615071158325,
+          0.005557624818770302
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.08000000000000002,
+        "euclidean_deviation": 0.22426058810629587,
+        "peak_abs_node_deviation": 0.2,
+        "post_prestress": {
+          "A": 0.2,
+          "B": 0.24441139859343552,
+          "C": 0.22676950804581814,
+          "D": -0.06919125265141923
+        }
+      },
+      "realised_event_id": "E5__realised_1.20",
+      "reference_prestress": {
+        "A": 0.0,
+        "B": 0.15128507891007836,
+        "C": 0.18883259872205335,
+        "D": -0.08264825346791976
+      },
+      "relative_improvement_vs_no_preconfiguration": 0.6711112323238057,
+      "stale_history_blind": {
+        "action": [
+          -0.07249417802035227,
+          -0.04704201217927592,
+          -0.02349477675176808,
+          -0.009705692276155394
+        ],
+        "action_l2_norm": 0.09008086230657716,
+        "action_peak_abs": 0.07249417802035227,
+        "euclidean_deviation": 0.04825105851610026,
+        "peak_abs_node_deviation": 0.04750582197964773,
+        "post_prestress": {
+          "A": 0.04750582197964773,
+          "B": 0.1594457737400971,
+          "C": 0.18760711622289172,
+          "D": -0.08445456974634492
+        }
+      }
+    }
+  },
+  "controller": {
+    "gain": 0.8,
+    "history_conditioned_action": [
+      -0.08000000000000002,
+      -0.0379236126740625,
+      -0.015667615071158325,
+      -0.005557624818770302
+    ],
+    "history_conditioned_action_norm": 0.09008086230657716,
+    "max_abs_action_per_node": 0.12,
+    "opposite_same_budget_action": [
+      0.08000000000000002,
+      0.0379236126740625,
+      0.015667615071158325,
+      0.005557624818770302
+    ],
+    "stale_history_blind_action": [
+      -0.07249417802035227,
+      -0.04704201217927592,
+      -0.02349477675176808,
+      -0.009705692276155394
+    ],
+    "stale_history_blind_action_norm": 0.09008086230657716
+  },
+  "external_predictive_validity_claimed": false,
+  "history_conditioned_prediction": [
+    0.1,
+    0.04740451584257813,
+    0.019584518838947906,
+    0.006947031023462877
+  ],
+  "history_event_count": 4,
+  "history_sequence": [
+    "E1",
+    "E2",
+    "E3",
+    "E4"
+  ],
+  "interpretation": "This controlled computational benchmark evaluates whether a bounded pre-event configuration derived from the current history-conditioned ROIF SystemImage reduces post-event prestress displacement relative to no preconfiguration, a stale/history-blind control, and an opposite same-budget sham action. The benchmark evaluates an internal stabilization capability of the implemented computational architecture. It does not establish external predictive validity, biological or clinical validity, universal stability, or topology-independent robustness.",
+  "nominal_expected_event": "E5",
+  "pre_event_prestress": {
+    "A": 0.0,
+    "B": 0.15128507891007836,
+    "C": 0.18883259872205335,
+    "D": -0.08264825346791976
+  },
+  "stale_prediction": [
+    0.10000000000000003,
+    0.06489074497274691,
+    0.03240919118383835,
+    0.013388236878043622
+  ],
+  "topology_independent_robustness_claimed": false,
+  "universal_stability_claimed": false
+}

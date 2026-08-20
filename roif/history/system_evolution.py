@@ -59,6 +59,10 @@ from roif.history.system_image import (
     SystemMeasure,
     build_system_image,
 )
+from roif.history.transition_modifiers import (
+    TransitionChannel,
+    TransitionModifierSet,
+)
 
 
 SCHEMA_VERSION = "system_evolution_v1"
@@ -648,6 +652,199 @@ def _build_prestress_connections(
     )
 
 
+def _build_modified_prestress_connections(
+    *,
+    adaptive_connections: Sequence[
+        AdaptiveConnectionState
+    ],
+    transition_modifiers: TransitionModifierSet,
+) -> tuple[
+    PrestressConnection,
+    ...,
+]:
+    """
+    Build prestress-transfer connections with explicit bounded memory-derived
+    modifiers.
+
+    Current integration scope
+    -------------------------
+
+    Only:
+
+        TransitionChannel.PRESTRESS_TRANSFER
+
+    is executable in SystemEvolution at this stage.
+
+    For one adaptive connection with ordinary transfer gain g and modifier m:
+
+        g_modified = g * (1 + m)
+
+    where:
+
+        m in [-1, 1]
+
+    Therefore:
+
+        m =  0  -> unchanged transfer
+        m = -1  -> zero transfer through the existing path
+        m = +1  -> twice the existing transfer gain
+
+    This is a local integration rule for the PRESTRESS_TRANSFER channel only.
+    It is NOT a general definition of the ROIF history-conditioned transition
+    operator.
+
+    Active modifiers for unsupported channels are rejected rather than silently
+    ignored.
+    """
+
+    if not isinstance(
+        transition_modifiers,
+        TransitionModifierSet,
+    ):
+        raise SystemEvolutionError(
+            "transition_modifiers must be a TransitionModifierSet"
+        )
+
+    active = (
+        transition_modifiers.active_modifiers
+    )
+
+    unsupported = tuple(
+        modifier
+        for modifier in active
+        if modifier.channel
+        != TransitionChannel.PRESTRESS_TRANSFER
+    )
+
+    if unsupported:
+        unsupported_channels = ", ".join(
+            sorted(
+                {
+                    modifier.channel.value
+                    for modifier
+                    in unsupported
+                }
+            )
+        )
+
+        raise SystemEvolutionError(
+            "active transition modifier channels are not yet "
+            f"supported by SystemEvolution: {unsupported_channels}"
+        )
+
+    adaptive_by_id = {
+        connection.connection_id:
+        connection
+        for connection
+        in adaptive_connections
+    }
+
+    for modifier in active:
+        if (
+            modifier.target_id
+            not in adaptive_by_id
+        ):
+            raise SystemEvolutionError(
+                "unknown PRESTRESS_TRANSFER modifier target: "
+                f"{modifier.target_id}"
+            )
+
+    modifier_by_target = {
+        modifier.target_id:
+        modifier
+        for modifier
+        in active
+    }
+
+    connections = []
+
+    for connection in adaptive_connections:
+        base_gain = (
+            effective_transfer_gain(
+                connection
+            )
+        )
+
+        modifier = (
+            modifier_by_target.get(
+                connection.connection_id
+            )
+        )
+
+        if modifier is None:
+            modified_gain = (
+                base_gain
+            )
+
+            modifier_metadata = {}
+
+        else:
+            modified_gain = (
+                base_gain
+                * (
+                    1.0
+                    + modifier.value
+                )
+            )
+
+            modifier_metadata = {
+                "transition_modifier_set_id": (
+                    transition_modifiers.modifier_set_id
+                ),
+                "transition_modifier_id": (
+                    modifier.modifier_id
+                ),
+                "transition_modifier_channel": (
+                    modifier.channel.value
+                ),
+                "transition_modifier_value": (
+                    modifier.value
+                ),
+                "memory_source_ids": (
+                    transition_modifiers.source_memory_ids
+                ),
+                "context_source_ids": (
+                    transition_modifiers.source_context_ids
+                ),
+            }
+
+        connections.append(
+            PrestressConnection(
+                connection_id=(
+                    f"prestress::{connection.connection_id}"
+                ),
+                source_node_id=(
+                    connection.source_node_id
+                ),
+                target_node_id=(
+                    connection.target_node_id
+                ),
+                transfer_gain=(
+                    modified_gain
+                ),
+                attenuation=1.0,
+                capacity=max(
+                    0.0,
+                    connection.contractile_capacity,
+                ),
+                enabled=True,
+                metadata={
+                    "schema_version": (
+                        SCHEMA_VERSION
+                    ),
+                    "source_adaptive_connection_id": (
+                        connection.connection_id
+                    ),
+                    **modifier_metadata,
+                },
+            )
+        )
+
+    return tuple(
+        connections
+    )
+
+
 def _connection_change_norm(
     records: Sequence[
         ConnectionEvolutionRecord
@@ -711,6 +908,7 @@ def evolve_system(
     source_image: SystemImage,
     event: SystemEvent,
     config: SystemEvolutionConfig | None = None,
+    transition_modifiers: TransitionModifierSet | None = None,
     target_image_id: str | None = None,
     metadata: Mapping[str, Any] | None = None,
 ) -> SystemEvolutionResult:
@@ -751,11 +949,33 @@ def evolve_system(
         ),
     )
 
-    prestress_connections = (
-        _build_prestress_connections(
-            adaptive_connections=target_connections,
+    if (
+        transition_modifiers is None
+        or transition_modifiers.is_zero
+    ):
+        # Exact backward-compatible path.
+        #
+        # None and the canonical zero modifier set deliberately use the
+        # pre-integration construction unchanged.
+        prestress_connections = (
+            _build_prestress_connections(
+                adaptive_connections=target_connections,
+            )
         )
-    )
+
+        active_transition_modifiers = None
+
+    else:
+        prestress_connections = (
+            _build_modified_prestress_connections(
+                adaptive_connections=target_connections,
+                transition_modifiers=transition_modifiers,
+            )
+        )
+
+        active_transition_modifiers = (
+            transition_modifiers
+        )
 
     prestress_result = (
         redistribute_prestress(
@@ -935,6 +1155,32 @@ def evolve_system(
         "causal_truth_inferred": False,
     }
 
+    if active_transition_modifiers is not None:
+        merged_metadata.update(
+            {
+                "transition_modifiers_applied": True,
+                "transition_modifier_set_id": (
+                    active_transition_modifiers.modifier_set_id
+                ),
+                "active_transition_modifier_count": (
+                    len(
+                        active_transition_modifiers.active_modifiers
+                    )
+                ),
+                "transition_modifier_channels": tuple(
+                    channel.value
+                    for channel
+                    in active_transition_modifiers.channels
+                ),
+                "transition_modifier_source_memory_ids": (
+                    active_transition_modifiers.source_memory_ids
+                ),
+                "transition_modifier_source_context_ids": (
+                    active_transition_modifiers.source_context_ids
+                ),
+            }
+        )
+
     if metadata:
         merged_metadata.update(
             dict(
@@ -961,6 +1207,7 @@ def evolve_sequence(
     source_image: SystemImage,
     events: Iterable[SystemEvent],
     config: SystemEvolutionConfig | None = None,
+    transition_modifiers: TransitionModifierSet | None = None,
 ) -> tuple[
     SystemEvolutionResult,
     ...,
@@ -999,6 +1246,9 @@ def evolve_sequence(
             source_image=current,
             event=event,
             config=config,
+            transition_modifiers=(
+                transition_modifiers
+            ),
             target_image_id=(
                 f"{sequence_id}::image_{index}"
             ),

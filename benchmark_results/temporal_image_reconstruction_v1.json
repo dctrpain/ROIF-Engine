@@ -1,0 +1,153 @@
+{
+  "benchmark_version": "roif_temporal_image_reconstruction_v1",
+  "biological_truth_claimed": false,
+  "causal_truth_claimed": false,
+  "claim_scope": "computational_model_only",
+  "clinical_validation_claimed": false,
+  "external_predictive_validity_claimed": false,
+  "ground_truth_source": "synthetic_roif_generated_trajectory",
+  "interpretation_note": "This benchmark evaluates controlled synthetic reconstruction and operator/history dependence. It is not empirical forecasting validation.",
+  "operator_evolution": {
+    "abc_final_revision": 3,
+    "bac_final_revision": 3,
+    "c_response_distance": 9.896623991806353e-05,
+    "history_changes_response_to_c": true,
+    "interpretation": "A non-zero C-response distance means that the same event C acts differently after AB versus BA history in this computational model.",
+    "post_c_state_distance": 0.005836506871609373,
+    "pre_c_state_distance": 0.005851093109146412,
+    "same_event_c_used": true,
+    "trajectory_distance": 0.5556140263347483
+  },
+  "temporal_reconstruction": {
+    "full_roif_best_or_tied": true,
+    "future_slice_indices": [
+      5
+    ],
+    "hidden_slice_indices": [
+      1,
+      3
+    ],
+    "methods": {
+      "full_roif": {
+        "future_slice_rmse": 0.0,
+        "mean_all_target_rmse": 0.0,
+        "mean_hidden_slice_rmse": 0.0,
+        "per_slice": {
+          "1": {
+            "euclidean_distance": 0.0,
+            "rmse": 0.0
+          },
+          "3": {
+            "euclidean_distance": 0.0,
+            "rmse": 0.0
+          },
+          "5": {
+            "euclidean_distance": 0.0,
+            "rmse": 0.0
+          }
+        }
+      },
+      "history_aware_fixed_coupling": {
+        "future_slice_rmse": 0.10595295262400659,
+        "mean_all_target_rmse": 0.062329718533164,
+        "mean_hidden_slice_rmse": 0.04051810148774271,
+        "per_slice": {
+          "1": {
+            "euclidean_distance": 0.0,
+            "rmse": 0.0
+          },
+          "3": {
+            "euclidean_distance": 0.41320518027946584,
+            "rmse": 0.08103620297548542
+          },
+          "5": {
+            "euclidean_distance": 0.5402561729525814,
+            "rmse": 0.10595295262400659
+          }
+        }
+      },
+      "linear_interpolation": {
+        "future_slice_rmse": 0.0679866511763248,
+        "mean_all_target_rmse": 0.054229841117239,
+        "mean_hidden_slice_rmse": 0.0473514360876961,
+        "per_slice": {
+          "1": {
+            "euclidean_distance": 0.29928594708726847,
+            "rmse": 0.05869480324392614
+          },
+          "3": {
+            "euclidean_distance": 0.18360584612833952,
+            "rmse": 0.03600806893146606
+          },
+          "5": {
+            "euclidean_distance": 0.34666526101190603,
+            "rmse": 0.0679866511763248
+          }
+        }
+      },
+      "memory_free": {
+        "future_slice_rmse": 0.8137153737057264,
+        "mean_all_target_rmse": 0.4098266249510687,
+        "mean_hidden_slice_rmse": 0.20788225057373982,
+        "per_slice": {
+          "1": {
+            "euclidean_distance": 0.0,
+            "rmse": 0.0
+          },
+          "3": {
+            "euclidean_distance": 2.1199913044101684,
+            "rmse": 0.41576450114747965
+          },
+          "5": {
+            "euclidean_distance": 4.149150569035944,
+            "rmse": 0.8137153737057264
+          }
+        }
+      }
+    },
+    "note": "The synthetic truth and full replay share the same deterministic transition model; this tests internal reconstruction consistency, not external predictive validity.",
+    "observed_slice_indices": [
+      0,
+      2,
+      4
+    ],
+    "ranking_by_mean_all_target_rmse": [
+      {
+        "mean_all_target_rmse": 0.0,
+        "method": "full_roif",
+        "rank": 1
+      },
+      {
+        "mean_all_target_rmse": 0.054229841117239,
+        "method": "linear_interpolation",
+        "rank": 2
+      },
+      {
+        "mean_all_target_rmse": 0.062329718533164,
+        "method": "history_aware_fixed_coupling",
+        "rank": 3
+      },
+      {
+        "mean_all_target_rmse": 0.4098266249510687,
+        "method": "memory_free",
+        "rank": 4
+      }
+    ]
+  },
+  "trajectory": {
+    "observed_slice_indices": [
+      0,
+      2,
+      4
+    ],
+    "slice_count": 6,
+    "vector_dimension": 26,
+    "withheld_future_slice_indices": [
+      5
+    ],
+    "withheld_intermediate_slice_indices": [
+      1,
+      3
+    ]
+  }
+}

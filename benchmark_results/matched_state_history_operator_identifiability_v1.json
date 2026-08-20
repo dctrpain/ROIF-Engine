@@ -1,0 +1,165 @@
+{
+  "absence_of_architectural_history_effect_claimed": false,
+  "benchmark_version": "roif_matched_state_history_operator_identifiability_v1",
+  "biological_history_mechanism_tested": false,
+  "central_results": {
+    "different_canonical_event_order_established": true,
+    "different_ordered_history_established": true,
+    "history_specific_transition_effect_detected": false,
+    "matched_current_state_established": true,
+    "post_probe_current_state_equal": true,
+    "post_probe_histories_remain_different": true,
+    "same_probe_applied": true,
+    "transition_response_distance": 0.0
+  },
+  "claim_scope": "computational_model_only",
+  "common_probe_event_id": "matched_history_operator_probe_C",
+  "experimental_question": "same_current_state_different_history_same_event",
+  "external_validity_tested": false,
+  "full_predictive_roif_tested": false,
+  "future_temporal_image_prediction_tested": false,
+  "history_conditioned_operator_effect_claimed": false,
+  "interpretation": "The two source SystemImages had explicitly matched current measures, prestress, reserve, adaptive connection topology and state, and context, while retaining different ordered historical traces. Applying the same probe event produced the same represented current-state transition within numeric tolerance. Therefore the tested implementation does not yet show an independently history-conditioned transition effect beyond state-mediated historical reconfiguration. This null result is a limitation/property of the current implementation and does not reject the broader ROIF architectural concept of a history-conditioned effective transition operator.",
+  "matched_state_operator_identifiability_test_performed": true,
+  "predictive_preconfiguration_tested": false,
+  "response_comparison": {
+    "generated_trace_semantics_equal": true,
+    "history_specific_transition_effect_detected": false,
+    "numeric_response_differs": false,
+    "numeric_response_distance": 0.0,
+    "target_current_state_equal": true
+  },
+  "responses": {
+    "history_A_then_D": {
+      "connection_delta": [
+        [
+          "A_B",
+          0.05325000000000002,
+          -0.1342500000000001,
+          0.12325000000000008,
+          0.13,
+          0.042500000000000024
+        ],
+        [
+          "B_C",
+          0.05049999999999999,
+          -0.12450000000000006,
+          0.12050000000000005,
+          0.135,
+          0.04000000000000001
+        ],
+        [
+          "C_D",
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "generated_trace_semantics": {
+        "magnitude": 0.24841902789033543,
+        "persistence": 1.0,
+        "relation_count": 5,
+        "source_event": "matched_history_operator_probe_C",
+        "trace_type": "temporal_reconstruction"
+      },
+      "prestress_delta": [
+        [
+          "A",
+          0.1
+        ],
+        [
+          "B",
+          0.035392022896528125
+        ],
+        [
+          "C",
+          0.011541423367307208
+        ],
+        [
+          "D",
+          0.004093979885181072
+        ]
+      ]
+    },
+    "history_D_then_A": {
+      "connection_delta": [
+        [
+          "A_B",
+          0.05325000000000002,
+          -0.1342500000000001,
+          0.12325000000000008,
+          0.13,
+          0.042500000000000024
+        ],
+        [
+          "B_C",
+          0.05049999999999999,
+          -0.12450000000000006,
+          0.12050000000000005,
+          0.135,
+          0.04000000000000001
+        ],
+        [
+          "C_D",
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "generated_trace_semantics": {
+        "magnitude": 0.24841902789033543,
+        "persistence": 1.0,
+        "relation_count": 5,
+        "source_event": "matched_history_operator_probe_C",
+        "trace_type": "temporal_reconstruction"
+      },
+      "prestress_delta": [
+        [
+          "A",
+          0.1
+        ],
+        [
+          "B",
+          0.035392022896528125
+        ],
+        [
+          "C",
+          0.011541423367307208
+        ],
+        [
+          "D",
+          0.004093979885181072
+        ]
+      ]
+    }
+  },
+  "source_control": {
+    "canonical_event_orders_differ": true,
+    "current_state_matched": true,
+    "history_A_then_D": [
+      "baseline",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "A",
+      "D"
+    ],
+    "history_D_then_A": [
+      "baseline",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "D",
+      "A"
+    ],
+    "natural_pre_matching_prestress_distance": 3.469446951953614e-18,
+    "ordered_histories_differ": true
+  },
+  "state_mediated_history_confound_removed": true
+}

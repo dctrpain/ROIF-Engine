@@ -1,0 +1,969 @@
+{
+  "audit_target": "q7_one_step_nominal_E5_prestress_preconfiguration",
+  "benchmark_version": "roif_q7_off_nominal_predictive_action_transferability_audit_v2",
+  "biological_or_clinical_validity_tested": false,
+  "central_results": {
+    "additive_coupling_exact_all_scenarios": true,
+    "final_objective_failure_count": 2,
+    "final_objective_failure_scenarios": [
+      "spatial_shift_A_to_D",
+      "opposite_sign_at_A"
+    ],
+    "final_objective_success_count": 7,
+    "final_objective_success_scenarios": [
+      "exact_nominal",
+      "intensity_080",
+      "intensity_120",
+      "split_A_D",
+      "altered_connection_exposure",
+      "sequence_A_then_D",
+      "sequence_D_then_A"
+    ],
+    "maximum_nominal_realised_alignment": 1.0000000000000002,
+    "maximum_relative_final_improvement": 0.984960991355722,
+    "minimum_nominal_realised_alignment": -1.0000000000000002,
+    "minimum_relative_final_improvement": -0.7999999999999999,
+    "trajectory_objective_failure_count": 2,
+    "trajectory_objective_failure_scenarios": [
+      "spatial_shift_A_to_D",
+      "opposite_sign_at_A"
+    ],
+    "trajectory_objective_success_count": 7,
+    "trajectory_objective_success_scenarios": [
+      "exact_nominal",
+      "intensity_080",
+      "intensity_120",
+      "split_A_D",
+      "altered_connection_exposure",
+      "sequence_A_then_D",
+      "sequence_D_then_A"
+    ]
+  },
+  "claim_scope": "computational_model_only",
+  "external_predictive_validity_tested": false,
+  "full_predictive_preconfiguration_architecture_tested": false,
+  "future_temporal_image_reconstruction_tested": false,
+  "history_action": [
+    -0.08000000000000002,
+    -0.0379236126740625,
+    -0.015667615071158325,
+    -0.005557624818770302
+  ],
+  "history_action_budget": 0.09008086230657716,
+  "interpretation": "This audit evaluates the scenario transferability of a single Q7 prestress-layer action constructed from the nominal expected E5 event. The same action is applied to realised futures that differ in intensity, spatial location, sign, perturbation distribution, adaptive-connection exposure, event number, and event order. Improvement or deterioration is reported rather than assumed. The audit remains restricted to the Q7 one-step prestress projection and does not constitute a test of ROIF's full future-Temporal-Image reconstruction or general predictive preconfiguration architecture.",
+  "nominal_expected_event_id": "E5",
+  "nominal_prediction": [
+    0.1,
+    0.04740451584257813,
+    0.019584518838947906,
+    0.006947031023462877
+  ],
+  "objective_independent_stabilization_tested": false,
+  "off_nominal_transferability_tested": true,
+  "scenario_count": 9,
+  "scenarios": {
+    "altered_connection_exposure": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          0.01999999999999999,
+          0.014178136838901949,
+          0.0041788796419207075,
+          0.0014823344272317067
+        ],
+        "controlled_final_displacement": [
+          0.01999999999999999,
+          0.014178136838901956,
+          0.0041788796419207075,
+          0.0014823344272317102
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          6.938893903907228e-18,
+          0.0,
+          3.469446951953614e-18
+        ],
+        "residual_norm": 7.757919228897728e-18
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          -0.07853025152713905,
+          -0.04091563494257092,
+          -0.015585502217501315,
+          -0.0055284977032934585
+        ],
+        "final_euclidean_deviation": 0.024627623346810026,
+        "history_minus_oracle_final_euclidean": 0.00028582512260993953
+      },
+      "event_count": 1,
+      "event_ids": [
+        "audit_altered_connection_exposure"
+      ],
+      "final_euclidean_improved": true,
+      "final_euclidean_improvement": 0.08979503718396722,
+      "history_action_alignment_with_inverse_realised_final_response": 0.9993148152004033,
+      "history_action_control": {
+        "final_displacement": [
+          0.01999999999999999,
+          0.014178136838901956,
+          0.0041788796419207075,
+          0.0014823344272317102
+        ],
+        "final_euclidean_deviation": 0.024913448469419966,
+        "trajectory": [
+          {
+            "displacement": [
+              0.01999999999999999,
+              0.014178136838901956,
+              0.0041788796419207075,
+              0.0014823344272317102
+            ],
+            "euclidean_deviation": 0.024913448469419966,
+            "event_id": "audit_altered_connection_exposure",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.024913448469419966,
+        "trajectory_rms_deviation": 0.024913448469419966
+      },
+      "no_control": {
+        "final_displacement": [
+          0.1,
+          0.05210174951296445,
+          0.019846494713079033,
+          0.007039959246002009
+        ],
+        "final_euclidean_deviation": 0.11470848565338719,
+        "trajectory": [
+          {
+            "displacement": [
+              0.1,
+              0.05210174951296445,
+              0.019846494713079033,
+              0.007039959246002009
+            ],
+            "euclidean_deviation": 0.11470848565338719,
+            "event_id": "audit_altered_connection_exposure",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.11470848565338719,
+        "trajectory_rms_deviation": 0.11470848565338719
+      },
+      "nominal_prediction_alignment_with_realised_final_response": 0.9993148152004033,
+      "relative_final_improvement": 0.7828107630615878,
+      "relative_integrated_improvement": 0.7828107630615878,
+      "scenario": "altered_connection_exposure",
+      "trajectory_integrated_improved": true,
+      "trajectory_integrated_improvement": 0.08979503718396722
+    },
+    "exact_nominal": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          0.01999999999999999,
+          0.009480903168515624,
+          0.003916903767789581,
+          0.0013894062046925747
+        ],
+        "controlled_final_displacement": [
+          0.01999999999999999,
+          0.00948090316851563,
+          0.003916903767789581,
+          0.0013894062046925781
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          6.938893903907228e-18,
+          0.0,
+          3.469446951953614e-18
+        ],
+        "residual_norm": 7.757919228897728e-18
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          -0.08000000000000002,
+          -0.0379236126740625,
+          -0.015667615071158325,
+          -0.005557624818770302
+        ],
+        "final_euclidean_deviation": 0.022520215576644284,
+        "history_minus_oracle_final_euclidean": 0.0
+      },
+      "event_count": 1,
+      "event_ids": [
+        "audit_exact_nominal_E5"
+      ],
+      "final_euclidean_improved": true,
+      "final_euclidean_improvement": 0.09008086230657716,
+      "history_action_alignment_with_inverse_realised_final_response": 1.0,
+      "history_action_control": {
+        "final_displacement": [
+          0.01999999999999999,
+          0.00948090316851563,
+          0.003916903767789581,
+          0.0013894062046925781
+        ],
+        "final_euclidean_deviation": 0.022520215576644284,
+        "trajectory": [
+          {
+            "displacement": [
+              0.01999999999999999,
+              0.00948090316851563,
+              0.003916903767789581,
+              0.0013894062046925781
+            ],
+            "euclidean_deviation": 0.022520215576644284,
+            "event_id": "audit_exact_nominal_E5",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.022520215576644284,
+        "trajectory_rms_deviation": 0.022520215576644284
+      },
+      "no_control": {
+        "final_displacement": [
+          0.1,
+          0.04740451584257813,
+          0.019584518838947906,
+          0.006947031023462877
+        ],
+        "final_euclidean_deviation": 0.11260107788322145,
+        "trajectory": [
+          {
+            "displacement": [
+              0.1,
+              0.04740451584257813,
+              0.019584518838947906,
+              0.006947031023462877
+            ],
+            "euclidean_deviation": 0.11260107788322145,
+            "event_id": "audit_exact_nominal_E5",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.11260107788322145,
+        "trajectory_rms_deviation": 0.11260107788322145
+      },
+      "nominal_prediction_alignment_with_realised_final_response": 1.0000000000000002,
+      "relative_final_improvement": 0.8,
+      "relative_integrated_improvement": 0.8,
+      "scenario": "exact_nominal",
+      "trajectory_integrated_improved": true,
+      "trajectory_integrated_improvement": 0.09008086230657716
+    },
+    "intensity_080": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          0.0,
+          0.0010713885574694312,
+          0.0007955631767175841,
+          0.00028220259661373634
+        ],
+        "controlled_final_displacement": [
+          0.0,
+          0.001071388557469466,
+          0.0007955631767175841,
+          0.0002822025966137398
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          3.469446951953614e-17,
+          0.0,
+          3.469446951953614e-18
+        ],
+        "residual_norm": 3.4867510341210807e-17
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          -0.07945747689190265,
+          -0.03873055511567704,
+          -0.016351532564973428,
+          -0.005800224398882209
+        ],
+        "final_euclidean_deviation": 0.000615057906572366,
+        "history_minus_oracle_final_euclidean": 0.0007489188215139362
+      },
+      "event_count": 1,
+      "event_ids": [
+        "audit_intensity_080"
+      ],
+      "final_euclidean_improved": true,
+      "final_euclidean_improvement": 0.08933194348506322,
+      "history_action_alignment_with_inverse_realised_final_response": 0.9999092936152217,
+      "history_action_control": {
+        "final_displacement": [
+          0.0,
+          0.001071388557469466,
+          0.0007955631767175841,
+          0.0002822025966137398
+        ],
+        "final_euclidean_deviation": 0.0013639767280863022,
+        "trajectory": [
+          {
+            "displacement": [
+              0.0,
+              0.001071388557469466,
+              0.0007955631767175841,
+              0.0002822025966137398
+            ],
+            "euclidean_deviation": 0.0013639767280863022,
+            "event_id": "audit_intensity_080",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.0013639767280863022,
+        "trajectory_rms_deviation": 0.0013639767280863022
+      },
+      "no_control": {
+        "final_displacement": [
+          0.08000000000000002,
+          0.038995001231531934,
+          0.01646317824787591,
+          0.0058398274153840385
+        ],
+        "final_euclidean_deviation": 0.09069592021314953,
+        "trajectory": [
+          {
+            "displacement": [
+              0.08000000000000002,
+              0.038995001231531934,
+              0.01646317824787591,
+              0.0058398274153840385
+            ],
+            "euclidean_deviation": 0.09069592021314953,
+            "event_id": "audit_intensity_080",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.09069592021314953,
+        "trajectory_rms_deviation": 0.09069592021314953
+      },
+      "nominal_prediction_alignment_with_realised_final_response": 0.9999092936152215,
+      "relative_final_improvement": 0.984960991355722,
+      "relative_integrated_improvement": 0.984960991355722,
+      "scenario": "intensity_080",
+      "trajectory_integrated_improved": true,
+      "trajectory_integrated_improvement": 0.08933194348506322
+    },
+    "intensity_120": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          0.03999999999999998,
+          0.017279094335232163,
+          0.0066016791814481335,
+          0.0023417511789599298
+        ],
+        "controlled_final_displacement": [
+          0.03999999999999998,
+          0.01727909433523217,
+          0.0066016791814481335,
+          0.0023417511789599332
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          6.938893903907228e-18,
+          0.0,
+          3.469446951953614e-18
+        ],
+        "residual_norm": 7.757919228897728e-18
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          -0.08055810705768876,
+          -0.037058546509408215,
+          -0.014949768254172036,
+          -0.0053029898109507425
+        ],
+        "final_euclidean_deviation": 0.0441043100069714,
+        "history_minus_oracle_final_euclidean": 2.768595564937859e-05
+      },
+      "event_count": 1,
+      "event_ids": [
+        "audit_intensity_120"
+      ],
+      "final_euclidean_improved": true,
+      "final_euclidean_improvement": 0.09005317635092779,
+      "history_action_alignment_with_inverse_realised_final_response": 0.999898949194875,
+      "history_action_control": {
+        "final_displacement": [
+          0.03999999999999998,
+          0.01727909433523217,
+          0.0066016791814481335,
+          0.0023417511789599332
+        ],
+        "final_euclidean_deviation": 0.04413199596262078,
+        "trajectory": [
+          {
+            "displacement": [
+              0.03999999999999998,
+              0.01727909433523217,
+              0.0066016791814481335,
+              0.0023417511789599332
+            ],
+            "euclidean_deviation": 0.04413199596262078,
+            "event_id": "audit_intensity_120",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.04413199596262078,
+        "trajectory_rms_deviation": 0.04413199596262078
+      },
+      "no_control": {
+        "final_displacement": [
+          0.12,
+          0.055202707009294666,
+          0.02226929425260646,
+          0.007899375997730232
+        ],
+        "final_euclidean_deviation": 0.13418517231354857,
+        "trajectory": [
+          {
+            "displacement": [
+              0.12,
+              0.055202707009294666,
+              0.02226929425260646,
+              0.007899375997730232
+            ],
+            "euclidean_deviation": 0.13418517231354857,
+            "event_id": "audit_intensity_120",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.13418517231354857,
+        "trajectory_rms_deviation": 0.13418517231354857
+      },
+      "nominal_prediction_alignment_with_realised_final_response": 0.9998989491948748,
+      "relative_final_improvement": 0.6711112323238057,
+      "relative_integrated_improvement": 0.6711112323238057,
+      "scenario": "intensity_120",
+      "trajectory_integrated_improved": true,
+      "trajectory_integrated_improvement": 0.09005317635092779
+    },
+    "opposite_sign_at_A": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          -0.18000000000000002,
+          -0.08532812851664062,
+          -0.03525213391010623,
+          -0.012504655842233179
+        ],
+        "controlled_final_displacement": [
+          -0.18000000000000002,
+          -0.08532812851664062,
+          -0.03525213391010623,
+          -0.012504655842233176
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          0.0,
+          0.0,
+          3.469446951953614e-18
+        ],
+        "residual_norm": 3.469446951953614e-18
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          0.08000000000000002,
+          0.0379236126740625,
+          0.015667615071158325,
+          0.005557624818770302
+        ],
+        "final_euclidean_deviation": 0.022520215576644284,
+        "history_minus_oracle_final_euclidean": 0.18016172461315433
+      },
+      "event_count": 1,
+      "event_ids": [
+        "audit_opposite_sign_A"
+      ],
+      "final_euclidean_improved": false,
+      "final_euclidean_improvement": -0.09008086230657715,
+      "history_action_alignment_with_inverse_realised_final_response": -1.0,
+      "history_action_control": {
+        "final_displacement": [
+          -0.18000000000000002,
+          -0.08532812851664062,
+          -0.03525213391010623,
+          -0.012504655842233176
+        ],
+        "final_euclidean_deviation": 0.2026819401897986,
+        "trajectory": [
+          {
+            "displacement": [
+              -0.18000000000000002,
+              -0.08532812851664062,
+              -0.03525213391010623,
+              -0.012504655842233176
+            ],
+            "euclidean_deviation": 0.2026819401897986,
+            "event_id": "audit_opposite_sign_A",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.2026819401897986,
+        "trajectory_rms_deviation": 0.2026819401897986
+      },
+      "no_control": {
+        "final_displacement": [
+          -0.1,
+          -0.04740451584257813,
+          -0.019584518838947906,
+          -0.006947031023462877
+        ],
+        "final_euclidean_deviation": 0.11260107788322145,
+        "trajectory": [
+          {
+            "displacement": [
+              -0.1,
+              -0.04740451584257813,
+              -0.019584518838947906,
+              -0.006947031023462877
+            ],
+            "euclidean_deviation": 0.11260107788322145,
+            "event_id": "audit_opposite_sign_A",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.11260107788322145,
+        "trajectory_rms_deviation": 0.11260107788322145
+      },
+      "nominal_prediction_alignment_with_realised_final_response": -1.0000000000000002,
+      "relative_final_improvement": -0.7999999999999999,
+      "relative_integrated_improvement": -0.7999999999999999,
+      "scenario": "opposite_sign_at_A",
+      "trajectory_integrated_improved": false,
+      "trajectory_integrated_improvement": -0.09008086230657715
+    },
+    "sequence_A_then_D": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          0.01999999999999999,
+          0.009480903168515624,
+          0.003916903767789581,
+          0.10138940620469258
+        ],
+        "controlled_final_displacement": [
+          0.01999999999999999,
+          0.00948090316851563,
+          0.003916903767789581,
+          0.10138940620469258
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          6.938893903907228e-18,
+          0.0,
+          0.0
+        ],
+        "residual_norm": 6.938893903907228e-18
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          -0.05806425309109432,
+          -0.027525078055442468,
+          -0.011371604585319758,
+          -0.06209799476687465
+        ],
+        "final_euclidean_deviation": 0.0650591033539704,
+        "history_minus_oracle_final_euclidean": 0.03879195032656309
+      },
+      "event_count": 2,
+      "event_ids": [
+        "audit_exact_nominal_E5",
+        "audit_second_event_D"
+      ],
+      "final_euclidean_improved": true,
+      "final_euclidean_improvement": 0.05128891198001409,
+      "history_action_alignment_with_inverse_realised_final_response": 0.7655710949021843,
+      "history_action_control": {
+        "final_displacement": [
+          0.01999999999999999,
+          0.00948090316851563,
+          0.003916903767789581,
+          0.10138940620469258
+        ],
+        "final_euclidean_deviation": 0.10385105368053349,
+        "trajectory": [
+          {
+            "displacement": [
+              0.01999999999999999,
+              0.00948090316851563,
+              0.003916903767789581,
+              0.0013894062046925781
+            ],
+            "euclidean_deviation": 0.022520215576644284,
+            "event_id": "audit_exact_nominal_E5",
+            "step": 1
+          },
+          {
+            "displacement": [
+              0.01999999999999999,
+              0.00948090316851563,
+              0.003916903767789581,
+              0.10138940620469258
+            ],
+            "euclidean_deviation": 0.10385105368053349,
+            "event_id": "audit_second_event_D",
+            "step": 2
+          }
+        ],
+        "trajectory_integrated_deviation": 0.1263712692571778,
+        "trajectory_rms_deviation": 0.07514053985757482
+      },
+      "no_control": {
+        "final_displacement": [
+          0.1,
+          0.04740451584257813,
+          0.019584518838947906,
+          0.10694703102346288
+        ],
+        "final_euclidean_deviation": 0.15513996566054758,
+        "trajectory": [
+          {
+            "displacement": [
+              0.1,
+              0.04740451584257813,
+              0.019584518838947906,
+              0.006947031023462877
+            ],
+            "euclidean_deviation": 0.11260107788322145,
+            "event_id": "audit_exact_nominal_E5",
+            "step": 1
+          },
+          {
+            "displacement": [
+              0.1,
+              0.04740451584257813,
+              0.019584518838947906,
+              0.10694703102346288
+            ],
+            "euclidean_deviation": 0.15513996566054758,
+            "event_id": "audit_second_event_D",
+            "step": 2
+          }
+        ],
+        "trajectory_integrated_deviation": 0.26774104354376904,
+        "trajectory_rms_deviation": 0.1355496434624953
+      },
+      "nominal_prediction_alignment_with_realised_final_response": 0.7655710949021843,
+      "relative_final_improvement": 0.33059767521308,
+      "relative_integrated_improvement": 0.5280093496889684,
+      "scenario": "sequence_A_then_D",
+      "trajectory_integrated_improved": true,
+      "trajectory_integrated_improvement": 0.14136977428659125
+    },
+    "sequence_D_then_A": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          0.01999999999999999,
+          0.009480903168515624,
+          0.003916903767789581,
+          0.10138940620469258
+        ],
+        "controlled_final_displacement": [
+          0.01999999999999999,
+          0.00948090316851563,
+          0.003916903767789581,
+          0.10138940620469258
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          6.938893903907228e-18,
+          0.0,
+          0.0
+        ],
+        "residual_norm": 6.938893903907228e-18
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          -0.05806425309109432,
+          -0.027525078055442468,
+          -0.011371604585319758,
+          -0.06209799476687465
+        ],
+        "final_euclidean_deviation": 0.0650591033539704,
+        "history_minus_oracle_final_euclidean": 0.03879195032656309
+      },
+      "event_count": 2,
+      "event_ids": [
+        "audit_first_event_D",
+        "audit_second_event_A"
+      ],
+      "final_euclidean_improved": true,
+      "final_euclidean_improvement": 0.05128891198001409,
+      "history_action_alignment_with_inverse_realised_final_response": 0.7655710949021843,
+      "history_action_control": {
+        "final_displacement": [
+          0.01999999999999999,
+          0.00948090316851563,
+          0.003916903767789581,
+          0.10138940620469258
+        ],
+        "final_euclidean_deviation": 0.10385105368053349,
+        "trajectory": [
+          {
+            "displacement": [
+              -0.08000000000000002,
+              -0.037923612674062496,
+              -0.015667615071158325,
+              0.0944423751812297
+            ],
+            "euclidean_deviation": 0.13039569314261287,
+            "event_id": "audit_first_event_D",
+            "step": 1
+          },
+          {
+            "displacement": [
+              0.01999999999999999,
+              0.00948090316851563,
+              0.003916903767789581,
+              0.10138940620469258
+            ],
+            "euclidean_deviation": 0.10385105368053349,
+            "event_id": "audit_second_event_A",
+            "step": 2
+          }
+        ],
+        "trajectory_integrated_deviation": 0.23424674682314636,
+        "trajectory_rms_deviation": 0.11787297854194469
+      },
+      "no_control": {
+        "final_displacement": [
+          0.1,
+          0.04740451584257813,
+          0.019584518838947906,
+          0.10694703102346288
+        ],
+        "final_euclidean_deviation": 0.15513996566054758,
+        "trajectory": [
+          {
+            "displacement": [
+              0.0,
+              0.0,
+              0.0,
+              0.1
+            ],
+            "euclidean_deviation": 0.1,
+            "event_id": "audit_first_event_D",
+            "step": 1
+          },
+          {
+            "displacement": [
+              0.1,
+              0.04740451584257813,
+              0.019584518838947906,
+              0.10694703102346288
+            ],
+            "euclidean_deviation": 0.15513996566054758,
+            "event_id": "audit_second_event_A",
+            "step": 2
+          }
+        ],
+        "trajectory_integrated_deviation": 0.2551399656605476,
+        "trajectory_rms_deviation": 0.1305151503564929
+      },
+      "nominal_prediction_alignment_with_realised_final_response": 0.7655710949021843,
+      "relative_final_improvement": 0.33059767521308,
+      "relative_integrated_improvement": 0.08188924374630796,
+      "scenario": "sequence_D_then_A",
+      "trajectory_integrated_improved": true,
+      "trajectory_integrated_improvement": 0.020893218837401223
+    },
+    "spatial_shift_A_to_D": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          -0.08000000000000002,
+          -0.0379236126740625,
+          -0.015667615071158325,
+          0.0944423751812297
+        ],
+        "controlled_final_displacement": [
+          -0.08000000000000002,
+          -0.037923612674062496,
+          -0.015667615071158325,
+          0.0944423751812297
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          6.938893903907228e-18,
+          0.0,
+          0.0
+        ],
+        "residual_norm": 6.938893903907228e-18
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          -0.0,
+          -0.0,
+          -0.0,
+          -0.09008086230657716
+        ],
+        "final_euclidean_deviation": 0.009919137693422841,
+        "history_minus_oracle_final_euclidean": 0.12047655544919003
+      },
+      "event_count": 1,
+      "event_ids": [
+        "audit_spatial_shift_D"
+      ],
+      "final_euclidean_improved": false,
+      "final_euclidean_improvement": -0.030395693142612867,
+      "history_action_alignment_with_inverse_realised_final_response": 0.06169595490611237,
+      "history_action_control": {
+        "final_displacement": [
+          -0.08000000000000002,
+          -0.037923612674062496,
+          -0.015667615071158325,
+          0.0944423751812297
+        ],
+        "final_euclidean_deviation": 0.13039569314261287,
+        "trajectory": [
+          {
+            "displacement": [
+              -0.08000000000000002,
+              -0.037923612674062496,
+              -0.015667615071158325,
+              0.0944423751812297
+            ],
+            "euclidean_deviation": 0.13039569314261287,
+            "event_id": "audit_spatial_shift_D",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.13039569314261287,
+        "trajectory_rms_deviation": 0.13039569314261287
+      },
+      "no_control": {
+        "final_displacement": [
+          0.0,
+          0.0,
+          0.0,
+          0.1
+        ],
+        "final_euclidean_deviation": 0.1,
+        "trajectory": [
+          {
+            "displacement": [
+              0.0,
+              0.0,
+              0.0,
+              0.1
+            ],
+            "euclidean_deviation": 0.1,
+            "event_id": "audit_spatial_shift_D",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.1,
+        "trajectory_rms_deviation": 0.1
+      },
+      "nominal_prediction_alignment_with_realised_final_response": 0.06169595490611237,
+      "relative_final_improvement": -0.3039569314261287,
+      "relative_integrated_improvement": -0.3039569314261287,
+      "scenario": "spatial_shift_A_to_D",
+      "trajectory_integrated_improved": false,
+      "trajectory_integrated_improvement": -0.030395693142612867
+    },
+    "split_A_D": {
+      "additive_coupling_diagnostic": {
+        "algebraic_realised_plus_action": [
+          -0.030000000000000013,
+          -0.014221354752773453,
+          -0.005875355651684372,
+          0.047915890692961136
+        ],
+        "controlled_final_displacement": [
+          -0.030000000000000013,
+          -0.014221354752773446,
+          -0.005875355651684372,
+          0.04791589069296114
+        ],
+        "exact_within_tolerance": true,
+        "residual": [
+          0.0,
+          6.938893903907228e-18,
+          0.0,
+          6.938893903907228e-18
+        ],
+        "residual_norm": 9.813077866773595e-18
+      },
+      "equal_budget_final_inverse_oracle": {
+        "action": [
+          -0.05806425309109434,
+          -0.027525078055442454,
+          -0.011371604585319762,
+          -0.06209799476687466
+        ],
+        "final_euclidean_deviation": 0.012510879476303395,
+        "history_minus_oracle_final_euclidean": 0.046078362846309145
+      },
+      "event_count": 1,
+      "event_ids": [
+        "audit_split_A_D"
+      ],
+      "final_euclidean_improved": true,
+      "final_euclidean_improvement": 0.018980740507661235,
+      "history_action_alignment_with_inverse_realised_final_response": 0.7655710949021843,
+      "history_action_control": {
+        "final_displacement": [
+          -0.030000000000000013,
+          -0.014221354752773446,
+          -0.005875355651684372,
+          0.04791589069296114
+        ],
+        "final_euclidean_deviation": 0.05858924232261254,
+        "trajectory": [
+          {
+            "displacement": [
+              -0.030000000000000013,
+              -0.014221354752773446,
+              -0.005875355651684372,
+              0.04791589069296114
+            ],
+            "euclidean_deviation": 0.05858924232261254,
+            "event_id": "audit_split_A_D",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.05858924232261254,
+        "trajectory_rms_deviation": 0.05858924232261254
+      },
+      "no_control": {
+        "final_displacement": [
+          0.05,
+          0.02370225792128905,
+          0.009792259419473953,
+          0.05347351551173144
+        ],
+        "final_euclidean_deviation": 0.07756998283027378,
+        "trajectory": [
+          {
+            "displacement": [
+              0.05,
+              0.02370225792128905,
+              0.009792259419473953,
+              0.05347351551173144
+            ],
+            "euclidean_deviation": 0.07756998283027378,
+            "event_id": "audit_split_A_D",
+            "step": 1
+          }
+        ],
+        "trajectory_integrated_deviation": 0.07756998283027378,
+        "trajectory_rms_deviation": 0.07756998283027378
+      },
+      "nominal_prediction_alignment_with_realised_final_response": 0.7655710949021844,
+      "relative_final_improvement": 0.24469182298508244,
+      "relative_integrated_improvement": 0.24469182298508244,
+      "scenario": "split_A_D",
+      "trajectory_integrated_improved": true,
+      "trajectory_integrated_improvement": 0.018980740507661235
+    }
+  },
+  "universal_stability_tested": false,
+  "whole_system_image_stabilization_tested": false
+}

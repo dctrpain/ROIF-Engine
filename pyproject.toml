@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "roif-engine"
-version = "1.0.0"
+version = "1.4.0"
 description = "Recursive Organic Integration Framework engine for cascade analysis."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -122,4 +122,3 @@ strict_equality = true
 exclude = [
     "^tests/",
 ]
-

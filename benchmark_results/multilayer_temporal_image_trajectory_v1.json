@@ -1,0 +1,3232 @@
+{
+  "benchmark_purpose": "multilayer_systemimage_trajectory_comparison",
+  "benchmark_version": "roif_multilayer_temporal_image_trajectory_v1",
+  "central_results": {
+    "no_control_final_prestress_distance_between_orders": 3.469446951953614e-18,
+    "no_control_final_prestress_endpoint_insufficient": true,
+    "no_control_multilayer_trajectory_differs_by_order": true,
+    "no_control_same_final_prestress_within_tolerance": true,
+    "q7_action_final_prestress_distance_between_orders": 3.469446951953614e-18,
+    "q7_action_final_prestress_endpoint_insufficient": true,
+    "q7_action_multilayer_trajectory_differs_by_order": true,
+    "q7_action_same_final_prestress_within_tolerance": true
+  },
+  "claim_scope": "computational_model_only",
+  "external_predictive_validity_tested": false,
+  "future_sequences": {
+    "A_then_D": [
+      "audit_exact_nominal_E5",
+      "audit_second_event_D"
+    ],
+    "D_then_A": [
+      "audit_first_event_D",
+      "audit_second_event_A"
+    ]
+  },
+  "future_temporal_image_prediction_validated": false,
+  "general_preconfiguration_operator_tested": false,
+  "heterogeneous_layers_collapsed_to_single_metric": false,
+  "interpretation": "This benchmark compares ordered realised sequences of complete ROIF SystemImages rather than reducing future evolution to a single prestress endpoint or a sum of prestress norms. SystemImage layers remain distinct: normalized measures, prestress, reserve, adaptive connection state, historical traces, and context are evaluated separately. If A->D and D->A share the same final prestress endpoint while their multilayer trajectories differ, the result establishes only that final prestress is insufficient to identify the realised SystemImage trajectory in this implementation. The benchmark does not yet reconstruct or predict a future Temporal Image and does not test the full ROIF reconstruction operator Q or general preconfiguration operator Pi.",
+  "nominal_prediction": [
+    0.1,
+    0.04740451584257813,
+    0.019584518838947906,
+    0.006947031023462877
+  ],
+  "objective_independent_stabilization_tested": false,
+  "order_comparisons": {
+    "no_control": {
+      "differing_slice_indices": [
+        1,
+        2
+      ],
+      "final_slice_differs": true,
+      "intermediate_slice_differs": true,
+      "per_slice": [
+        {
+          "adaptive_connection_distances": {
+            "contractile_capacity": 0.0,
+            "fatigue": 0.0,
+            "reflex_gain": 0.0,
+            "remodeling_bias": 0.0,
+            "stiffness": 0.0
+          },
+          "any_layer_differs": false,
+          "connection_topology_left": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "connection_topology_right": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "context_equal": true,
+          "layer_difference_flags": {
+            "adaptive_connection_identity_differs": false,
+            "adaptive_connection_state_differs": false,
+            "connection_topology_differs": false,
+            "context_differs": false,
+            "measure_identity_set_differs": false,
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "prestress_differs": false,
+            "prestress_node_identity_differs": false,
+            "raw_measure_values_differ": false,
+            "reserve_differs": false,
+            "trace_event_order_differs": false,
+            "trace_magnitude_sequence_differs": false,
+            "trace_sequence_differs": false
+          },
+          "measure_comparison": {
+            "measure_identity_set_differs": false,
+            "measure_ids_only_left": [],
+            "measure_ids_only_right": [],
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "per_measure": {
+              "chemical_proxy": {
+                "left_normalized_value": 0.6,
+                "left_raw_value": 7.2,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.6,
+                "right_raw_value": 7.2
+              },
+              "electrical_proxy": {
+                "left_normalized_value": 0.4,
+                "left_raw_value": 1.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.4,
+                "right_raw_value": 1.0
+              },
+              "mass_proxy": {
+                "left_normalized_value": 0.55,
+                "left_raw_value": 80.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.55,
+                "right_raw_value": 80.0
+              },
+              "temperature": {
+                "left_normalized_value": 0.48,
+                "left_raw_value": 36.8,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.48,
+                "right_raw_value": 36.8
+              }
+            },
+            "raw_measure_values_differ": false,
+            "shared_measure_ids": [
+              "chemical_proxy",
+              "electrical_proxy",
+              "mass_proxy",
+              "temperature"
+            ]
+          },
+          "newest_trace_magnitude_difference": 0.0,
+          "prestress_distance": 0.0,
+          "prestress_node_ids_left": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "prestress_node_ids_right": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "reserve_distance": 0.0,
+          "slice_index": 0,
+          "trace_count_difference": 0,
+          "trace_event_order_left": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "trace_event_order_right": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "trace_magnitude_sum_difference": 0.0,
+          "trace_semantic_sequence_left": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ]
+          ],
+          "trace_semantic_sequence_right": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ]
+          ]
+        },
+        {
+          "adaptive_connection_distances": {
+            "contractile_capacity": 0.13925723724460423,
+            "fatigue": 0.18741664813991313,
+            "reflex_gain": 0.16945062887165688,
+            "remodeling_bias": 0.05836308764964377,
+            "stiffness": 0.07046996257271601
+          },
+          "any_layer_differs": true,
+          "connection_topology_left": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "connection_topology_right": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "context_equal": true,
+          "layer_difference_flags": {
+            "adaptive_connection_identity_differs": false,
+            "adaptive_connection_state_differs": true,
+            "connection_topology_differs": false,
+            "context_differs": false,
+            "measure_identity_set_differs": false,
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "prestress_differs": true,
+            "prestress_node_identity_differs": false,
+            "raw_measure_values_differ": false,
+            "reserve_differs": false,
+            "trace_event_order_differs": true,
+            "trace_magnitude_sequence_differs": true,
+            "trace_sequence_differs": true
+          },
+          "measure_comparison": {
+            "measure_identity_set_differs": false,
+            "measure_ids_only_left": [],
+            "measure_ids_only_right": [],
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "per_measure": {
+              "chemical_proxy": {
+                "left_normalized_value": 0.6,
+                "left_raw_value": 7.2,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.6,
+                "right_raw_value": 7.2
+              },
+              "electrical_proxy": {
+                "left_normalized_value": 0.4,
+                "left_raw_value": 1.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.4,
+                "right_raw_value": 1.0
+              },
+              "mass_proxy": {
+                "left_normalized_value": 0.55,
+                "left_raw_value": 80.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.55,
+                "right_raw_value": 80.0
+              },
+              "temperature": {
+                "left_normalized_value": 0.48,
+                "left_raw_value": 36.8,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.48,
+                "right_raw_value": 36.8
+              }
+            },
+            "raw_measure_values_differ": false,
+            "shared_measure_ids": [
+              "chemical_proxy",
+              "electrical_proxy",
+              "mass_proxy",
+              "temperature"
+            ]
+          },
+          "newest_trace_magnitude_difference": 0.09550449996586097,
+          "prestress_distance": 0.14590954915895918,
+          "prestress_node_ids_left": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "prestress_node_ids_right": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "reserve_distance": 0.0,
+          "slice_index": 1,
+          "trace_count_difference": 0,
+          "trace_event_order_left": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "audit_exact_nominal_E5"
+          ],
+          "trace_event_order_right": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "audit_first_event_D"
+          ],
+          "trace_magnitude_sum_difference": 0.09550449996586097,
+          "trace_semantic_sequence_left": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ],
+            [
+              "audit_exact_nominal_E5",
+              "temporal_reconstruction",
+              0.19550449996586097,
+              1.0,
+              5
+            ]
+          ],
+          "trace_semantic_sequence_right": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ],
+            [
+              "audit_first_event_D",
+              "temporal_reconstruction",
+              0.1,
+              1.0,
+              0
+            ]
+          ]
+        },
+        {
+          "adaptive_connection_distances": {
+            "contractile_capacity": 0.0,
+            "fatigue": 0.0,
+            "reflex_gain": 0.0,
+            "remodeling_bias": 0.0,
+            "stiffness": 0.0
+          },
+          "any_layer_differs": true,
+          "connection_topology_left": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "connection_topology_right": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "context_equal": true,
+          "layer_difference_flags": {
+            "adaptive_connection_identity_differs": false,
+            "adaptive_connection_state_differs": false,
+            "connection_topology_differs": false,
+            "context_differs": false,
+            "measure_identity_set_differs": false,
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "prestress_differs": false,
+            "prestress_node_identity_differs": false,
+            "raw_measure_values_differ": false,
+            "reserve_differs": false,
+            "trace_event_order_differs": true,
+            "trace_magnitude_sequence_differs": true,
+            "trace_sequence_differs": true
+          },
+          "measure_comparison": {
+            "measure_identity_set_differs": false,
+            "measure_ids_only_left": [],
+            "measure_ids_only_right": [],
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "per_measure": {
+              "chemical_proxy": {
+                "left_normalized_value": 0.6,
+                "left_raw_value": 7.2,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.6,
+                "right_raw_value": 7.2
+              },
+              "electrical_proxy": {
+                "left_normalized_value": 0.4,
+                "left_raw_value": 1.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.4,
+                "right_raw_value": 1.0
+              },
+              "mass_proxy": {
+                "left_normalized_value": 0.55,
+                "left_raw_value": 80.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.55,
+                "right_raw_value": 80.0
+              },
+              "temperature": {
+                "left_normalized_value": 0.48,
+                "left_raw_value": 36.8,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.48,
+                "right_raw_value": 36.8
+              }
+            },
+            "raw_measure_values_differ": false,
+            "shared_measure_ids": [
+              "chemical_proxy",
+              "electrical_proxy",
+              "mass_proxy",
+              "temperature"
+            ]
+          },
+          "newest_trace_magnitude_difference": -0.09550449996586097,
+          "prestress_distance": 3.469446951953614e-18,
+          "prestress_node_ids_left": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "prestress_node_ids_right": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "reserve_distance": 0.0,
+          "slice_index": 2,
+          "trace_count_difference": 0,
+          "trace_event_order_left": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "audit_exact_nominal_E5",
+            "audit_second_event_D"
+          ],
+          "trace_event_order_right": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "audit_first_event_D",
+            "audit_second_event_A"
+          ],
+          "trace_magnitude_sum_difference": 0.0,
+          "trace_semantic_sequence_left": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ],
+            [
+              "audit_exact_nominal_E5",
+              "temporal_reconstruction",
+              0.19550449996586097,
+              1.0,
+              5
+            ],
+            [
+              "audit_second_event_D",
+              "temporal_reconstruction",
+              0.1,
+              1.0,
+              0
+            ]
+          ],
+          "trace_semantic_sequence_right": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ],
+            [
+              "audit_first_event_D",
+              "temporal_reconstruction",
+              0.1,
+              1.0,
+              0
+            ],
+            [
+              "audit_second_event_A",
+              "temporal_reconstruction",
+              0.19550449996586097,
+              1.0,
+              5
+            ]
+          ]
+        }
+      ],
+      "slice_count": 3,
+      "trajectory_differs": true
+    },
+    "q7_action": {
+      "differing_slice_indices": [
+        1,
+        2
+      ],
+      "final_slice_differs": true,
+      "intermediate_slice_differs": true,
+      "per_slice": [
+        {
+          "adaptive_connection_distances": {
+            "contractile_capacity": 0.0,
+            "fatigue": 0.0,
+            "reflex_gain": 0.0,
+            "remodeling_bias": 0.0,
+            "stiffness": 0.0
+          },
+          "any_layer_differs": false,
+          "connection_topology_left": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "connection_topology_right": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "context_equal": true,
+          "layer_difference_flags": {
+            "adaptive_connection_identity_differs": false,
+            "adaptive_connection_state_differs": false,
+            "connection_topology_differs": false,
+            "context_differs": false,
+            "measure_identity_set_differs": false,
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "prestress_differs": false,
+            "prestress_node_identity_differs": false,
+            "raw_measure_values_differ": false,
+            "reserve_differs": false,
+            "trace_event_order_differs": false,
+            "trace_magnitude_sequence_differs": false,
+            "trace_sequence_differs": false
+          },
+          "measure_comparison": {
+            "measure_identity_set_differs": false,
+            "measure_ids_only_left": [],
+            "measure_ids_only_right": [],
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "per_measure": {
+              "chemical_proxy": {
+                "left_normalized_value": 0.6,
+                "left_raw_value": 7.2,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.6,
+                "right_raw_value": 7.2
+              },
+              "electrical_proxy": {
+                "left_normalized_value": 0.4,
+                "left_raw_value": 1.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.4,
+                "right_raw_value": 1.0
+              },
+              "mass_proxy": {
+                "left_normalized_value": 0.55,
+                "left_raw_value": 80.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.55,
+                "right_raw_value": 80.0
+              },
+              "temperature": {
+                "left_normalized_value": 0.48,
+                "left_raw_value": 36.8,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.48,
+                "right_raw_value": 36.8
+              }
+            },
+            "raw_measure_values_differ": false,
+            "shared_measure_ids": [
+              "chemical_proxy",
+              "electrical_proxy",
+              "mass_proxy",
+              "temperature"
+            ]
+          },
+          "newest_trace_magnitude_difference": 0.0,
+          "prestress_distance": 0.0,
+          "prestress_node_ids_left": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "prestress_node_ids_right": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "reserve_distance": 0.0,
+          "slice_index": 0,
+          "trace_count_difference": 0,
+          "trace_event_order_left": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "trace_event_order_right": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "trace_magnitude_sum_difference": 0.0,
+          "trace_semantic_sequence_left": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ]
+          ],
+          "trace_semantic_sequence_right": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ]
+          ]
+        },
+        {
+          "adaptive_connection_distances": {
+            "contractile_capacity": 0.13925723724460423,
+            "fatigue": 0.18741664813991313,
+            "reflex_gain": 0.16945062887165688,
+            "remodeling_bias": 0.05836308764964377,
+            "stiffness": 0.07046996257271601
+          },
+          "any_layer_differs": true,
+          "connection_topology_left": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "connection_topology_right": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "context_equal": true,
+          "layer_difference_flags": {
+            "adaptive_connection_identity_differs": false,
+            "adaptive_connection_state_differs": true,
+            "connection_topology_differs": false,
+            "context_differs": false,
+            "measure_identity_set_differs": false,
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "prestress_differs": true,
+            "prestress_node_identity_differs": false,
+            "raw_measure_values_differ": false,
+            "reserve_differs": false,
+            "trace_event_order_differs": true,
+            "trace_magnitude_sequence_differs": true,
+            "trace_sequence_differs": true
+          },
+          "measure_comparison": {
+            "measure_identity_set_differs": false,
+            "measure_ids_only_left": [],
+            "measure_ids_only_right": [],
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "per_measure": {
+              "chemical_proxy": {
+                "left_normalized_value": 0.6,
+                "left_raw_value": 7.2,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.6,
+                "right_raw_value": 7.2
+              },
+              "electrical_proxy": {
+                "left_normalized_value": 0.4,
+                "left_raw_value": 1.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.4,
+                "right_raw_value": 1.0
+              },
+              "mass_proxy": {
+                "left_normalized_value": 0.55,
+                "left_raw_value": 80.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.55,
+                "right_raw_value": 80.0
+              },
+              "temperature": {
+                "left_normalized_value": 0.48,
+                "left_raw_value": 36.8,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.48,
+                "right_raw_value": 36.8
+              }
+            },
+            "raw_measure_values_differ": false,
+            "shared_measure_ids": [
+              "chemical_proxy",
+              "electrical_proxy",
+              "mass_proxy",
+              "temperature"
+            ]
+          },
+          "newest_trace_magnitude_difference": 0.09550449996586097,
+          "prestress_distance": 0.14590954915895918,
+          "prestress_node_ids_left": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "prestress_node_ids_right": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "reserve_distance": 0.0,
+          "slice_index": 1,
+          "trace_count_difference": 0,
+          "trace_event_order_left": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "audit_exact_nominal_E5"
+          ],
+          "trace_event_order_right": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "audit_first_event_D"
+          ],
+          "trace_magnitude_sum_difference": 0.09550449996586097,
+          "trace_semantic_sequence_left": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ],
+            [
+              "audit_exact_nominal_E5",
+              "temporal_reconstruction",
+              0.19550449996586097,
+              1.0,
+              5
+            ]
+          ],
+          "trace_semantic_sequence_right": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ],
+            [
+              "audit_first_event_D",
+              "temporal_reconstruction",
+              0.1,
+              1.0,
+              0
+            ]
+          ]
+        },
+        {
+          "adaptive_connection_distances": {
+            "contractile_capacity": 0.0,
+            "fatigue": 0.0,
+            "reflex_gain": 0.0,
+            "remodeling_bias": 0.0,
+            "stiffness": 0.0
+          },
+          "any_layer_differs": true,
+          "connection_topology_left": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "connection_topology_right": [
+            [
+              "A_B",
+              "A",
+              "B"
+            ],
+            [
+              "B_C",
+              "B",
+              "C"
+            ],
+            [
+              "C_D",
+              "C",
+              "D"
+            ]
+          ],
+          "context_equal": true,
+          "layer_difference_flags": {
+            "adaptive_connection_identity_differs": false,
+            "adaptive_connection_state_differs": false,
+            "connection_topology_differs": false,
+            "context_differs": false,
+            "measure_identity_set_differs": false,
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "prestress_differs": false,
+            "prestress_node_identity_differs": false,
+            "raw_measure_values_differ": false,
+            "reserve_differs": false,
+            "trace_event_order_differs": true,
+            "trace_magnitude_sequence_differs": true,
+            "trace_sequence_differs": true
+          },
+          "measure_comparison": {
+            "measure_identity_set_differs": false,
+            "measure_ids_only_left": [],
+            "measure_ids_only_right": [],
+            "measure_metadata_differs": false,
+            "normalized_measure_values_differ": false,
+            "per_measure": {
+              "chemical_proxy": {
+                "left_normalized_value": 0.6,
+                "left_raw_value": 7.2,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.6,
+                "right_raw_value": 7.2
+              },
+              "electrical_proxy": {
+                "left_normalized_value": 0.4,
+                "left_raw_value": 1.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.4,
+                "right_raw_value": 1.0
+              },
+              "mass_proxy": {
+                "left_normalized_value": 0.55,
+                "left_raw_value": 80.0,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.55,
+                "right_raw_value": 80.0
+              },
+              "temperature": {
+                "left_normalized_value": 0.48,
+                "left_raw_value": 36.8,
+                "metadata_differs": false,
+                "normalized_value_differs": false,
+                "raw_value_differs": false,
+                "right_normalized_value": 0.48,
+                "right_raw_value": 36.8
+              }
+            },
+            "raw_measure_values_differ": false,
+            "shared_measure_ids": [
+              "chemical_proxy",
+              "electrical_proxy",
+              "mass_proxy",
+              "temperature"
+            ]
+          },
+          "newest_trace_magnitude_difference": -0.09550449996586097,
+          "prestress_distance": 3.469446951953614e-18,
+          "prestress_node_ids_left": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "prestress_node_ids_right": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "reserve_distance": 0.0,
+          "slice_index": 2,
+          "trace_count_difference": 0,
+          "trace_event_order_left": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "audit_exact_nominal_E5",
+            "audit_second_event_D"
+          ],
+          "trace_event_order_right": [
+            "baseline",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "audit_first_event_D",
+            "audit_second_event_A"
+          ],
+          "trace_magnitude_sum_difference": 0.0,
+          "trace_semantic_sequence_left": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ],
+            [
+              "audit_exact_nominal_E5",
+              "temporal_reconstruction",
+              0.19550449996586097,
+              1.0,
+              5
+            ],
+            [
+              "audit_second_event_D",
+              "temporal_reconstruction",
+              0.1,
+              1.0,
+              0
+            ]
+          ],
+          "trace_semantic_sequence_right": [
+            [
+              "baseline",
+              "baseline",
+              0.0,
+              1.0,
+              0
+            ],
+            [
+              "E1",
+              "temporal_reconstruction",
+              0.30567704159028164,
+              1.0,
+              4
+            ],
+            [
+              "E2",
+              "temporal_reconstruction",
+              0.1947829551286497,
+              1.0,
+              3
+            ],
+            [
+              "E3",
+              "temporal_reconstruction",
+              0.1332775711182481,
+              1.0,
+              2
+            ],
+            [
+              "E4",
+              "temporal_reconstruction",
+              0.1704908094249115,
+              1.0,
+              1
+            ],
+            [
+              "audit_first_event_D",
+              "temporal_reconstruction",
+              0.1,
+              1.0,
+              0
+            ],
+            [
+              "audit_second_event_A",
+              "temporal_reconstruction",
+              0.19550449996586097,
+              1.0,
+              5
+            ]
+          ]
+        }
+      ],
+      "slice_count": 3,
+      "trajectory_differs": true
+    }
+  },
+  "predicted_temporal_image_reconstructed": false,
+  "q7_history_action": [
+    -0.08000000000000002,
+    -0.0379236126740625,
+    -0.015667615071158325,
+    -0.005557624818770302
+  ],
+  "realised_multilayer_systemimage_sequence_evaluated": true,
+  "trajectories": {
+    "no_control_A_then_D": [
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.820125,
+            "fatigue": 0.21000000000000002,
+            "reflex_gain": 1.2263750000000002,
+            "remodeling_bias": 0.08,
+            "source_node_id": "A",
+            "stiffness": 1.051375,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.8639999999999999,
+            "fatigue": 0.15000000000000002,
+            "reflex_gain": 1.0115,
+            "remodeling_bias": 0.030000000000000006,
+            "source_node_id": "B",
+            "stiffness": 0.9914999999999999,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_4",
+          "timestamp_label": "t4"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "predictive_stabilization_history_image_4",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.0,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.15128507891007836,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.18883259872205335,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.08264825346791976,
+            "reserve": 0.8
+          }
+        },
+        "revision": 4,
+        "trace_summary": {
+          "count": 5,
+          "magnitude_l2": 0.42214793665914974,
+          "magnitude_sum": 0.804228377262091,
+          "newest_trace_magnitude": 0.1704908094249115
+        }
+      },
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.71625,
+            "fatigue": 0.34,
+            "reflex_gain": 1.3475000000000001,
+            "remodeling_bias": 0.12250000000000001,
+            "source_node_id": "A",
+            "stiffness": 1.1024999999999998,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.7712499999999999,
+            "fatigue": 0.28500000000000003,
+            "reflex_gain": 1.1300000000000001,
+            "remodeling_bias": 0.07,
+            "source_node_id": "B",
+            "stiffness": 1.04,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_5",
+          "timestamp_label": "t5"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.19550449996586097,
+            "persistence": 1.0,
+            "relation_count": 5,
+            "source_event_id": "audit_exact_nominal_E5",
+            "trace_id": "no_control_A_then_D::step_1::audit_exact_nominal_E5::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "no_control_A_then_D::step_1::post_event",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.1,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.1986895947526565,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.20841711756100126,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.07570122244445689,
+            "reserve": 0.8
+          }
+        },
+        "revision": 5,
+        "trace_summary": {
+          "count": 6,
+          "magnitude_l2": 0.4652213343479411,
+          "magnitude_sum": 0.9997328772279519,
+          "newest_trace_magnitude": 0.19550449996586097
+        }
+      },
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.71625,
+            "fatigue": 0.34,
+            "reflex_gain": 1.3475000000000001,
+            "remodeling_bias": 0.12250000000000001,
+            "source_node_id": "A",
+            "stiffness": 1.1024999999999998,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.7712499999999999,
+            "fatigue": 0.28500000000000003,
+            "reflex_gain": 1.1300000000000001,
+            "remodeling_bias": 0.07,
+            "source_node_id": "B",
+            "stiffness": 1.04,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_5",
+          "timestamp_label": "t5"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.19550449996586097,
+            "persistence": 1.0,
+            "relation_count": 5,
+            "source_event_id": "audit_exact_nominal_E5",
+            "trace_id": "no_control_A_then_D::step_1::audit_exact_nominal_E5::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "audit_second_event_D",
+            "trace_id": "no_control_A_then_D::step_2::audit_second_event_D::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "no_control_A_then_D::step_2::post_event",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.1,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.1986895947526565,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.20841711756100126,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.02429877755554312,
+            "reserve": 0.8
+          }
+        },
+        "revision": 6,
+        "trace_summary": {
+          "count": 7,
+          "magnitude_l2": 0.4758475490453627,
+          "magnitude_sum": 1.099732877227952,
+          "newest_trace_magnitude": 0.1
+        }
+      }
+    ],
+    "no_control_D_then_A": [
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.820125,
+            "fatigue": 0.21000000000000002,
+            "reflex_gain": 1.2263750000000002,
+            "remodeling_bias": 0.08,
+            "source_node_id": "A",
+            "stiffness": 1.051375,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.8639999999999999,
+            "fatigue": 0.15000000000000002,
+            "reflex_gain": 1.0115,
+            "remodeling_bias": 0.030000000000000006,
+            "source_node_id": "B",
+            "stiffness": 0.9914999999999999,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_4",
+          "timestamp_label": "t4"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "predictive_stabilization_history_image_4",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.0,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.15128507891007836,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.18883259872205335,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.08264825346791976,
+            "reserve": 0.8
+          }
+        },
+        "revision": 4,
+        "trace_summary": {
+          "count": 5,
+          "magnitude_l2": 0.42214793665914974,
+          "magnitude_sum": 0.804228377262091,
+          "newest_trace_magnitude": 0.1704908094249115
+        }
+      },
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.820125,
+            "fatigue": 0.21000000000000002,
+            "reflex_gain": 1.2263750000000002,
+            "remodeling_bias": 0.08,
+            "source_node_id": "A",
+            "stiffness": 1.051375,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.8639999999999999,
+            "fatigue": 0.15000000000000002,
+            "reflex_gain": 1.0115,
+            "remodeling_bias": 0.030000000000000006,
+            "source_node_id": "B",
+            "stiffness": 0.9914999999999999,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_5",
+          "timestamp_label": "t5"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "audit_first_event_D",
+            "trace_id": "no_control_D_then_A::step_1::audit_first_event_D::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "no_control_D_then_A::step_1::post_event",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.0,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.15128507891007836,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.18883259872205335,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.017351746532080242,
+            "reserve": 0.8
+          }
+        },
+        "revision": 5,
+        "trace_summary": {
+          "count": 6,
+          "magnitude_l2": 0.43383047429333216,
+          "magnitude_sum": 0.9042283772620909,
+          "newest_trace_magnitude": 0.1
+        }
+      },
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.71625,
+            "fatigue": 0.34,
+            "reflex_gain": 1.3475000000000001,
+            "remodeling_bias": 0.12250000000000001,
+            "source_node_id": "A",
+            "stiffness": 1.1024999999999998,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.7712499999999999,
+            "fatigue": 0.28500000000000003,
+            "reflex_gain": 1.1300000000000001,
+            "remodeling_bias": 0.07,
+            "source_node_id": "B",
+            "stiffness": 1.04,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_5",
+          "timestamp_label": "t5"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "audit_first_event_D",
+            "trace_id": "no_control_D_then_A::step_1::audit_first_event_D::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.19550449996586097,
+            "persistence": 1.0,
+            "relation_count": 5,
+            "source_event_id": "audit_second_event_A",
+            "trace_id": "no_control_D_then_A::step_2::audit_second_event_A::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "no_control_D_then_A::step_2::post_event",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.1,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.1986895947526565,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.20841711756100126,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.024298777555543116,
+            "reserve": 0.8
+          }
+        },
+        "revision": 6,
+        "trace_summary": {
+          "count": 7,
+          "magnitude_l2": 0.4758475490453627,
+          "magnitude_sum": 1.099732877227952,
+          "newest_trace_magnitude": 0.19550449996586097
+        }
+      }
+    ],
+    "q7_action_A_then_D": [
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.820125,
+            "fatigue": 0.21000000000000002,
+            "reflex_gain": 1.2263750000000002,
+            "remodeling_bias": 0.08,
+            "source_node_id": "A",
+            "stiffness": 1.051375,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.8639999999999999,
+            "fatigue": 0.15000000000000002,
+            "reflex_gain": 1.0115,
+            "remodeling_bias": 0.030000000000000006,
+            "source_node_id": "B",
+            "stiffness": 0.9914999999999999,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_4",
+          "timestamp_label": "t4"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "q7_action_A_then_D::prepared",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.08000000000000002,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.11336146623601587,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.17316498365089503,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.08820587828669006,
+            "reserve": 0.8
+          }
+        },
+        "revision": 5,
+        "trace_summary": {
+          "count": 5,
+          "magnitude_l2": 0.42214793665914974,
+          "magnitude_sum": 0.804228377262091,
+          "newest_trace_magnitude": 0.1704908094249115
+        }
+      },
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.71625,
+            "fatigue": 0.34,
+            "reflex_gain": 1.3475000000000001,
+            "remodeling_bias": 0.12250000000000001,
+            "source_node_id": "A",
+            "stiffness": 1.1024999999999998,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.7712499999999999,
+            "fatigue": 0.28500000000000003,
+            "reflex_gain": 1.1300000000000001,
+            "remodeling_bias": 0.07,
+            "source_node_id": "B",
+            "stiffness": 1.04,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_5",
+          "timestamp_label": "t5"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.19550449996586097,
+            "persistence": 1.0,
+            "relation_count": 5,
+            "source_event_id": "audit_exact_nominal_E5",
+            "trace_id": "q7_action_A_then_D::step_1::audit_exact_nominal_E5::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "q7_action_A_then_D::step_1::post_event",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.01999999999999999,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.160765982078594,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.19274950248984293,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.08125884726322719,
+            "reserve": 0.8
+          }
+        },
+        "revision": 6,
+        "trace_summary": {
+          "count": 6,
+          "magnitude_l2": 0.4652213343479411,
+          "magnitude_sum": 0.9997328772279519,
+          "newest_trace_magnitude": 0.19550449996586097
+        }
+      },
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.71625,
+            "fatigue": 0.34,
+            "reflex_gain": 1.3475000000000001,
+            "remodeling_bias": 0.12250000000000001,
+            "source_node_id": "A",
+            "stiffness": 1.1024999999999998,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.7712499999999999,
+            "fatigue": 0.28500000000000003,
+            "reflex_gain": 1.1300000000000001,
+            "remodeling_bias": 0.07,
+            "source_node_id": "B",
+            "stiffness": 1.04,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_5",
+          "timestamp_label": "t5"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.19550449996586097,
+            "persistence": 1.0,
+            "relation_count": 5,
+            "source_event_id": "audit_exact_nominal_E5",
+            "trace_id": "q7_action_A_then_D::step_1::audit_exact_nominal_E5::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "audit_second_event_D",
+            "trace_id": "q7_action_A_then_D::step_2::audit_second_event_D::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "q7_action_A_then_D::step_2::post_event",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.01999999999999999,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.160765982078594,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.19274950248984293,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.01874115273677282,
+            "reserve": 0.8
+          }
+        },
+        "revision": 7,
+        "trace_summary": {
+          "count": 7,
+          "magnitude_l2": 0.4758475490453627,
+          "magnitude_sum": 1.099732877227952,
+          "newest_trace_magnitude": 0.1
+        }
+      }
+    ],
+    "q7_action_D_then_A": [
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.820125,
+            "fatigue": 0.21000000000000002,
+            "reflex_gain": 1.2263750000000002,
+            "remodeling_bias": 0.08,
+            "source_node_id": "A",
+            "stiffness": 1.051375,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.8639999999999999,
+            "fatigue": 0.15000000000000002,
+            "reflex_gain": 1.0115,
+            "remodeling_bias": 0.030000000000000006,
+            "source_node_id": "B",
+            "stiffness": 0.9914999999999999,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_4",
+          "timestamp_label": "t4"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "q7_action_D_then_A::prepared",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.08000000000000002,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.11336146623601587,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.17316498365089503,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.08820587828669006,
+            "reserve": 0.8
+          }
+        },
+        "revision": 5,
+        "trace_summary": {
+          "count": 5,
+          "magnitude_l2": 0.42214793665914974,
+          "magnitude_sum": 0.804228377262091,
+          "newest_trace_magnitude": 0.1704908094249115
+        }
+      },
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.820125,
+            "fatigue": 0.21000000000000002,
+            "reflex_gain": 1.2263750000000002,
+            "remodeling_bias": 0.08,
+            "source_node_id": "A",
+            "stiffness": 1.051375,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.8639999999999999,
+            "fatigue": 0.15000000000000002,
+            "reflex_gain": 1.0115,
+            "remodeling_bias": 0.030000000000000006,
+            "source_node_id": "B",
+            "stiffness": 0.9914999999999999,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_5",
+          "timestamp_label": "t5"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "audit_first_event_D",
+            "trace_id": "q7_action_D_then_A::step_1::audit_first_event_D::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "q7_action_D_then_A::step_1::post_event",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": -0.08000000000000002,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.11336146623601587,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.17316498365089503,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.011794121713309944,
+            "reserve": 0.8
+          }
+        },
+        "revision": 6,
+        "trace_summary": {
+          "count": 6,
+          "magnitude_l2": 0.43383047429333216,
+          "magnitude_sum": 0.9042283772620909,
+          "newest_trace_magnitude": 0.1
+        }
+      },
+      {
+        "adaptive_connections": {
+          "A_B": {
+            "contractile_capacity": 0.71625,
+            "fatigue": 0.34,
+            "reflex_gain": 1.3475000000000001,
+            "remodeling_bias": 0.12250000000000001,
+            "source_node_id": "A",
+            "stiffness": 1.1024999999999998,
+            "target_node_id": "B"
+          },
+          "B_C": {
+            "contractile_capacity": 0.7712499999999999,
+            "fatigue": 0.28500000000000003,
+            "reflex_gain": 1.1300000000000001,
+            "remodeling_bias": 0.07,
+            "source_node_id": "B",
+            "stiffness": 1.04,
+            "target_node_id": "C"
+          },
+          "C_D": {
+            "contractile_capacity": 0.758625,
+            "fatigue": 0.17500000000000002,
+            "reflex_gain": 1.002375,
+            "remodeling_bias": 0.047500000000000014,
+            "source_node_id": "C",
+            "stiffness": 0.942375,
+            "target_node_id": "D"
+          }
+        },
+        "context": {
+          "context_id": "temporal_ctx_5",
+          "timestamp_label": "t5"
+        },
+        "historical_traces": [
+          {
+            "magnitude": 0.0,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "baseline",
+            "trace_id": "baseline_trace",
+            "trace_type": "baseline"
+          },
+          {
+            "magnitude": 0.30567704159028164,
+            "persistence": 1.0,
+            "relation_count": 4,
+            "source_event_id": "E1",
+            "trace_id": "predictive_stabilization_history::1::E1::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1947829551286497,
+            "persistence": 1.0,
+            "relation_count": 3,
+            "source_event_id": "E2",
+            "trace_id": "predictive_stabilization_history::2::E2::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1332775711182481,
+            "persistence": 1.0,
+            "relation_count": 2,
+            "source_event_id": "E3",
+            "trace_id": "predictive_stabilization_history::3::E3::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1704908094249115,
+            "persistence": 1.0,
+            "relation_count": 1,
+            "source_event_id": "E4",
+            "trace_id": "predictive_stabilization_history::4::E4::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.1,
+            "persistence": 1.0,
+            "relation_count": 0,
+            "source_event_id": "audit_first_event_D",
+            "trace_id": "q7_action_D_then_A::step_1::audit_first_event_D::trace",
+            "trace_type": "temporal_reconstruction"
+          },
+          {
+            "magnitude": 0.19550449996586097,
+            "persistence": 1.0,
+            "relation_count": 5,
+            "source_event_id": "audit_second_event_A",
+            "trace_id": "q7_action_D_then_A::step_2::audit_second_event_A::trace",
+            "trace_type": "temporal_reconstruction"
+          }
+        ],
+        "image_id": "q7_action_D_then_A::step_2::post_event",
+        "measures": {
+          "chemical_proxy": {
+            "measure_type": "chemical_state",
+            "normalized_value": 0.6,
+            "raw_value": 7.2,
+            "unit": "pH"
+          },
+          "electrical_proxy": {
+            "measure_type": "electrical_activity",
+            "normalized_value": 0.4,
+            "raw_value": 1.0,
+            "unit": "arb"
+          },
+          "mass_proxy": {
+            "measure_type": "mass",
+            "normalized_value": 0.55,
+            "raw_value": 80.0,
+            "unit": "kg"
+          },
+          "temperature": {
+            "measure_type": "temperature",
+            "normalized_value": 0.48,
+            "raw_value": 36.8,
+            "unit": "degC"
+          }
+        },
+        "prestress": {
+          "A": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.01999999999999999,
+            "reserve": 1.0
+          },
+          "B": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.160765982078594,
+            "reserve": 0.9
+          },
+          "C": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.19274950248984293,
+            "reserve": 0.85
+          },
+          "D": {
+            "max_prestress": 1.0,
+            "min_prestress": -1.0,
+            "prestress": 0.018741152736772817,
+            "reserve": 0.8
+          }
+        },
+        "revision": 7,
+        "trace_summary": {
+          "count": 7,
+          "magnitude_l2": 0.4758475490453627,
+          "magnitude_sum": 1.099732877227952,
+          "newest_trace_magnitude": 0.19550449996586097
+        }
+      }
+    ]
+  },
+  "whole_system_stabilization_tested": false
+}

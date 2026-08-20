@@ -6,6 +6,101 @@ The format follows the principles of *Keep a Changelog*.
 
 ---
 
+# [1.4.0] - 2026-08-20
+
+## Added
+
+### Structured Memory-to-Transition Layer
+
+* Added `roif/history/transition_modifiers.py`.
+* Added explicit bounded transition modifiers with structured provenance.
+* Added transition-modifier channels and deterministic modifier signatures.
+* Added `TransitionModifierSet` as a policy-free transition-conditioning interface.
+* Added explicit separation between structured memory provenance and direct physical-state evolution.
+
+### Memory Transition Derivation
+
+* Added `roif/history/memory_transition_derivation.py`.
+* Added deterministic derivation of bounded transition modifiers from structured memory evidence.
+* Added explicit semantic-to-physical target bindings.
+* Added binding polarity and target-channel mapping.
+* Added provenance-preserving derivation signatures.
+* Added rejection of ambiguous duplicate physical transition targets.
+
+### System Evolution Integration
+
+* Integrated `TransitionModifierSet` into `roif/history/system_evolution.py`.
+* Added executable support for the `PRESTRESS_TRANSFER` transition channel.
+* Added bounded modification of effective prestress-transfer gain.
+* Preserved the exact legacy transition path when modifiers are absent or zero.
+* Added rejection of unsupported active modifier channels.
+* Added transition-modifier provenance to evolution metadata.
+* Kept the integration explicitly narrower than a general history-conditioned operator over the complete `SystemImage`.
+
+### Matched-Current-State Identifiability
+
+* Added `roif_matched_state_history_operator_identifiability_benchmark.py`.
+* Added a matched-current-state physical-history control.
+* Added explicit separation between:
+  * history embodied in current physical organization;
+  * structured memory retained outside the matched physical state;
+  * independently identifiable transition conditioning.
+* Added null-result handling when no independent physical-history contribution remains after represented current state is matched.
+
+### Structured-Memory-Conditioned Transition Benchmark
+
+* Added `roif_memory_conditioned_matched_state_transition_benchmark.py`.
+* Added matched-current-state experiments in which represented physical state, topology, probe event, attractor, and binding are held fixed while structured conditioning memory varies.
+* Demonstrated different bounded memory-derived transition modifiers under matched represented current state.
+* Demonstrated different subsequent prestress transitions through the implemented `PRESTRESS_TRANSFER` channel.
+* Preserved matched adaptive connection state across compared conditions.
+
+### History-Conditioned Redistribution Controls
+
+* Added Q8 history-conditioned redistribution benchmarks.
+* Added matched-state decomposition of prestress-state and adaptive-connection contributions.
+* Added capacity-aware redistribution analysis.
+* Added explicit distinction between redistribution and stabilization.
+
+### Predictive Preconfiguration Audits
+
+* Added `roif_predictive_stabilization_benchmark.py`.
+* Added `roif_q7_objective_independence_audit.py`.
+* Added `roif_q7_off_nominal_transferability_audit.py`.
+* Added restricted one-step prestress-layer predictive preconfiguration.
+* Added objective-independence auditing.
+* Added off-nominal transferability auditing.
+* Added explicit claim boundaries preventing interpretation as general objective-independent whole-system predictive stabilization.
+
+### Temporal Image and Trajectory Benchmarks
+
+* Added `roif_temporal_image_reconstruction_benchmark.py`.
+* Added `roif_multilayer_temporal_image_trajectory_benchmark.py`.
+* Added deterministic temporal-image reconstruction controls.
+* Added endpoint-versus-trajectory comparisons.
+* Added explicit distinction between scalar trajectory summaries and a complete future `TemporalImage`.
+* Added claim-boundary tests preventing reinterpretation of trajectory analysis as full future Temporal-Image prediction.
+
+### Reproducibility Assets
+
+* Added benchmark result artifacts for matched-state identifiability, structured-memory transition conditioning, Q7 audits, Q8 redistribution decomposition, and temporal-image reconstruction.
+* Added Entropy figure-generation support in `experiments/build_entropy_figures.py`.
+* Added architecture claim-boundary regression tests.
+* Added transition-modifier integration tests.
+* Added memory-transition derivation tests.
+
+## Changed
+
+* Extended `SystemEvolution` with an optional transition-conditioning pathway while preserving backward-compatible zero-modifier behavior.
+* Refined predictive-preconfiguration semantics to a restricted implemented prestress-layer mechanism.
+* Refined history dependence into experimentally separable state-mediated and structured-memory-conditioned mechanisms.
+* Refined temporal claims so that complete future `TemporalImage` prediction remains an architectural target rather than a demonstrated capability.
+
+## Validation
+
+* Full project test suite passed after integration of structured-memory-conditioned transition support and associated benchmarks.
+
+---
 # [1.3.0] - 2026-08-09
 
 ## Added
@@ -80,7 +175,7 @@ The format follows the principles of *Keep a Changelog*.
 
 ---
 
-## Added — Mechanical Validation
+## Added вЂ” Mechanical Validation
 
 ### Pre-Stressed Mechanical Benchmarks
 
@@ -91,7 +186,7 @@ Added validation cases for:
 * pre-stressed branching;
 * symmetric branching ambiguity.
 
-### 03C — Misleading High-Amplitude Branch
+### 03C вЂ” Misleading High-Amplitude Branch
 
 Added an adversarial benchmark in which:
 
@@ -108,7 +203,7 @@ Validated that:
 * the quieter aligned branch can be selected;
 * only authorized directional evidence advances the active cascade.
 
-### 03D — Misleading Reverse-Direction Response
+### 03D вЂ” Misleading Reverse-Direction Response
 
 Added an adversarial benchmark in which the strongest response points opposite to the proposed causal relation.
 
@@ -124,7 +219,7 @@ relation rejected
 
 The reverse branch is explicitly rejected rather than merely ignored.
 
-### 03E — Delayed Misleading Response
+### 03E вЂ” Delayed Misleading Response
 
 Added a temporal adversarial benchmark.
 
@@ -143,20 +238,20 @@ First Response != Correct Response
 
 ---
 
-## Added — Clinical Validation
+## Added вЂ” Clinical Validation
 
-### Foot–Knee Active Probe
+### FootвЂ“Knee Active Probe
 
 * Added `validation/clinical/foot_knee_probe_case.py`.
-* Added Active Probe validation for the Foot–Knee case.
+* Added Active Probe validation for the FootвЂ“Knee case.
 * Added recursive Probe validation.
 * Added corresponding integration and regression tests.
 
 ---
 
-## Added — Sailing Validation
+## Added вЂ” Sailing Validation
 
-### 04A — Coupled Yacht–Crew System
+### 04A вЂ” Coupled YachtвЂ“Crew System
 
 Added:
 
@@ -180,9 +275,9 @@ The benchmark separates:
 * helmsman control demand;
 * sail-trimmer control demand.
 
-The benchmark uses published yacht–crew modeling literature as the basis for the coupled-system topology while keeping ROIF-specific normalized parameters separate from published claims.
+The benchmark uses published yachtвЂ“crew modeling literature as the basis for the coupled-system topology while keeping ROIF-specific normalized parameters separate from published claims.
 
-### 04A — Yacht–Crew Predictive Control
+### 04A вЂ” YachtвЂ“Crew Predictive Control
 
 Added:
 
@@ -200,7 +295,7 @@ Added candidate policies for:
 
 The benchmark evaluates candidate actions before execution using predicted residual state, uncertainty, cost, safety, and available control reserve.
 
-Under the current normalized benchmark state, the coupled helm–trim action is selected.
+Under the current normalized benchmark state, the coupled helmвЂ“trim action is selected.
 
 ---
 
@@ -331,10 +426,10 @@ Added or extended tests for:
 * misleading high-amplitude response;
 * reverse-direction contradiction;
 * delayed-response temporal control;
-* Foot–Knee Active Probe;
-* Foot–Knee recursive Probe;
+* FootвЂ“Knee Active Probe;
+* FootвЂ“Knee recursive Probe;
 * Predictive Control;
-* sailing yacht–crew Predictive Control.
+* sailing yachtвЂ“crew Predictive Control.
 
 Recent targeted validation checkpoints include:
 
@@ -349,7 +444,7 @@ Predictive Control:
 ```
 
 ```text
-04A Yacht–Crew Predictive Control:
+04A YachtвЂ“Crew Predictive Control:
 76 passed
 ```
 
@@ -379,36 +474,36 @@ Version 1.3.0 introduces three additional capabilities:
 
 ```text
 ACTIVE EVIDENCE
-      ↓
+      в†“
 direction and timing determine whether
 a response supports or contradicts a relation
 
 ACTIVE CASCADE
-      ↓
+      в†“
 authorized evidence can advance or reject
 candidate causal transitions
 
 PREDICTIVE CONTROL
-      ↓
+      в†“
 the system can evaluate possible actions
 before committing to them
 ```
 
-The 04A yacht–crew benchmark also introduces the first explicit ROIF validation of a coupled system containing both a physical plant and an adaptive living controller.
+The 04A yachtвЂ“crew benchmark also introduces the first explicit ROIF validation of a coupled system containing both a physical plant and an adaptive living controller.
 
 The current architectural frontier is now:
 
 ```text
 Prediction
-    ↓
+    в†“
 Action / Probe
-    ↓
+    в†“
 Observation
-    ↓
+    в†“
 Prediction Error
-    ↓
+    в†“
 Experience Trace
-        ↑
+        в†‘
        NEXT
 ```
 
@@ -433,7 +528,7 @@ Persistent controller memory and experience-dependent adaptation are not yet imp
 ### Validation
 
 * Added the first clinical validation package.
-* Added Foot–Knee clinical validation case.
+* Added FootвЂ“Knee clinical validation case.
 * Added Active Probe integration tests.
 * Added Active Probe end-to-end tests.
 * Added role validation tests for D_origin, D_fast, D_root and Node*.

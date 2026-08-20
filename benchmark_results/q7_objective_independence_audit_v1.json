@@ -1,0 +1,229 @@
+{
+  "audit_target": "q7_one_step_prestress_preconfiguration",
+  "benchmark_version": "roif_q7_objective_independence_audit_v1",
+  "biological_or_clinical_validity_tested": false,
+  "central_results": {
+    "additive_superposition_exact_all_conditions": true,
+    "history_beats_or_matches_discrete_search_all_conditions": true,
+    "maximum_alignment_with_inverse_realised_response": 1.0,
+    "maximum_history_minus_oracle_euclidean": 0.0007489188215139362,
+    "mean_alignment_with_inverse_realised_response": 0.999936080936699,
+    "minimum_alignment_with_inverse_realised_response": 0.999898949194875,
+    "minimum_history_minus_oracle_euclidean": 0.0
+  },
+  "claim_scope": "computational_model_only",
+  "conditions": {
+    "challenge_080pct": {
+      "algebraic_event_plus_action_prediction": [
+        0.0,
+        0.0010713885574694312,
+        0.0007955631767175841,
+        0.00028220259661373634
+      ],
+      "condition": "challenge_080pct",
+      "equal_budget_direction_search": {
+        "best_candidate": {
+          "action": [
+            -0.06369678859211238,
+            -0.06369678859211238,
+            0.0,
+            0.0
+          ],
+          "euclidean_deviation": 0.034367322026605654,
+          "index": 5,
+          "peak_abs_deviation": 0.02470178736058043
+        },
+        "candidate_count": 80,
+        "history_beats_or_matches_discrete_search": true,
+        "history_minus_best_search_euclidean": -0.03300334529851935
+      },
+      "event_displacement_no_control": [
+        0.08000000000000002,
+        0.038995001231531934,
+        0.01646317824787591,
+        0.0058398274153840385
+      ],
+      "exact_additive_superposition_within_tolerance": true,
+      "history_action": [
+        -0.08000000000000002,
+        -0.0379236126740625,
+        -0.015667615071158325,
+        -0.005557624818770302
+      ],
+      "history_action_alignment_with_inverse_realised_response": 0.9999092936152217,
+      "history_action_budget": 0.09008086230657716,
+      "history_action_euclidean_deviation": 0.0013639767280863022,
+      "history_action_peak_abs_deviation": 0.001071388557469466,
+      "history_matches_oracle_within_tolerance": false,
+      "history_minus_oracle_euclidean": 0.0007489188215139362,
+      "history_post_displacement": [
+        0.0,
+        0.001071388557469466,
+        0.0007955631767175841,
+        0.0002822025966137398
+      ],
+      "no_control_euclidean_deviation": 0.09069592021314953,
+      "nominal_prediction_alignment_with_realised_response": 0.9999092936152215,
+      "oracle_action": [
+        -0.07945747689190265,
+        -0.03873055511567704,
+        -0.016351532564973428,
+        -0.005800224398882209
+      ],
+      "oracle_euclidean_deviation": 0.000615057906572366,
+      "oracle_peak_abs_deviation": 0.0005425231080973675,
+      "superposition_residual": [
+        0.0,
+        3.469446951953614e-17,
+        0.0,
+        3.469446951953614e-18
+      ],
+      "superposition_residual_norm": 3.4867510341210807e-17
+    },
+    "challenge_100pct": {
+      "algebraic_event_plus_action_prediction": [
+        0.01999999999999999,
+        0.009480903168515624,
+        0.003916903767789581,
+        0.0013894062046925747
+      ],
+      "condition": "challenge_100pct",
+      "equal_budget_direction_search": {
+        "best_candidate": {
+          "action": [
+            -0.06369678859211238,
+            -0.06369678859211238,
+            0.0,
+            0.0
+          ],
+          "euclidean_deviation": 0.04489071093294313,
+          "index": 5,
+          "peak_abs_deviation": 0.03630321140788763
+        },
+        "candidate_count": 80,
+        "history_beats_or_matches_discrete_search": true,
+        "history_minus_best_search_euclidean": -0.02237049535629885
+      },
+      "event_displacement_no_control": [
+        0.1,
+        0.04740451584257813,
+        0.019584518838947906,
+        0.006947031023462877
+      ],
+      "exact_additive_superposition_within_tolerance": true,
+      "history_action": [
+        -0.08000000000000002,
+        -0.0379236126740625,
+        -0.015667615071158325,
+        -0.005557624818770302
+      ],
+      "history_action_alignment_with_inverse_realised_response": 1.0,
+      "history_action_budget": 0.09008086230657716,
+      "history_action_euclidean_deviation": 0.022520215576644284,
+      "history_action_peak_abs_deviation": 0.01999999999999999,
+      "history_matches_oracle_within_tolerance": true,
+      "history_minus_oracle_euclidean": 0.0,
+      "history_post_displacement": [
+        0.01999999999999999,
+        0.00948090316851563,
+        0.003916903767789581,
+        0.0013894062046925781
+      ],
+      "no_control_euclidean_deviation": 0.11260107788322145,
+      "nominal_prediction_alignment_with_realised_response": 1.0000000000000002,
+      "oracle_action": [
+        -0.08000000000000002,
+        -0.0379236126740625,
+        -0.015667615071158325,
+        -0.005557624818770302
+      ],
+      "oracle_euclidean_deviation": 0.022520215576644284,
+      "oracle_peak_abs_deviation": 0.01999999999999999,
+      "superposition_residual": [
+        0.0,
+        6.938893903907228e-18,
+        0.0,
+        3.469446951953614e-18
+      ],
+      "superposition_residual_norm": 7.757919228897728e-18
+    },
+    "challenge_120pct": {
+      "algebraic_event_plus_action_prediction": [
+        0.03999999999999998,
+        0.017279094335232163,
+        0.0066016791814481335,
+        0.0023417511789599298
+      ],
+      "condition": "challenge_120pct",
+      "equal_budget_direction_search": {
+        "best_candidate": {
+          "action": [
+            -0.06369678859211238,
+            -0.06369678859211238,
+            0.0,
+            0.0
+          ],
+          "euclidean_deviation": 0.06164837909012318,
+          "index": 5,
+          "peak_abs_deviation": 0.05630321140788762
+        },
+        "candidate_count": 80,
+        "history_beats_or_matches_discrete_search": true,
+        "history_minus_best_search_euclidean": -0.0175163831275024
+      },
+      "event_displacement_no_control": [
+        0.12,
+        0.055202707009294666,
+        0.02226929425260646,
+        0.007899375997730232
+      ],
+      "exact_additive_superposition_within_tolerance": true,
+      "history_action": [
+        -0.08000000000000002,
+        -0.0379236126740625,
+        -0.015667615071158325,
+        -0.005557624818770302
+      ],
+      "history_action_alignment_with_inverse_realised_response": 0.999898949194875,
+      "history_action_budget": 0.09008086230657716,
+      "history_action_euclidean_deviation": 0.04413199596262078,
+      "history_action_peak_abs_deviation": 0.03999999999999998,
+      "history_matches_oracle_within_tolerance": false,
+      "history_minus_oracle_euclidean": 2.768595564937859e-05,
+      "history_post_displacement": [
+        0.03999999999999998,
+        0.01727909433523217,
+        0.0066016791814481335,
+        0.0023417511789599332
+      ],
+      "no_control_euclidean_deviation": 0.13418517231354857,
+      "nominal_prediction_alignment_with_realised_response": 0.9998989491948748,
+      "oracle_action": [
+        -0.08055810705768876,
+        -0.037058546509408215,
+        -0.014949768254172036,
+        -0.0053029898109507425
+      ],
+      "oracle_euclidean_deviation": 0.0441043100069714,
+      "oracle_peak_abs_deviation": 0.039441892942311235,
+      "superposition_residual": [
+        0.0,
+        6.938893903907228e-18,
+        0.0,
+        3.469446951953614e-18
+      ],
+      "superposition_residual_norm": 7.757919228897728e-18
+    }
+  },
+  "external_predictive_validity_tested": false,
+  "interpretation": "This audit examines whether the Q7 prestress-layer result is mathematically coupled to its controller and objective. Q7 builds a bounded action opposite to a predicted prestress displacement and evaluates post-event Euclidean deviation in the same prestress space. Exact additive superposition, strong alignment with the inverse realised response, or near-oracle performance would show that part of the observed Q7 improvement follows directly from this construction. Such a result would not invalidate Q7 as a controlled one-step prestress preconfiguration experiment, but it would prevent interpreting Q7 as objective-independent evidence for general predictive stabilization.",
+  "multi_step_temporal_image_tested": false,
+  "objective_independent_stabilization_tested": false,
+  "questions_under_audit": {
+    "additive_superposition": true,
+    "equal_budget_direction_search": true,
+    "equal_budget_oracle_gap": true,
+    "objective_controller_coupling": true
+  },
+  "whole_system_stabilization_tested": false
+}
