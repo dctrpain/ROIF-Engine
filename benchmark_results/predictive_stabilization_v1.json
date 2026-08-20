@@ -1,5 +1,4 @@
 {
-  "architecture_under_test": "history_conditioned_predictive_preconfiguration",
   "benchmark_version": "roif_predictive_stabilization_v1",
   "biological_truth_claimed": false,
   "central_results": {
@@ -281,6 +280,7 @@
     "stale_history_blind_action_norm": 0.09008086230657716
   },
   "external_predictive_validity_claimed": false,
+  "general_optimal_stabilization_policy_claimed": false,
   "history_conditioned_prediction": [
     0.1,
     0.04740451584257813,
@@ -294,7 +294,9 @@
     "E3",
     "E4"
   ],
-  "interpretation": "This controlled computational benchmark evaluates whether a bounded pre-event configuration derived from the current history-conditioned ROIF SystemImage reduces post-event prestress displacement relative to no preconfiguration, a stale/history-blind control, and an opposite same-budget sham action. The benchmark evaluates an internal stabilization capability of the implemented computational architecture. It does not establish external predictive validity, biological or clinical validity, universal stability, or topology-independent robustness.",
+  "interpretation": "This controlled computational benchmark evaluates a one-step history-conditioned predictive preconfiguration mechanism restricted to the prestress layer of the implemented ROIF model. The current history-conditioned SystemImage is evolved under a nominal expected event to obtain a model-internal future SystemImage, but the control action is derived only from the predicted prestress displacement and is applied only to the prestress layer. The outcome metric measures post-event prestress deviation from the pre-event prestress configuration. The benchmark therefore demonstrates only a bounded one-step prestress-layer stabilization effect within this controlled computational implementation. It does not test whole-SystemImage predictive stabilization, multi-step Temporal-Image stabilization, or a general optimal stabilization policy. It also does not establish external predictive validity, biological or clinical validity, universal stability, or topology-independent robustness.",
+  "mechanism_under_test": "history_conditioned_one_step_prestress_preconfiguration",
+  "multi_step_temporal_image_stabilization_claimed": false,
   "nominal_expected_event": "E5",
   "pre_event_prestress": {
     "A": 0.0,
@@ -302,6 +304,7 @@
     "C": 0.18883259872205335,
     "D": -0.08264825346791976
   },
+  "prestress_layer_one_step_stabilization_tested": true,
   "stale_prediction": [
     0.10000000000000003,
     0.06489074497274691,
@@ -309,5 +312,6 @@
     0.013388236878043622
   ],
   "topology_independent_robustness_claimed": false,
-  "universal_stability_claimed": false
+  "universal_stability_claimed": false,
+  "whole_system_image_stabilization_claimed": false
 }
