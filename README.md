@@ -2,62 +2,82 @@
 
 > **Recursive Organic Integration Framework**
 >
-> Universal Cascade Analysis, Active Exploration, and Predictive Control Engine
+> Universal Cascade Analysis, Active Exploration, History-Conditioned Transition, and Predictive Control Engine
+
+**Current release:** `v1.4.0`
+**Release date:** 2026-08-20
+**Release commit:** `580716c13fd4866484cbb651157002123e337b06`
+**Regression suite:** `10877 passed`
 
 ---
 
 ## Overview
 
-ROIF Engine is a domain-independent framework for analyzing, exploring, and controlling cascade dynamics in **pre-stressed complex systems**.
+ROIF Engine is a domain-independent computational architecture for representing, probing, evolving, and experimentally separating different mechanisms of response in **pre-stressed complex systems**.
 
-Unlike traditional graph analysis engines, ROIF is designed to operate on **incomplete causal graphs** and dynamically loaded systems.
+Unlike conventional graph-analysis pipelines, ROIF is designed to work with incomplete causal structure, dynamically loaded systems, recursive cascade propagation, active evidence, physical history, structured memory, and explicitly bounded predictive-control mechanisms.
 
-Rather than assuming that the entire system is already known, ROIF can identify informative observations, perform controlled probes, evaluate directional and temporal responses, update the active cascade state, predict candidate control actions, and compare predicted outcomes with subsequent observations.
+The current architecture can:
+
+* propagate disturbances through a represented pre-stressed system;
+* distinguish structural origin, early functional failure, cascade mediation, and intervention roles;
+* actively probe incomplete causal structure;
+* evaluate directional, utilization, and temporal evidence;
+* update an active cascade only through authorized evidence;
+* evolve physical state recursively;
+* preserve and test state-mediated path dependence;
+* represent structured memory outside the matched current physical state;
+* derive bounded transition modifiers from structured memory;
+* apply the currently implemented modifier path through `PRESTRESS_TRANSFER`;
+* compare matched-current-state systems with different retained histories;
+* evaluate restricted predictive preconfiguration;
+* reconstruct and compare Temporal Image trajectories under controlled benchmark conditions;
+* preserve explicit scientific claim boundaries around each implemented mechanism.
 
 Medicine and biomechanics remain important validation domains, but they are not architectural boundaries.
-
-ROIF is progressively being validated across mechanical and mixed human–physical systems.
 
 ---
 
 # Why ROIF?
 
-Most diagnostic or causal-analysis systems answer the question:
+Many causal-analysis systems effectively ask:
 
 > **"Given the graph, what is the cause?"**
 
-ROIF asks a broader sequence of questions:
+ROIF separates a broader sequence of questions:
 
-> **"What is the most informative next observation if the graph is incomplete?"**
+> **"How can a disturbance propagate through the currently represented system?"**
+
+> **"What is the most informative next observation if causal structure is incomplete?"**
 
 > **"Does the observed response actually support the proposed direction of propagation?"**
 
-> **"What action is expected to stabilize the system under the current load and available reserve?"**
+> **"Can two systems with the same current measured state respond differently because their retained histories differ?"**
 
-This transforms ROIF from a passive cascade-analysis engine into an architecture for **active exploration and predictive stabilization**.
+> **"What bounded action or preconfiguration is justified under the current load, reserve, uncertainty, and tested objective?"**
+
+These questions are deliberately kept separate. A large response is not automatically causal evidence; a useful intervention is not automatically the structural root; history dependence is not automatically a general forecasting capability; and predictive preconfiguration is not equivalent to universal predictive stabilization.
 
 ---
 
 # Core Causal Roles
 
-ROIF distinguishes four fundamentally different causal and control roles.
+ROIF distinguishes four causal and control roles.
 
-| Role         | Meaning                                                   |
-| ------------ | --------------------------------------------------------- |
-| **D_origin** | Structural origin of the cascade                          |
-| **D_fast**   | Earliest observable functional failure                    |
-| **D_root**   | Structural mediation node maintaining cascade propagation |
-| **Node***    | Best intervention point                                   |
+| Role | Meaning |
+| --- | --- |
+| **D_origin** | Structural origin of the cascade |
+| **D_fast** | Earliest observable functional failure |
+| **D_root** | Structural mediation node maintaining cascade propagation |
+| **Node*** | Best counterfactual intervention point |
 
-These roles are intentionally independent.
-
-A node may occupy more than one role in a particular system, but the architecture never assumes that the roles coincide.
+These roles are intentionally independent. A node may occupy more than one role in a particular system, but the architecture does not assume that the roles coincide.
 
 ---
 
 # Cascade Engine
 
-The Cascade Engine performs recursive propagation through pre-stressed systems.
+The Cascade Engine performs recursive propagation through represented pre-stressed systems.
 
 Current capabilities include:
 
@@ -68,11 +88,9 @@ Current capabilities include:
 * counterfactual simulation;
 * mediation-based root detection;
 * independent intervention ranking;
-* structural history evaluation.
+* structural and physical history mechanisms.
 
-The passive cascade layer describes how disturbances can propagate through the currently represented system.
-
-It does not by itself determine whether an observed active response confirms the causal direction being investigated.
+The passive cascade layer describes how disturbances can propagate through the currently represented system. It does not by itself establish that an observed active response confirms the causal direction under investigation.
 
 ---
 
@@ -82,20 +100,20 @@ The Active Probe Engine allows ROIF to investigate incomplete causal structure i
 
 ```text
 Incomplete Graph
-      │
-      ▼
+      |
+      v
 Active Probe Engine
-      │
-      ▼
+      |
+      v
 Probe*
-      │
-      ▼
+      |
+      v
 Observation
-      │
-      ▼
+      |
+      v
 Evidence
-      │
-      ▼
+      |
+      v
 Authorized Graph / State Update
 ```
 
@@ -115,52 +133,38 @@ A proposed observation does not automatically become accepted structural knowled
 
 # Vector Probe and Active Cascade
 
-ROIF now separates passive transport from the response produced by an active probe.
+ROIF separates passive transport from the response produced by an active probe.
 
-This distinction is essential.
-
-A branch may carry a large passive scalar response while producing an active response that is:
-
-* aligned with the investigated direction;
-* orthogonal to it;
-* reversed;
-* delayed;
-* or insufficient.
-
-The Vector Probe layer evaluates active evidence independently of passive amplitude.
-
-Conceptually:
+A branch may carry a large passive scalar response while producing an active response that is aligned, orthogonal, reversed, delayed, insufficient, or absent relative to the investigated relation.
 
 ```text
 Passive Cascade
-      │
-      ▼
+      |
+      v
 Candidate Relations
-      │
-      ▼
+      |
+      v
 Active Probe
-      │
-      ▼
+      |
+      v
 Observed Response Vector
-      │
-      ▼
+      |
+      v
 Directional / Temporal Evidence
-      │
-      ▼
+      |
+      v
 Active Cascade Update
 ```
 
-This prevents a high-amplitude response from automatically being interpreted as causal confirmation.
+The Vector Probe layer evaluates active evidence independently of passive amplitude. This prevents a high-amplitude response from automatically being interpreted as causal confirmation.
 
 ---
 
 # Predictive Control
 
-ROIF now contains a domain-independent **Predictive Control Layer**.
+ROIF contains a domain-independent Predictive Control Layer.
 
-The layer evaluates the current system state, stabilization demand, available control reserve, and alternative candidate actions before selecting the next admissible control operation.
-
-Conceptually:
+The layer evaluates current state, stabilization demand, available control reserve, uncertainty, and alternative candidate actions before selecting an admissible operation.
 
 ```text
 Current State
@@ -168,24 +172,22 @@ Current State
 Disturbance
      +
 Control Reserve
-     │
-     ▼
+      |
+      v
 Stabilization Demand
-     │
-     ▼
+      |
+      v
 Candidate Actions
-     │
-     ▼
+      |
+      v
 Predicted Outcomes
-     │
-     ▼
+      |
+      v
 Candidate Ranking
-     │
-     ▼
+      |
+      v
 ACTION / PROBE / HOLD / NO SAFE ACTION
 ```
-
-The predictive controller does not require the strongest immediate action to be selected.
 
 Candidate evaluation can account for:
 
@@ -199,34 +201,30 @@ Candidate evaluation can account for:
 * probe value;
 * safety constraints.
 
-A system may remain temporarily stabilized while its available control reserve is already insufficient relative to stabilization demand.
-
-ROIF therefore preserves **stabilization margin** as an explicit audit quantity rather than treating observed stability as proof of adequate reserve.
+Observed stability is not treated as proof of adequate reserve. Stabilization margin remains an explicit audit quantity.
 
 ---
 
 # Prediction Error
 
-Predictive Control also introduces an explicit boundary between prediction and observation.
+Predictive Control preserves an explicit boundary between prediction and observation.
 
 ```text
 Predicted State
-      │
-      ▼
+      |
+      v
 Action / Probe
-      │
-      ▼
+      |
+      v
 Observed State
-      │
-      ▼
+      |
+      v
 Prediction Error
 ```
 
 Prediction error records the difference between predicted and subsequently observed state variables.
 
-This provides the architectural foundation for future experience-dependent adaptation.
-
-Persistent controller memory and learning are **not yet implemented** in this layer.
+Persistent experience-dependent controller learning is **not claimed as an implemented general capability in v1.4.0**.
 
 ---
 
@@ -243,17 +241,171 @@ Supported analyses include:
 * incoming load reduction;
 * recursive scenario comparison.
 
-Counterfactual evaluation remains separated from causal inference.
+Counterfactual evaluation remains separated from causal inference. A useful intervention is not automatically the structural root of a cascade.
 
-A useful intervention is not automatically the structural root of a cascade.
+---
+
+# Physical History and Recursive System Evolution
+
+ROIF contains mechanisms in which previous loading changes the physical organization of the system itself.
+
+Examples include:
+
+* fatigue;
+* recovery;
+* remodeling;
+* rheological memory;
+* irreversible material adaptation;
+* adaptive connection state;
+* recursive physical-state evolution.
+
+This produces **state-mediated history dependence**: prior events can alter the present physical state, and the altered present state can change subsequent response.
+
+This mechanism does not require a separate retained memory object. History may already be embodied in the current physical organization.
+
+---
+
+# Structured Memory-to-Transition Layer вЂ” v1.4.0
+
+Version `v1.4.0` adds a second experimentally separable mechanism.
+
+ROIF can retain structured memory evidence outside the matched current physical state, derive bounded transition modifiers from that evidence, and use those modifiers to condition a subsequent transition through the currently implemented physical channel.
+
+```text
+Historical Evidence
+      |
+      v
+Structured Memory
+      |
+      v
+Memory-to-Transition Derivation
+      |
+      v
+TransitionModifierSet
+      |
+      v
+PRESTRESS_TRANSFER
+      |
+      v
+Subsequent SystemEvolution
+```
+
+The implementation includes:
+
+* `roif/history/memory_transition_derivation.py`;
+* `roif/history/transition_modifiers.py`;
+* `TransitionModifierSet`;
+* explicit semantic-to-physical target bindings;
+* binding polarity and target-channel mapping;
+* bounded transition modifiers;
+* structured provenance;
+* deterministic modifier signatures;
+* rejection of ambiguous duplicate physical transition targets;
+* integration with `roif/history/system_evolution.py`;
+* executable support for the `PRESTRESS_TRANSFER` channel;
+* exact preservation of the legacy transition path when modifiers are absent or zero;
+* explicit rejection of unsupported active modifier channels.
+
+## Critical boundary
+
+The current implementation is intentionally narrower than a general history-conditioned operator over the complete `SystemImage`.
+
+```text
+TransitionModifierSet
+        !=
+general history-conditioned SystemImage operator
+```
+
+The demonstrated result is therefore:
+
+> structured retained memory can condition a tested subsequent physical transition through an explicit bounded mechanism.
+
+It is **not** a demonstration that arbitrary historical information can modify every system operator or predict the complete future state.
+
+---
+
+# Matched-Current-State Controls
+
+A central v1.4.0 experimental strategy is to compare systems that are matched on the relevant current measured physical state while differing in retained history.
+
+This separates two mechanisms that can otherwise be confused:
+
+```text
+History A -> Present Physical State A -> Future Response
+History B -> Present Physical State B -> Future Response
+```
+
+from the stricter control:
+
+```text
+History A -> Matched Present State + Memory A
+History B -> Matched Present State + Memory B
+                              |
+                              v
+                   Different bounded modifiers
+                              |
+                              v
+                   Subsequent transition test
+```
+
+The matched-state controls test whether retained structured history contributes information beyond the matched current physical state under the implemented transition mechanism.
+
+---
+
+# Predictive Preconfiguration
+
+ROIF v1.4.0 includes restricted computational experiments in anticipatory prestress preconfiguration.
+
+The claim is deliberately limited.
+
+The benchmark evaluates whether a tested preconfiguration policy can improve a defined one-step objective under specified conditions and available reserve.
+
+It does **not** establish:
+
+* objective-independent whole-system stabilization;
+* universal optimal control;
+* general future-state prediction;
+* complete Temporal Image prediction;
+* biological anticipation;
+* learned human-like predictive behavior.
+
+Predictive preconfiguration should therefore be read as a tested architectural mechanism, not as a synonym for unrestricted forecasting.
+
+---
+
+# Temporal Image Benchmarks
+
+The current repository includes Temporal Image reconstruction and multilayer temporal-trajectory benchmarks.
+
+These experiments test separable properties of the architecture rather than a single scalar notion of "ROIF accuracy."
+
+The temporal benchmark family includes controlled comparisons intended to distinguish effects such as:
+
+* current-state information;
+* fixed coupling;
+* retained history;
+* memory-free ablation;
+* trajectory-conditioned reconstruction.
+
+The experiments support analysis of trajectory dependence and reconstruction under their tested conditions.
+
+They do **not** establish complete prediction of a future Temporal Image for arbitrary systems.
+
+---
+
+# History-Conditioned Redistribution
+
+The current benchmark suite also tests history-conditioned redistribution under controlled conditions, including matched-state decomposition of contributions associated with prestress and adaptive connections.
+
+These experiments are intended to determine which represented mechanisms carry historical information into subsequent redistribution.
+
+They should not be interpreted as evidence for a universal history operator.
 
 ---
 
 # Mixed-System Validation
 
-ROIF validation has expanded beyond purely mechanical and clinical systems.
-
-The **04A Sailing Yacht–Crew benchmark** represents a coupled system containing both:
+The `04A Sailing Yacht-Crew` benchmark represents a coupled system containing a mechanical plant and a living controller.
 
 ### Mechanical Plant
 
@@ -269,11 +421,9 @@ The **04A Sailing Yacht–Crew benchmark** represents a coupled system containin
 * helmsman control demand;
 * sail-trimmer control demand.
 
-The benchmark tests the architecture as a coupled **physical plant + living controller** system.
+The benchmark evaluates the architecture as a coupled physical-plant + living-controller system and includes alternative stabilization strategies such as helm correction, sail-trim correction, coupled action, hold, and information probe.
 
-The predictive-control layer evaluates several candidate stabilization strategies, including helm correction, sail-trim correction, coupled helm–trim action, holding the current control state, and an information probe.
-
-This benchmark is intended as a cross-domain validation environment for control architecture, not as a claim that human cognition has already been fully modeled.
+This is a cross-domain validation environment for the control architecture. It is not a claim that human cognition has been fully modeled.
 
 ---
 
@@ -281,57 +431,96 @@ This benchmark is intended as a cross-domain validation environment for control 
 
 ROIF is developed using a validation-first approach.
 
-Current validation includes:
+Validation families include:
 
-* Unit tests;
-* Integration tests;
-* End-to-End tests;
-* Clinical validation;
-* Mechanical ground-truth validation;
+* unit tests;
+* integration tests;
+* end-to-end tests;
+* mechanical ground-truth validation;
+* clinical/biomechanical validation environments;
 * Active Probe validation;
 * Active Cascade validation;
-* Vector-response validation;
-* Temporal-response validation;
-* Counterfactual validation;
+* vector-response validation;
+* temporal-response validation;
+* counterfactual validation;
 * Predictive Control validation;
-* Mixed yacht–crew validation.
+* mixed yacht-crew validation;
+* matched-current-state history controls;
+* structured-memory-conditioned transition benchmarks;
+* predictive-preconfiguration audits;
+* objective-independence audits;
+* off-nominal transferability audits;
+* history-conditioned redistribution controls;
+* Temporal Image reconstruction benchmarks;
+* multilayer temporal-trajectory benchmarks;
+* architecture claim-boundary tests.
 
-Important mechanical controls include cases in which:
+For release `v1.4.0`, the complete repository regression suite completed with:
 
-* the largest-amplitude branch is directionally wrong;
-* a high-amplitude response is orthogonal to the candidate direction;
-* a high-amplitude response is reversed;
-* the correct response is delayed;
-* early observation would produce a misleading conclusion.
-
-These controls explicitly test whether ROIF can avoid treating **amplitude, timing, or passive transport as sufficient causal evidence**.
+```text
+10877 passed
+```
 
 ---
 
-# Current Validation Benchmarks
+# Reproducibility Assets
 
-Current validation families include:
+The repository contains executable benchmark scripts, stored benchmark outputs, figure-generation code, and tests supporting the current manuscript-facing computational claims.
+
+Key experiment scripts include:
 
 ```text
-Mechanical
-├── Pre-stressed spring
-├── Serial weak link
-├── Pre-stressed branching
-├── Symmetric branching ambiguity
-├── 03C Misleading High-Amplitude Branch
-├── 03D Misleading Reverse-Direction Response
-└── 03E Delayed Misleading Response
-
-Clinical / Biomechanical
-├── Foot–Knee validation
-├── Active Probe validation
-└── Recursive Probe validation
-
-Mixed Human–Physical Systems
-└── 04A Sailing Yacht–Crew
-    ├── coupled-system ground truth
-    └── predictive stabilization
+experiments/
+    roif_matched_state_history_operator_identifiability_benchmark.py
+    roif_memory_conditioned_matched_state_transition_benchmark.py
+    roif_multilayer_temporal_image_trajectory_benchmark.py
+    roif_predictive_stabilization_benchmark.py
+    roif_q7_objective_independence_audit.py
+    roif_q7_off_nominal_transferability_audit.py
+    roif_q8_history_conditioned_redistribution_benchmark.py
+    roif_q8_history_conditioned_redistribution_matched_state_benchmark.py
+    roif_temporal_image_reconstruction_benchmark.py
+    build_entropy_figures.py
 ```
+
+Stored outputs include:
+
+```text
+benchmark_results/
+    matched_state_history_operator_identifiability_v1.json
+    memory_conditioned_matched_state_transition_v1.json
+    multilayer_temporal_image_trajectory_v1.json
+    predictive_stabilization_v1.json
+    q7_objective_independence_audit_v1.json
+    q7_off_nominal_transferability_audit_v2.json
+    q8_history_conditioned_redistribution_capacity_v1.json
+    q8_history_conditioned_redistribution_matched_state_v2.json
+    temporal_image_reconstruction_v1.json
+    temporal_image_reconstruction_methods_v1.csv
+    temporal_image_reconstruction_slices_v1.csv
+```
+
+The release also includes tests for memory-transition derivation, transition modifiers, system-evolution integration, predictive stabilization, Temporal Image reconstruction, matched-state redistribution, and architectural claim boundaries.
+
+For manuscript reproducibility, use the immutable release tag:
+
+```text
+v1.4.0
+```
+
+corresponding to commit:
+
+```text
+580716c13fd4866484cbb651157002123e337b06
+```
+
+Repository:
+
+https://github.com/dctrpain/ROIF-Engine
+
+Release tag:
+
+https://github.com/dctrpain/ROIF-Engine/tree/v1.4.0
 
 ---
 
@@ -352,19 +541,21 @@ roif/
     probe_planner.py
     probe_graph_adapter.py
 
+    history/
+        memory_transition_derivation.py
+        system_evolution.py
+        transition_modifiers.py
+
     solver.py
     network.py
     node.py
     element.py
     material.py
 
+experiments/
+benchmark_results/
 validation/
-    clinical/
-    mechanical/
-    sailing/
-
 tests/
-
 docs/
 ```
 
@@ -372,222 +563,115 @@ docs/
 
 # Current Architecture
 
-The current ROIF architecture can be represented as:
-
 ```text
 Pre-Stressed System
-        │
-        ▼
+        |
+        v
 Passive Cascade
-        │
-        ▼
+        |
+        v
 Incomplete / Candidate Structure
-        │
-        ▼
+        |
+        v
 Active Probe
-        │
-        ▼
+        |
+        v
 Vector + Temporal Evidence
-        │
-        ▼
+        |
+        v
 Active Cascade
-        │
-        ▼
+        |
+        v
 Current Dynamic State
-        │
-        ▼
-Predictive Control
-        │
-        ├── Stabilization Demand
-        ├── Control Reserve
-        ├── Candidate Actions
-        └── Predicted Outcomes
-        │
-        ▼
-Action / Probe / Hold
-        │
-        ▼
-Observation
-        │
-        ▼
-Prediction Error
+        |
+        +------------------------------+
+        |                              |
+        v                              v
+Physical SystemEvolution       Structured Memory
+        |                              |
+        |                              v
+        |                    Memory-to-Transition
+        |                          Derivation
+        |                              |
+        |                              v
+        |                    TransitionModifierSet
+        |                              |
+        +--------------+---------------+
+                       |
+                       v
+             Subsequent Transition
+                       |
+                       v
+              Predictive Control
+                       |
+             +---------+---------+
+             |         |         |
+             v         v         v
+          Demand     Reserve   Candidates
+                       |
+                       v
+             Action / Probe / Hold
+                       |
+                       v
+                  Observation
+                       |
+                       v
+                Prediction Error
 ```
 
-The architecture intentionally keeps these layers separate.
+The architecture intentionally keeps passive propagation, active causal evidence, physical history, retained structured memory, transition conditioning, prediction, observation, and control conceptually separable.
 
 ---
 
-# Two Different Forms of History
+# Scientific Claim Boundaries
 
-ROIF already contains physical and structural history mechanisms.
+ROIF Engine `v1.4.0` provides executable and tested mechanisms for:
 
-Examples include:
+* recursive cascade dynamics in represented pre-stressed systems;
+* active exploration of incomplete causal structure;
+* vector- and temporal-sensitive active evidence;
+* counterfactual intervention analysis;
+* predictive-control candidate evaluation;
+* recursive physical-state evolution;
+* state-mediated history dependence;
+* structured-memory-conditioned transition modulation through the tested `PRESTRESS_TRANSFER` channel;
+* matched-current-state history controls;
+* restricted anticipatory prestress preconfiguration;
+* controlled Temporal Image reconstruction and trajectory experiments;
+* history-conditioned redistribution experiments.
 
-* fatigue;
-* recovery;
-* remodeling;
-* rheological memory;
-* irreversible material adaptation.
+ROIF Engine `v1.4.0` does **not** establish:
 
-These mechanisms describe how **the physical system itself changes because of its previous loading history**.
+* a general history-conditioned operator over the complete `SystemImage`;
+* full future Temporal Image prediction;
+* objective-independent whole-system predictive stabilization;
+* universal stability;
+* biological learning;
+* autonomous psychological learning;
+* consciousness;
+* a complete model of human cognition;
+* clinical validity as a consequence of the computational benchmarks alone.
 
-A future research layer will investigate a different form of history:
-
-```text
-Prediction
-    ↓
-Action
-    ↓
-Outcome
-    ↓
-Prediction Error
-    ↓
-Experience Trace
-```
-
-Such experience-dependent controller memory must remain conceptually separate from rheological or structural material memory.
-
-It is **not yet an implemented capability**.
-
----
-
-# Scientific Background
-
-ROIF is developed alongside ongoing research into recursive cascade dynamics and adaptive control in pre-stressed systems.
-
-The architecture currently supports concepts including:
-
-* recursive cascade dynamics;
-* tensor-based propagation;
-* structural mediation;
-* counterfactual reasoning;
-* active exploration;
-* vector-sensitive evidence;
-* temporal evidence;
-* uncertainty reduction;
-* predictive stabilization;
-* finite control reserve;
-* prediction error.
-
-Current scientific terminology includes:
-
-* D_origin;
-* D_fast;
-* D_root;
-* Node*;
-* Probe*;
-* Tensor W;
-* Spectral Coherence (η);
-* Stabilization Demand;
-* Control Reserve;
-* Prediction Error.
-
----
-
-# Current Status
-
-Implemented:
-
-* Stable Cascade Solver;
-* Pre-stressed system mechanics;
-* Capacity Tensor;
-* Dynamic History;
-* Rheological Memory;
-* Counterfactual Engine;
-* Mediation-based D_root;
-* Independent Node*;
-* Active Probe Engine;
-* Vector Probe;
-* Utilization layer;
-* Active Cascade;
-* Direction-sensitive active evidence;
-* Temporal-response controls;
-* Predictive Control;
-* Prediction Error comparison;
-* Clinical validation pipeline;
-* Mechanical validation suite;
-* 04A Yacht–Crew coupled-system benchmark;
-* 04A Yacht–Crew predictive-control benchmark.
-
----
-
-# Next Research Layer
-
-The next architectural research step is **experience-dependent predictive control**.
-
-The proposed sequence is:
-
-```text
-Prediction
-    ↓
-Action / Probe
-    ↓
-Observed State
-    ↓
-Prediction Error
-    ↓
-Experience Trace
-    ↓
-Persistent Controller Memory
-    ↓
-Modified Predictive State
-    ↓
-Next Prediction
-```
-
-Working concepts such as **Memory Scar** and **Predictive Preload** remain research terminology until they are formally defined, implemented, and validated.
-
-The immediate implementation target is therefore the smallest auditable representation of an **Experience Trace**.
-
----
-
-# Cross-Domain Development Direction
-
-```text
-Mechanical Validation
-        │
-        ▼
-Active Probe Controls
-        │
-        ▼
-Vector / Temporal Evidence
-        │
-        ▼
-Mixed Yacht–Crew System
-        │
-        ▼
-Predictive Stabilization
-        │
-        ▼
-Experience-Dependent Control
-        │
-        ▼
-Adaptive Stabilization
-        │
-        ▼
-Robotics Transfer Validation
-```
-
-The purpose of cross-domain validation is to test whether the same core architecture remains reusable without redesigning its fundamental inference and control principles.
+These boundaries are part of the architecture and validation strategy, not merely documentation disclaimers.
 
 ---
 
 # Design Principles
 
-Every architectural decision should satisfy the following principles:
+Every architectural decision should remain:
 
-* Domain independent;
-* Mathematically formalizable;
-* Compatible with recursive cascade dynamics;
-* Compatible with pre-stressed systems;
-* Compatible with Active Probe;
-* Explicit about uncertainty;
-* Explicit about control reserve;
-* Auditable;
-* Deterministic where required by validation;
-* Scientifically defensible;
-* Experimentally testable;
-* Suitable for peer-reviewed publication.
+* domain-independent;
+* mathematically formalizable;
+* compatible with recursive cascade dynamics;
+* compatible with pre-stressed systems;
+* compatible with Active Probe;
+* explicit about uncertainty;
+* explicit about control reserve;
+* auditable;
+* deterministic where required by validation;
+* scientifically defensible;
+* experimentally testable;
+* suitable for peer-reviewed publication.
 
 ---
 
@@ -601,22 +685,43 @@ Information gain, predictive utility, or expected stabilization benefit must not
 
 ---
 
-# Research Boundary
+# Development Frontier
 
-ROIF currently implements predictive stabilization and active exploration.
+The implemented v1.4.0 memory-to-transition mechanism does not close the broader research problem of persistent adaptive controller memory.
 
-It does **not** currently claim to implement:
+Future work may investigate:
 
-* consciousness;
-* biological instinct;
-* human cognition;
-* autonomous psychological learning;
-* a complete model of biological predictive processing.
+```text
+Prediction
+    |
+    v
+Action / Probe
+    |
+    v
+Observed State
+    |
+    v
+Prediction Error
+    |
+    v
+Experience Trace
+    |
+    v
+Persistent Controller Memory
+    |
+    v
+Modified Predictive State
+    |
+    v
+Next Prediction
+```
 
-Possible relationships between repeated prediction errors, persistent controller memory, learned stabilization responses, and biological control remain **research hypotheses to be formalized and tested**.
+Working concepts such as **Memory Scar** and **Predictive Preload** remain research terminology unless and until they are formally defined, implemented, and independently validated.
+
+Additional development directions include broader transition channels beyond `PRESTRESS_TRANSFER`, stronger identifiability controls, external-domain replication, and further separation of architectural capability from benchmark-specific performance.
 
 ---
 
 # License
 
-See the LICENSE file for licensing information.
+See the `LICENSE` file for licensing information.

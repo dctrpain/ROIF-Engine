@@ -2,14 +2,18 @@
 
 **Project:** ROIF Engine
 **Full Name:** Recursive Organic Integration Framework Engine
+**Current Release:** `v1.4.0`
+**Release Date:** 2026-08-20
+**Release Commit:** `580716c13fd4866484cbb651157002123e337b06`
+**Development State:** Active Development
 
 ---
 
-## Current Development State
+# Current Development State
 
-🟢 **Active Development**
-
-ROIF Engine has progressed beyond its original biomechanical-core stage.
+ROIF Engine is a domain-independent computational architecture for representing,
+probing, evolving, and experimentally separating different mechanisms of
+response in pre-stressed complex systems.
 
 The current engine includes:
 
@@ -21,124 +25,442 @@ The current engine includes:
 * Vector Probe evidence;
 * Active Cascade transitions;
 * temporal evidence controls;
-* predictive stabilization;
+* predictive-control machinery;
 * finite control reserve;
 * prediction-error evaluation;
-* mixed yacht–crew validation.
+* recursive physical-state evolution;
+* historical traces and state-mediated path dependence;
+* structured memory representations;
+* memory-to-transition derivation;
+* bounded transition modifiers;
+* matched-current-state identifiability controls;
+* restricted one-step predictive preconfiguration;
+* Temporal Image reconstruction and trajectory controls;
+* reproducibility benchmarks and claim-boundary tests.
+
+The architecture deliberately separates capabilities that may appear similar in
+a scalar output but correspond to different computational mechanisms.
 
 ---
 
 # Current Architectural Frontier
 
-```text id="m1f74d"
-Mechanical Core
-      ↓
-Dynamic Physical History
-      ↓
-Recursive Cascade
-      ↓
-Counterfactual Engine
-      ↓
-Active Probe
-      ↓
-Vector / Temporal Evidence
-      ↓
-Active Cascade
-      ↓
-Predictive Control
-      ↓
-Prediction Error
-      ↓
-Experience Trace
-          ↑
-        NEXT
+Version `v1.4.0` introduces an experimentally controlled distinction among
+physical history, structured memory, transition conditioning, and predictive
+preconfiguration.
+
+```text
+Event History
+     |
+     +-------------------------------+
+     |                               |
+     v                               v
+Physical / State-Mediated       Structured Memory
+History                              |
+     |                               v
+     v                       Memory-to-Transition
+Historically Modified           Derivation
+Current SystemImage                  |
+     |                               v
+     v                       TransitionModifierSet
+Subsequent Response                  |
+                                     v
+                            PRESTRESS_TRANSFER
+                                     |
+                                     v
+                               SystemEvolution
+                                     |
+                                     v
+                             Subsequent SystemImage
 ```
 
-The immediate next implementation target is:
+A separate predictive branch is:
 
-**Experience Trace**
+```text
+History-Conditioned SystemImage
+              |
+              v
+      Model-Internal Future
+              |
+              v
+Restricted One-Step Prestress
+     Predictive Preconfiguration
+              |
+              v
+       Subsequent Transition
+```
 
-Persistent controller memory, Memory Scar, Predictive Preload, and experience-dependent adaptation remain research-stage concepts.
+These branches are related but are not treated as equivalent.
+
+---
+
+# Epistemic Levels
+
+ROIF distinguishes three scientific statuses:
+
+1. **Architectural Construct** вЂ” formally defined but not necessarily implemented.
+2. **Implemented Mechanism** вЂ” represented by executable machinery.
+3. **Demonstrated Mechanism** вЂ” isolated by controlled computational benchmarks with explicit claim boundaries.
 
 ---
 
 # Implemented Core Modules
 
-| Module                | Status |
-| --------------------- | :----: |
-| Node                  |    ✅   |
-| Element               |    ✅   |
-| Material              |    ✅   |
-| Network               |    ✅   |
-| Solver                |    ✅   |
-| XPBD Constraints      |    ✅   |
-| Capacity Tensor       |    ✅   |
-| Cascade Solver        |    ✅   |
-| Counterfactual Engine |    ✅   |
-| Root Detection        |    ✅   |
-| Utilization Layer     |    ✅   |
-| Active Probe Engine   |    ✅   |
-| Vector Probe          |    ✅   |
-| Active Cascade        |    ✅   |
-| Predictive Control    |    ✅   |
-| Prediction Error      |    ✅   |
+| Module | Status |
+| --- | :---: |
+| Mechanical Core | вњ… |
+| Capacity Tensor | вњ… |
+| Cascade Solver | вњ… |
+| Counterfactual Engine | вњ… |
+| Root Detection | вњ… |
+| Utilization Layer | вњ… |
+| Active Probe Engine | вњ… |
+| Vector Probe | вњ… |
+| Active Cascade | вњ… |
+| Predictive Control | вњ… |
+| Prediction Error | вњ… |
+| SystemImage | вњ… |
+| SystemEvolution | вњ… |
+| Historical Trace | вњ… |
+| Structured Memory Components | вњ… |
+| Memory-to-Transition Derivation | вњ… |
+| TransitionModifierSet | вњ… |
 
 ---
 
-# Material / Physical History Models
+# Explicit Causal and Control Roles
 
-| Model              |        Status       |
-| ------------------ | :-----------------: |
-| Elastic            |          ✅          |
-| Viscoelastic       |          ✅          |
-| Pretension         |          ✅          |
-| Fatigue            |          ✅          |
-| Recovery           |          ✅          |
-| Remodeling         |          ✅          |
-| Failure            |          ✅          |
-| Rheological Memory |          ✅          |
-| Creep              | ⏳ Planned / partial |
-| Stress Relaxation  |      ⏳ Planned      |
+ROIF separates:
 
-Physical history remains distinct from future controller memory.
+| Role | Meaning |
+| --- | --- |
+| **D_origin** | Structural origin of a cascade |
+| **D_fast** | Earliest observable functional loss |
+| **D_root** | Structural mediation node maintaining cascade propagation |
+| **Node*** | Best counterfactual intervention candidate |
+| **Probe*** | Best admissible information-gathering experiment |
 
-```text id="jd20hv"
-RheologicalMemory != ControllerMemory
+```text
+D_origin != D_fast != D_root != Node*
+D_root != Node* != Probe*
 ```
 
+unless the represented system itself causes particular roles to coincide.
+
 ---
 
-# Explicit Causal Roles
+# Physical and State-Mediated History
 
-ROIF currently separates:
+ROIF contains physical-history mechanisms including fatigue, recovery,
+remodeling, rheological memory, irreversible material adaptation, adaptive
+connection-state evolution, prestress-state evolution, and persistent
+historical traces.
 
-| Role         | Meaning                                          |
-| ------------ | ------------------------------------------------ |
-| **D_origin** | Structural origin of the cascade                 |
-| **D_fast**   | Earliest functional loss                         |
-| **D_root**   | Structural mediation node                        |
-| **Node***    | Best intervention candidate                      |
-| **Probe***   | Best admissible information-gathering experiment |
+The demonstrated state-mediated path is:
 
-Architectural invariant:
+```text
+H_t -> I_t^H -> R_(t+1)
+```
 
-```text id="5agza5"
-D_origin != D_fast != D_root != Node*
+This is genuine history dependence. It does not require an independently acting
+history-conditioned transition operator after the complete represented current
+physical state has already been specified.
+
+---
+
+# Matched-Current-State Identifiability
+
+Version `v1.4.0` adds a stricter control for distinguishing state-mediated
+history dependence from an independently identifiable history-specific
+transition contribution.
+
+The control compares different ordered physical histories after explicitly
+matching represented current physical state, prestress, reserve, adaptive
+connection topology and state, context, and subsequent probe.
+
+Under the tested physical-history transition path:
+
+```text
+D(R1, R2) = 0
+```
+
+This means that, for the tested path and probe, no additional physical-history
+transition contribution remained independently identifiable after represented
+physical consequences of history were matched.
+
+It does **not** imply:
+
+```text
+Phi_Ht == 0
+```
+
+for all possible ROIF transition mechanisms.
+
+---
+
+# Structured Memory
+
+Version `v1.4.0` introduces a computational distinction between:
+
+```text
+history embodied in the current physical state
 ```
 
 and:
 
-```text id="l0r6z5"
-D_root != Node* != Probe*
+```text
+structured memory capable of conditioning a subsequent transition
 ```
 
-unless the system itself causes the roles to coincide.
+Structured memory may preserve conditioning identity, cue identity, associative
+context, semantic attractor, target identity, provenance, and
+semantic-to-physical binding structure.
+
+---
+
+# Memory-to-Transition Derivation
+
+Implemented in:
+
+```text
+roif/history/memory_transition_derivation.py
+```
+
+The implemented path is:
+
+```text
+Structured Memory
+       |
+       v
+Memory-Derived Semantic Signal
+       |
+       v
+Semantic-to-Physical Binding
+       |
+       v
+TransitionModifierSet
+       |
+       v
+Specified Physical Transition Channel
+```
+
+The derivation includes explicit bindings, target-channel mapping, binding
+polarity, bounded values, deterministic derivation, provenance preservation,
+and rejection of ambiguous duplicate physical targets.
+
+---
+
+# TransitionModifierSet
+
+Implemented in:
+
+```text
+roif/history/transition_modifiers.py
+```
+
+The currently integrated physical channel is:
+
+```text
+PRESTRESS_TRANSFER
+```
+
+Integration occurs through:
+
+```text
+roif/history/system_evolution.py
+```
+
+Important properties:
+
+* modifiers are explicit and bounded;
+* provenance is preserved;
+* unsupported active channels are rejected;
+* absent or zero modifiers preserve the legacy evolution path;
+* the mechanism remains policy-free at the `SystemEvolution` level.
+
+Critical boundary:
+
+```text
+TransitionModifierSet != complete history-conditioned operator
+Gamma_t != Phi_Ht
+```
+
+The current modifier pathway is one implemented interface into transition
+dynamics, not a complete realization of a general history-conditioned operator
+over the whole `SystemImage`.
+
+---
+
+# Structured-Memory-Conditioned Transition Benchmark
+
+The matched-current-state benchmark holds fixed:
+
+* represented current physical `SystemImage`;
+* adaptive connection state;
+* topology;
+* subsequent physical probe event;
+* semantic attractor;
+* explicit semantic-to-physical binding.
+
+Structured conditioning memory is allowed to differ.
+
+```text
+different structured memory
+        |
+        v
+different memory-derived signal
+        |
+        v
+different bounded TransitionModifierSet
+        |
+        v
+different subsequent prestress transition
+```
+
+This supports a structured-memory-conditioned contribution to the tested
+subsequent transition through `PRESTRESS_TRANSFER`.
+
+It does not establish whole-SystemImage memory conditioning or a universal
+memory operator.
+
+---
+
+# History-Conditioned Redistribution
+
+The current benchmark family evaluates how previous events alter response
+geometry to a later matched perturbation.
+
+Matched-state decomposition separates prestress-state and adaptive
+connection-state contributions.
+
+Critical boundary:
+
+```text
+Redistribution != Stabilization
+```
+
+Redistribution alone does not establish energy absorption, dissipation, failure
+resistance, biological protection, clinical benefit, or whole-system stability.
+
+---
+
+# Predictive Control
+
+ROIF contains a domain-independent Predictive Control layer in:
+
+```text
+roif/predictive_control.py
+```
+
+Capabilities include `PredictiveState`, `DisturbanceEstimate`, `ControlReserve`,
+`StabilizationDemand`, `ControlCandidate`, `PredictedOutcome`,
+`CandidateEvaluation`, `PredictiveControlDecision`, and `PredictionError`.
+
+Supported decisions:
+
+```text
+ACTION
+PROBE
+HOLD
+NO_SAFE_ACTION
+```
+
+This layer remains distinct from structured-memory-conditioned physical
+transition modulation.
+
+---
+
+# Stabilization Reserve
+
+ROIF explicitly separates:
+
+```text
+StabilizationDemand
+```
+
+from:
+
+```text
+ControlReserve
+```
+
+Important invariant:
+
+```text
+Observed Stability != Adequate Control Reserve
+```
+
+---
+
+# Restricted Predictive Preconfiguration
+
+Version `v1.4.0` includes a separate predictive-preconfiguration benchmark
+restricted to a one-step prestress projection of a model-internal nominal
+future transition.
+
+```text
+History-Conditioned Current SystemImage
+                |
+                v
+       Predicted Next State
+                |
+                v
+ Predicted Prestress Displacement
+                |
+                v
+      Bounded Preconfiguration
+                |
+                v
+       Subsequent Transition
+```
+
+It does **not** demonstrate complete whole-SystemImage predictive stabilization,
+robust multi-step predictive control, optimization across complete alternative
+future Temporal Images, or objective-independent general stabilization.
+
+---
+
+# Objective-Independence and Off-Nominal Audits
+
+The Q7 objective-independence audit showed that the tested prestress action
+channel is exactly additive under audited conditions and highly aligned with the
+inverse realised prestress response in the same evaluation space.
+
+Therefore:
+
+```text
+Q7 nominal improvement
+    !=
+objective-independent proof of general predictive stabilization
+```
+
+The off-nominal audit further shows conditional rather than universal
+transferability of the tested one-step preconfiguration.
+
+---
+
+# Temporal Image
+
+Current experiments include deterministic Temporal Image reconstruction,
+withheld-slice controls, endpoint-versus-trajectory comparisons, multilayer
+temporal trajectory experiments, and temporal-order controls.
+
+These experiments show that endpoint state alone can be insufficient to
+characterize temporal evolution.
+
+Critical boundaries:
+
+```text
+trajectory statistic != Temporal Image
+temporal reconstruction != complete future prediction
+```
+
+A complete predicted future Temporal Image remains a broader architectural
+target and is not a demonstrated capability of `v1.4.0`.
 
 ---
 
 # Active Exploration Status
-
-## Active Probe Engine
 
 Implemented:
 
@@ -149,400 +471,233 @@ Implemented:
 * Active Probe Engine;
 * Graph Update Proposals;
 * explicit authorization boundary;
-* Non-Fonit Gate.
-
-Architectural invariant:
-
-```text id="7ql39g"
-GraphUpdateProposal != Graph Mutation
-```
-
----
-
-# Vector Probe / Active Cascade Status
-
-Implemented:
-
+* Non-Fonit Gate;
 * directional response analysis;
 * vector alignment;
-* SUPPORTS / CONTRADICTS / INSUFFICIENT / NO_RESPONSE states;
-* relation confirmation;
-* relation rejection;
+* `SUPPORTS`, `CONTRADICTS`, `INSUFFICIENT`, `NO_RESPONSE`;
 * recursive active-cascade transition;
-* audit steps;
 * deterministic evidence handling.
 
 Key invariants:
 
-```text id="bw4ks1"
+```text
+GraphUpdateProposal != Graph Mutation
 High Amplitude != Directional Support
-```
-
-```text id="iy3u1r"
-Strong Reverse Response -> CONTRADICTS
-```
-
-```text id="skhrnq"
 First Response != Correct Response
 ```
 
 ---
 
-# Predictive Control Status
+# Validation Families
 
-Implemented in:
+Current validation and computational benchmark families include:
 
-```text id="f4f86c"
-roif/predictive_control.py
-```
+* mechanical and structural validation;
+* Active Probe and Active Cascade validation;
+* Vector Probe and temporal-response controls;
+* 04A Sailing Yacht-Crew coupled-system validation;
+* Temporal Image reconstruction;
+* history-conditioned redistribution;
+* matched-state redistribution decomposition;
+* matched-current-state physical-history identifiability;
+* structured-memory-conditioned matched-state transition;
+* restricted predictive prestress preconfiguration;
+* objective-independence audit;
+* off-nominal transferability audit;
+* multilayer temporal trajectory analysis.
 
-Capabilities include:
-
-* PredictiveState;
-* DisturbanceEstimate;
-* ControlReserve;
-* StabilizationDemand;
-* ControlCandidate;
-* PredictedOutcome;
-* CandidateEvaluation;
-* PredictiveControlDecision;
-* PredictionError.
-
-Supported decisions:
-
-```text id="utvdeu"
-ACTION
-PROBE
-HOLD
-NO_SAFE_ACTION
-```
+The yacht-crew benchmark is a cross-domain computational validation
+environment, not a complete model of human cognition.
 
 ---
 
-# Stabilization Reserve
+# Current Reproducibility Checkpoint
 
-ROIF now explicitly separates:
+The complete repository regression suite was executed for the `v1.4.0`
+release candidate.
 
-```text id="uy8zce"
-StabilizationDemand
+```text
+10877 passed
 ```
 
-from:
-
-```text id="gdkddt"
-ControlReserve
-```
-
-Important invariant:
-
-```text id="3i8xj7"
-Observed Stability != Adequate Control Reserve
-```
-
-A system may still appear stabilized while internal compensatory reserve is under pressure.
+No test failures were observed.
 
 ---
 
-# Current Validation Families
+# Current Git Checkpoint
 
-## Mechanical Validation
+Current scientific release:
 
-Implemented:
-
-* pre-stressed spring;
-* serial weak link;
-* pre-stressed branching;
-* symmetric branching ambiguity;
-* 03C misleading high-amplitude branch;
-* 03D misleading reverse-direction response;
-* 03E delayed misleading response.
-
----
-
-## Clinical / Biomechanical Validation
-
-Implemented:
-
-* Foot–Knee validation;
-* Active Probe validation;
-* recursive Probe validation.
-
----
-
-## Mixed-System Validation
-
-Implemented:
-
-### 04A — Sailing Yacht–Crew Coupled System
-
-Includes:
-
-* wind disturbance;
-* sail load;
-* heel/yaw response;
-* course error;
-* helmsman demand;
-* sail-trimmer demand;
-* rudder action;
-* sail-trim action.
-
-The benchmark separates:
-
-```text id="l6ukfm"
-Physical Plant
-      +
-Living Controller
+```text
+v1.4.0
 ```
 
----
+Release commit:
 
-# 04A Predictive Stabilization
-
-Implemented in:
-
-```text id="r8e6e2"
-validation/sailing/sailing_yacht_crew_predictive_control.py
+```text
+580716c13fd4866484cbb651157002123e337b06
 ```
 
-The predictive controller evaluates:
+Commit message:
 
-* helm correction;
-* sail-trim correction;
-* coupled helm + trim correction;
-* information Probe;
-* hold.
-
-Current default benchmark result:
-
-```text id="6q9xgb"
-selected action:
-coupled_helm_trim_action
+```text
+release: add structured memory-conditioned transitions and reproducibility benchmarks
 ```
 
-The coupled action produces the lowest predicted residual error among the available candidates under the current normalized benchmark parameters.
-
----
-
-# Current Test Checkpoints
-
-Recent validated checkpoints include:
-
-```text id="7p3hpi"
-03A–03E validation family
-505 passed
-```
-
-```text id="z66smt"
-Predictive Control core
-63 passed
-```
-
-```text id="7efv5c"
-04A Yacht–Crew Predictive Control
-76 passed
-```
-
-The full repository regression suite remains substantially larger than these targeted subsets.
-
----
-
-# Current Git Checkpoints
-
-Important recent repository checkpoints:
-
-```text id="vyr2j3"
-fc08f1b
-validation: add active probe cascade controls and 04A yacht-crew benchmark
-```
-
-```text id="e5hf3a"
-c9d2cfe
-validation: add predictive control layer and 04A yacht-crew predictive benchmark
-```
-
-`c9d2cfe` is the current architectural checkpoint before controller experience memory work.
-
----
-
-# Current Research Boundary
-
-Implemented:
-
-```text id="vhua0m"
-Prediction
-    ↓
-Action / Probe
-    ↓
-Observed State
-    ↓
-Prediction Error
-```
-
-Not yet implemented:
-
-```text id="0fg5ud"
-Prediction Error
-    ↓
-Experience Trace
-    ↓
-Persistent Controller Memory
-    ↓
-Predictive Preload
-    ↓
-Experience-Dependent Action Selection
-```
-
----
-
-# Next Implementation Target
-
-## Experience Trace
-
-The next module should record one complete predictive-control episode.
-
-Proposed minimum content:
-
-* initial state;
-* disturbance;
-* stabilization demand;
-* control reserve;
-* candidate actions;
-* selected action;
-* predicted outcome;
-* observed outcome;
-* prediction error;
-* action cost;
-* uncertainty before action;
-* uncertainty after observation;
-* provenance;
-* sequence identity.
-
-Important invariant:
-
-```text id="furmcu"
-ExperienceTrace != Learning
-```
-
-Recording experience must not automatically modify future controller behavior.
-
----
-
-# Future Research
-
-Planned research layers:
-
-| Layer                        |        Status        |
-| ---------------------------- | :------------------: |
-| Experience Trace             |         NEXT         |
-| Persistent Controller Memory |      🔬 Research     |
-| Memory Scar                  |      🔬 Research     |
-| Predictive Preload           |      🔬 Research     |
-| Experience-Dependent Control |      🔬 Research     |
-| Adaptive Stabilization       |      🔬 Research     |
-| Graph Learning               |   🔬 Parallel Track  |
-| Recursive Active Exploration |   🔬 Parallel Track  |
-| Robotics Transfer            | 🎯 Future Validation |
-
----
-
-# Cross-Domain Direction
-
-ROIF development currently follows:
-
-```text id="jxr7om"
-Mechanical Validation
-        ↓
-Active Exploration
-        ↓
-Directional / Temporal Evidence
-        ↓
-Mixed Yacht–Crew System
-        ↓
-Predictive Stabilization
-        ↓
-Experience-Dependent Control
-        ↓
-Adaptive Stabilization
-        ↓
-Robotics Transfer
-```
-
-The objective is to test whether the same core architecture remains reusable across different physical and control domains.
-
----
-
-# Safety Status
-
-The architecture preserves:
-
-* explicit authorization;
-* preference for reversible Probes;
-* cascade-risk evaluation;
-* Non-Fonit veto;
-* proposal-only graph updates;
-* uncertainty representation;
-* finite control reserve;
-* auditability.
-
-Information gain, prediction quality, or control utility must not override unacceptable cascade risk.
+This supersedes older documentation that identified `c9d2cfe` as the current
+architectural checkpoint.
 
 ---
 
 # Current Scientific Boundary
 
-ROIF currently implements:
+ROIF Engine `v1.4.0` provides executable and tested mechanisms for recursive
+cascade analysis, active exploration, directional and temporal evidence,
+counterfactual analysis, state-mediated history dependence,
+structured-memory-conditioned transition modulation through the tested
+`PRESTRESS_TRANSFER` channel, history-conditioned redistribution under
+controlled conditions, predictive-control candidate evaluation, restricted
+one-step anticipatory prestress preconfiguration, temporal reconstruction, and
+trajectory analysis.
 
-* cascade analysis;
-* active exploration;
-* directional evidence;
-* temporal evidence;
-* predictive control;
-* prediction error.
+It does **not** establish:
 
-ROIF does **not** currently claim to implement:
-
-* consciousness;
+* a general history-conditioned operator over the complete `SystemImage`;
+* complete future Temporal Image prediction;
+* objective-independent whole-system predictive stabilization;
+* universal adaptive control;
+* biological learning;
+* conditioned biological reflexes;
 * instinct;
-* biological self-preservation;
-* human cognition;
+* consciousness;
 * psychological memory;
-* autonomous psychological learning.
+* autonomous psychological learning;
+* clinical diagnostic validity;
+* therapeutic efficacy;
+* universal stability.
 
-Relationships between repeated prediction error, persistent controller memory, predictive preload, learned stabilization, biological reflexes, and future robotic control remain research hypotheses.
+---
+
+# Memory Boundary
+
+The current architecture requires at least three different notions of history
+or memory to remain distinct:
+
+```text
+1. Physical / State-Mediated History
+2. Structured Memory Conditioning
+3. Persistent Controller Memory
+```
+
+Current status:
+
+```text
+Physical / State-Mediated History      IMPLEMENTED + DEMONSTRATED
+
+Structured Memory Conditioning         IMPLEMENTED PARTIALLY
+                                       DEMONSTRATED FOR
+                                       PRESTRESS_TRANSFER
+
+Persistent Controller Memory           RESEARCH
+
+General History-Conditioned Operator   ARCHITECTURAL TARGET
+
+Complete Future Temporal Image
+Prediction                             ARCHITECTURAL TARGET
+```
+
+Therefore:
+
+```text
+Historical State
+    !=
+Structured Memory Conditioning
+    !=
+Persistent Controller Memory
+```
+
+---
+
+# Next Research Frontier
+
+The next research frontier is not simply "add memory."
+
+Priority questions include:
+
+1. Can structured-memory-conditioned transition modulation be reproduced through
+   additional physical channels beyond `PRESTRESS_TRANSFER`?
+2. Which memory-derived effects remain identifiable after stronger matched-state controls?
+3. Can a broader history-conditioned operator be isolated without merely renaming state-mediated history?
+4. Can predictive preconfiguration be evaluated with objectives not directly coupled to the action channel?
+5. Can preconfiguration remain useful across broader off-nominal futures?
+6. Can complete alternative future Temporal Images be represented and compared?
+7. Can persistent controller memory remain computationally distinct from structured transition conditioning?
+8. Can experience-dependent control improve decisions without unsafe or context-inappropriate learned behavior?
+
+Persistent Controller Memory, Predictive Preload, Memory Scar,
+experience-dependent policy adaptation, and general adaptive stabilization
+remain research-stage concepts unless independently implemented and tested.
+
+---
+
+# Safety Status
+
+The architecture preserves explicit authorization boundaries, preference for
+reversible Probes, cascade-risk evaluation, the Non-Fonit veto, explicit
+uncertainty, finite control reserve, deterministic audit paths, provenance
+preservation, and human oversight.
+
+Information gain, predictive utility, memory-derived modulation, or expected
+stabilization benefit must not override unacceptable cascade risk.
 
 ---
 
 # Current Status Summary
 
-```text id="rzs0w0"
-ROIF Engine
+```text
+ROIF Engine v1.4.0
 
-Core Mechanics                  ✅
-Dynamic Physical History        ✅
-Cascade Engine                  ✅
-Counterfactual Engine           ✅
-Explicit Causal Roles           ✅
-Active Probe                    ✅
-Vector Probe                    ✅
-Active Cascade                  ✅
-Temporal Evidence               ✅
-Predictive Control              ✅
-Control Reserve                 ✅
-Stabilization Demand            ✅
-Prediction Error                ✅
-04A Yacht–Crew Benchmark        ✅
-04A Predictive Stabilization    ✅
+Mechanical Core                              вњ…
+Dynamic Physical History                    вњ…
+Cascade Engine                              вњ…
+Counterfactual Engine                       вњ…
+Explicit Causal Roles                       вњ…
+Active Probe                                вњ…
+Vector Probe                                вњ…
+Active Cascade                              вњ…
+Temporal Evidence                           вњ…
+Predictive Control                          вњ…
+Control Reserve                             вњ…
+Stabilization Demand                        вњ…
+Prediction Error                            вњ…
+SystemImage                                 вњ…
+SystemEvolution                             вњ…
+State-Mediated History Dependence           вњ…
+Matched-State Physical-History Control      вњ…
+Structured Memory Components                вњ…
+Memory-to-Transition Derivation             вњ…
+TransitionModifierSet                       вњ…
+PRESTRESS_TRANSFER Integration              вњ…
+Matched-State Memory Transition Benchmark   вњ…
+History-Conditioned Redistribution          вњ…
+Objective-Independence Audit                вњ…
+Off-Nominal Predictive Audit                вњ…
+Temporal Image Reconstruction               вњ…
+Multilayer Temporal Trajectory Benchmark    вњ…
+04A Yacht-Crew Benchmark                    вњ…
 
-Experience Trace                NEXT
-
-Persistent Controller Memory    RESEARCH
-Predictive Preload              RESEARCH
-Adaptive Stabilization          RESEARCH
-Robotics Transfer               FUTURE
+General History-Conditioned Operator        RESEARCH
+Whole-System Predictive Stabilization       NOT DEMONSTRATED
+Complete Future Temporal Image Prediction   NOT DEMONSTRATED
+Persistent Controller Memory                RESEARCH
+Predictive Preload                          RESEARCH
+Experience-Dependent Control                RESEARCH
+Adaptive Stabilization                      RESEARCH
+Robotics Transfer                           FUTURE
 ```
 
 ---
 
 ## Last Updated
 
-2026-08-09
+2026-08-20
