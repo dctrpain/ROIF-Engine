@@ -1,3 +1,9 @@
+from .endogenous_grouping import (
+    ChannelRelation,
+    EndogenousGroup,
+    EndogenousGroupingAnalyzer,
+    GroupingResult,
+)
 from .endogenous_difference import (
     ChannelDeviation,
     DifferenceProfile,
@@ -22,6 +28,10 @@ from .observation import (
 )
 
 __all__ = [
+    "ChannelRelation",
+    "EndogenousGroup",
+    "EndogenousGroupingAnalyzer",
+    "GroupingResult",
     "ChannelDeviation",
     "DifferenceProfile",
     "EndogenousDifferenceAnalyzer",
