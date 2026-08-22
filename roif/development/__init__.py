@@ -1,3 +1,8 @@
+from .dimensional_growth import (
+    ResidualDimension,
+    DimensionalGrowthAssessment,
+    DimensionalGrowthAnalyzer,
+)
 from .endogenous_grouping import (
     ChannelRelation,
     EndogenousGroup,
@@ -28,6 +33,9 @@ from .observation import (
 )
 
 __all__ = [
+    "ResidualDimension",
+    "DimensionalGrowthAssessment",
+    "DimensionalGrowthAnalyzer",
     "ChannelRelation",
     "EndogenousGroup",
     "EndogenousGroupingAnalyzer",
