@@ -1,0 +1,68 @@
+{
+  "benchmark": "roif_rda_0_first_perturbation_v1",
+  "configuration": {
+    "dt": 0.001,
+    "duration": 5.0,
+    "observation_interval_steps": 1,
+    "perturbation_force_ground_truth": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "perturbation_node_ground_truth": 0,
+    "perturbation_time_ground_truth": 2.0
+  },
+  "developmental_stage": "RDA-0",
+  "experience": "first_perturbation",
+  "experience_sha256": "6401915440654c64ddd1b0bf547721ef6e781168631d73643165f64a197f4446",
+  "experience_summary": {
+    "changed_channel_count": 30,
+    "changed_channels": {
+      "member_0_axial_force": 0.006491438819544726,
+      "member_0_length": 3.245719409772363e-05,
+      "member_10_axial_force": 0.0019440738398657231,
+      "member_10_length": 1.944073839865723e-05,
+      "member_11_axial_force": 0.0012320997625048236,
+      "member_11_length": 1.2320997625048236e-05,
+      "member_1_axial_force": 0.0025884355900451794,
+      "member_1_length": 1.2942177950225897e-05,
+      "member_2_axial_force": 0.002201664739143183,
+      "member_2_length": 1.1008323695715916e-05,
+      "member_3_axial_force": 0.003998842335550812,
+      "member_3_length": 3.998842335550812e-05,
+      "member_4_axial_force": 0.002474478527436652,
+      "member_4_length": 2.474478527436652e-05,
+      "member_5_axial_force": 0.004260672372269347,
+      "member_5_length": 4.2606723722693474e-05,
+      "member_6_axial_force": 0.002426099040730989,
+      "member_6_length": 2.426099040730989e-05,
+      "member_7_axial_force": 0.001486881416745689,
+      "member_7_length": 1.486881416745689e-05,
+      "member_8_axial_force": 0.002998600498571591,
+      "member_8_length": 2.998600498571591e-05,
+      "member_9_axial_force": 0.0017746718227185099,
+      "member_9_length": 1.77467182271851e-05,
+      "node_0_accel_norm": 1.0,
+      "node_1_accel_norm": 0.004861641144301469,
+      "node_2_accel_norm": 0.0051381358722804435,
+      "node_3_accel_norm": 0.0050957993351664396,
+      "node_4_accel_norm": 0.007869018680839682,
+      "node_5_accel_norm": 0.005550799387397128
+    },
+    "channel_count": 30,
+    "duration": 5.000000000000004,
+    "ground_truth_or_semantic_leak_detected": false,
+    "sample_count": 5001
+  },
+  "goal_supplied": false,
+  "ground_truth_sha256": "8e94d84a015c827b792483003e1f87108d37cbc60279f3f3183533d181ac36d1",
+  "interpretation_supplied_to_roif": false,
+  "physical_summary": {
+    "initial_internal_force_norm": 25.806975801127876,
+    "maximum_final_member_force_change": 0.0001889277790212418,
+    "maximum_final_node_displacement": 0.0001307743536658691
+  },
+  "reward_supplied": false,
+  "run_sha256": "0ee66268620fc5f04f4a81241da5b1fdd808d99f116d5982a6a95f03b28de6b5",
+  "semantic_event_label_supplied": false
+}

@@ -222,6 +222,7 @@ class Tensegrity3DWorld(WorldInterface):
 
         self.velocities = np.zeros_like(self.positions)
         self.last_accelerations = np.zeros_like(self.positions)
+        self._external_forces = np.zeros_like(self.positions)
 
         topology = self._member_topology()
 
@@ -543,6 +544,39 @@ class Tensegrity3DWorld(WorldInterface):
 
         return forces
 
+    def apply_external_force(
+        self,
+        *,
+        node_index: int,
+        force: np.ndarray,
+    ) -> None:
+        """
+        Apply an experimenter-controlled external force to one node
+        for the next integration step only.
+
+        This force belongs to world ground truth and is never exposed
+        directly through the body's Observation.
+        """
+
+        if not 0 <= node_index < self.node_count:
+            raise IndexError("node_index out of range.")
+
+        force = np.asarray(force, dtype=float)
+
+        if force.shape != (3,):
+            raise ValueError("force must have shape (3,).")
+
+        if not np.all(np.isfinite(force)):
+            raise ValueError("force must contain only finite values.")
+
+        self._external_forces[node_index] += force
+
+    def clear_external_forces(self) -> None:
+        """
+        Remove all pending experimenter-controlled external forces.
+        """
+        self._external_forces.fill(0.0)
+
     def step(self, dt: float) -> None:
         if not isinstance(dt, (int, float)):
             raise TypeError("dt must be numeric.")
@@ -564,6 +598,7 @@ class Tensegrity3DWorld(WorldInterface):
         total_forces = (
             internal_forces
             + damping_forces
+            + self._external_forces
         )
 
         accelerations = (
@@ -584,6 +619,8 @@ class Tensegrity3DWorld(WorldInterface):
 
         self.last_accelerations = accelerations.copy()
         self._time += dt
+
+        self.clear_external_forces()
 
     def world_state(self) -> WorldState:
         values: dict[str, float] = {}
