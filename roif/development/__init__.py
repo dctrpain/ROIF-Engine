@@ -1,3 +1,7 @@
+from .familiar_state_change import (
+    ChangeDetection,
+    FamiliarStateChangeDetector,
+)
 from .body_interface import (
     BodyGroundTruth,
     BodyInterface,
@@ -13,6 +17,8 @@ from .observation import (
 )
 
 __all__ = [
+    "ChangeDetection",
+    "FamiliarStateChangeDetector",
     "BodyGroundTruth",
     "BodyInterface",
     "ExperienceSample",
