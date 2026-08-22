@@ -1,0 +1,4390 @@
+{
+  "benchmark": "roif_rda_2_first_endogenous_grouping_v1",
+  "configuration": {
+    "all_profile_count": 4000,
+    "baseline_duration": 1.0,
+    "baseline_sample_count": 1001,
+    "dt": 0.001,
+    "duration": 5.0,
+    "grouping_profile_count": 1001,
+    "grouping_window_duration": 1.0
+  },
+  "developmental_stage": "RDA-2",
+  "epistemic_boundary": {
+    "grouping_received_body_ground_truth": false,
+    "grouping_received_body_part_labels": false,
+    "grouping_received_event_label": false,
+    "grouping_received_force_vector": false,
+    "grouping_received_goal": false,
+    "grouping_received_ground_truth": false,
+    "grouping_received_member_mapping": false,
+    "grouping_received_node_mapping": false,
+    "grouping_received_perturbation_node": false,
+    "grouping_received_perturbation_time": false,
+    "grouping_received_reward": false,
+    "grouping_received_topology": false,
+    "grouping_received_valence": false,
+    "grouping_received_world_coordinates": false,
+    "grouping_received_world_state": false
+  },
+  "experience": "first_endogenous_grouping",
+  "frozen_components": {
+    "difference_analyzer_commit": "0aee759",
+    "difference_scale_floor": 1e-09,
+    "grouping_analyzer_commit": "88ab5cf",
+    "minimum_temporal_variation": 1e-12,
+    "parameters_modified_after_freeze": false,
+    "relation_threshold": 0.95
+  },
+  "ground_truth_evaluation_only": {
+    "grouping_window_end_step": 3000,
+    "grouping_window_start_step": 2000,
+    "perturbation_force": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "perturbation_node": 0,
+    "perturbation_step": 2000,
+    "perturbation_time": 2.0
+  },
+  "grouping_profile_step_indices": [
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026,
+    2027,
+    2028,
+    2029,
+    2030,
+    2031,
+    2032,
+    2033,
+    2034,
+    2035,
+    2036,
+    2037,
+    2038,
+    2039,
+    2040,
+    2041,
+    2042,
+    2043,
+    2044,
+    2045,
+    2046,
+    2047,
+    2048,
+    2049,
+    2050,
+    2051,
+    2052,
+    2053,
+    2054,
+    2055,
+    2056,
+    2057,
+    2058,
+    2059,
+    2060,
+    2061,
+    2062,
+    2063,
+    2064,
+    2065,
+    2066,
+    2067,
+    2068,
+    2069,
+    2070,
+    2071,
+    2072,
+    2073,
+    2074,
+    2075,
+    2076,
+    2077,
+    2078,
+    2079,
+    2080,
+    2081,
+    2082,
+    2083,
+    2084,
+    2085,
+    2086,
+    2087,
+    2088,
+    2089,
+    2090,
+    2091,
+    2092,
+    2093,
+    2094,
+    2095,
+    2096,
+    2097,
+    2098,
+    2099,
+    2100,
+    2101,
+    2102,
+    2103,
+    2104,
+    2105,
+    2106,
+    2107,
+    2108,
+    2109,
+    2110,
+    2111,
+    2112,
+    2113,
+    2114,
+    2115,
+    2116,
+    2117,
+    2118,
+    2119,
+    2120,
+    2121,
+    2122,
+    2123,
+    2124,
+    2125,
+    2126,
+    2127,
+    2128,
+    2129,
+    2130,
+    2131,
+    2132,
+    2133,
+    2134,
+    2135,
+    2136,
+    2137,
+    2138,
+    2139,
+    2140,
+    2141,
+    2142,
+    2143,
+    2144,
+    2145,
+    2146,
+    2147,
+    2148,
+    2149,
+    2150,
+    2151,
+    2152,
+    2153,
+    2154,
+    2155,
+    2156,
+    2157,
+    2158,
+    2159,
+    2160,
+    2161,
+    2162,
+    2163,
+    2164,
+    2165,
+    2166,
+    2167,
+    2168,
+    2169,
+    2170,
+    2171,
+    2172,
+    2173,
+    2174,
+    2175,
+    2176,
+    2177,
+    2178,
+    2179,
+    2180,
+    2181,
+    2182,
+    2183,
+    2184,
+    2185,
+    2186,
+    2187,
+    2188,
+    2189,
+    2190,
+    2191,
+    2192,
+    2193,
+    2194,
+    2195,
+    2196,
+    2197,
+    2198,
+    2199,
+    2200,
+    2201,
+    2202,
+    2203,
+    2204,
+    2205,
+    2206,
+    2207,
+    2208,
+    2209,
+    2210,
+    2211,
+    2212,
+    2213,
+    2214,
+    2215,
+    2216,
+    2217,
+    2218,
+    2219,
+    2220,
+    2221,
+    2222,
+    2223,
+    2224,
+    2225,
+    2226,
+    2227,
+    2228,
+    2229,
+    2230,
+    2231,
+    2232,
+    2233,
+    2234,
+    2235,
+    2236,
+    2237,
+    2238,
+    2239,
+    2240,
+    2241,
+    2242,
+    2243,
+    2244,
+    2245,
+    2246,
+    2247,
+    2248,
+    2249,
+    2250,
+    2251,
+    2252,
+    2253,
+    2254,
+    2255,
+    2256,
+    2257,
+    2258,
+    2259,
+    2260,
+    2261,
+    2262,
+    2263,
+    2264,
+    2265,
+    2266,
+    2267,
+    2268,
+    2269,
+    2270,
+    2271,
+    2272,
+    2273,
+    2274,
+    2275,
+    2276,
+    2277,
+    2278,
+    2279,
+    2280,
+    2281,
+    2282,
+    2283,
+    2284,
+    2285,
+    2286,
+    2287,
+    2288,
+    2289,
+    2290,
+    2291,
+    2292,
+    2293,
+    2294,
+    2295,
+    2296,
+    2297,
+    2298,
+    2299,
+    2300,
+    2301,
+    2302,
+    2303,
+    2304,
+    2305,
+    2306,
+    2307,
+    2308,
+    2309,
+    2310,
+    2311,
+    2312,
+    2313,
+    2314,
+    2315,
+    2316,
+    2317,
+    2318,
+    2319,
+    2320,
+    2321,
+    2322,
+    2323,
+    2324,
+    2325,
+    2326,
+    2327,
+    2328,
+    2329,
+    2330,
+    2331,
+    2332,
+    2333,
+    2334,
+    2335,
+    2336,
+    2337,
+    2338,
+    2339,
+    2340,
+    2341,
+    2342,
+    2343,
+    2344,
+    2345,
+    2346,
+    2347,
+    2348,
+    2349,
+    2350,
+    2351,
+    2352,
+    2353,
+    2354,
+    2355,
+    2356,
+    2357,
+    2358,
+    2359,
+    2360,
+    2361,
+    2362,
+    2363,
+    2364,
+    2365,
+    2366,
+    2367,
+    2368,
+    2369,
+    2370,
+    2371,
+    2372,
+    2373,
+    2374,
+    2375,
+    2376,
+    2377,
+    2378,
+    2379,
+    2380,
+    2381,
+    2382,
+    2383,
+    2384,
+    2385,
+    2386,
+    2387,
+    2388,
+    2389,
+    2390,
+    2391,
+    2392,
+    2393,
+    2394,
+    2395,
+    2396,
+    2397,
+    2398,
+    2399,
+    2400,
+    2401,
+    2402,
+    2403,
+    2404,
+    2405,
+    2406,
+    2407,
+    2408,
+    2409,
+    2410,
+    2411,
+    2412,
+    2413,
+    2414,
+    2415,
+    2416,
+    2417,
+    2418,
+    2419,
+    2420,
+    2421,
+    2422,
+    2423,
+    2424,
+    2425,
+    2426,
+    2427,
+    2428,
+    2429,
+    2430,
+    2431,
+    2432,
+    2433,
+    2434,
+    2435,
+    2436,
+    2437,
+    2438,
+    2439,
+    2440,
+    2441,
+    2442,
+    2443,
+    2444,
+    2445,
+    2446,
+    2447,
+    2448,
+    2449,
+    2450,
+    2451,
+    2452,
+    2453,
+    2454,
+    2455,
+    2456,
+    2457,
+    2458,
+    2459,
+    2460,
+    2461,
+    2462,
+    2463,
+    2464,
+    2465,
+    2466,
+    2467,
+    2468,
+    2469,
+    2470,
+    2471,
+    2472,
+    2473,
+    2474,
+    2475,
+    2476,
+    2477,
+    2478,
+    2479,
+    2480,
+    2481,
+    2482,
+    2483,
+    2484,
+    2485,
+    2486,
+    2487,
+    2488,
+    2489,
+    2490,
+    2491,
+    2492,
+    2493,
+    2494,
+    2495,
+    2496,
+    2497,
+    2498,
+    2499,
+    2500,
+    2501,
+    2502,
+    2503,
+    2504,
+    2505,
+    2506,
+    2507,
+    2508,
+    2509,
+    2510,
+    2511,
+    2512,
+    2513,
+    2514,
+    2515,
+    2516,
+    2517,
+    2518,
+    2519,
+    2520,
+    2521,
+    2522,
+    2523,
+    2524,
+    2525,
+    2526,
+    2527,
+    2528,
+    2529,
+    2530,
+    2531,
+    2532,
+    2533,
+    2534,
+    2535,
+    2536,
+    2537,
+    2538,
+    2539,
+    2540,
+    2541,
+    2542,
+    2543,
+    2544,
+    2545,
+    2546,
+    2547,
+    2548,
+    2549,
+    2550,
+    2551,
+    2552,
+    2553,
+    2554,
+    2555,
+    2556,
+    2557,
+    2558,
+    2559,
+    2560,
+    2561,
+    2562,
+    2563,
+    2564,
+    2565,
+    2566,
+    2567,
+    2568,
+    2569,
+    2570,
+    2571,
+    2572,
+    2573,
+    2574,
+    2575,
+    2576,
+    2577,
+    2578,
+    2579,
+    2580,
+    2581,
+    2582,
+    2583,
+    2584,
+    2585,
+    2586,
+    2587,
+    2588,
+    2589,
+    2590,
+    2591,
+    2592,
+    2593,
+    2594,
+    2595,
+    2596,
+    2597,
+    2598,
+    2599,
+    2600,
+    2601,
+    2602,
+    2603,
+    2604,
+    2605,
+    2606,
+    2607,
+    2608,
+    2609,
+    2610,
+    2611,
+    2612,
+    2613,
+    2614,
+    2615,
+    2616,
+    2617,
+    2618,
+    2619,
+    2620,
+    2621,
+    2622,
+    2623,
+    2624,
+    2625,
+    2626,
+    2627,
+    2628,
+    2629,
+    2630,
+    2631,
+    2632,
+    2633,
+    2634,
+    2635,
+    2636,
+    2637,
+    2638,
+    2639,
+    2640,
+    2641,
+    2642,
+    2643,
+    2644,
+    2645,
+    2646,
+    2647,
+    2648,
+    2649,
+    2650,
+    2651,
+    2652,
+    2653,
+    2654,
+    2655,
+    2656,
+    2657,
+    2658,
+    2659,
+    2660,
+    2661,
+    2662,
+    2663,
+    2664,
+    2665,
+    2666,
+    2667,
+    2668,
+    2669,
+    2670,
+    2671,
+    2672,
+    2673,
+    2674,
+    2675,
+    2676,
+    2677,
+    2678,
+    2679,
+    2680,
+    2681,
+    2682,
+    2683,
+    2684,
+    2685,
+    2686,
+    2687,
+    2688,
+    2689,
+    2690,
+    2691,
+    2692,
+    2693,
+    2694,
+    2695,
+    2696,
+    2697,
+    2698,
+    2699,
+    2700,
+    2701,
+    2702,
+    2703,
+    2704,
+    2705,
+    2706,
+    2707,
+    2708,
+    2709,
+    2710,
+    2711,
+    2712,
+    2713,
+    2714,
+    2715,
+    2716,
+    2717,
+    2718,
+    2719,
+    2720,
+    2721,
+    2722,
+    2723,
+    2724,
+    2725,
+    2726,
+    2727,
+    2728,
+    2729,
+    2730,
+    2731,
+    2732,
+    2733,
+    2734,
+    2735,
+    2736,
+    2737,
+    2738,
+    2739,
+    2740,
+    2741,
+    2742,
+    2743,
+    2744,
+    2745,
+    2746,
+    2747,
+    2748,
+    2749,
+    2750,
+    2751,
+    2752,
+    2753,
+    2754,
+    2755,
+    2756,
+    2757,
+    2758,
+    2759,
+    2760,
+    2761,
+    2762,
+    2763,
+    2764,
+    2765,
+    2766,
+    2767,
+    2768,
+    2769,
+    2770,
+    2771,
+    2772,
+    2773,
+    2774,
+    2775,
+    2776,
+    2777,
+    2778,
+    2779,
+    2780,
+    2781,
+    2782,
+    2783,
+    2784,
+    2785,
+    2786,
+    2787,
+    2788,
+    2789,
+    2790,
+    2791,
+    2792,
+    2793,
+    2794,
+    2795,
+    2796,
+    2797,
+    2798,
+    2799,
+    2800,
+    2801,
+    2802,
+    2803,
+    2804,
+    2805,
+    2806,
+    2807,
+    2808,
+    2809,
+    2810,
+    2811,
+    2812,
+    2813,
+    2814,
+    2815,
+    2816,
+    2817,
+    2818,
+    2819,
+    2820,
+    2821,
+    2822,
+    2823,
+    2824,
+    2825,
+    2826,
+    2827,
+    2828,
+    2829,
+    2830,
+    2831,
+    2832,
+    2833,
+    2834,
+    2835,
+    2836,
+    2837,
+    2838,
+    2839,
+    2840,
+    2841,
+    2842,
+    2843,
+    2844,
+    2845,
+    2846,
+    2847,
+    2848,
+    2849,
+    2850,
+    2851,
+    2852,
+    2853,
+    2854,
+    2855,
+    2856,
+    2857,
+    2858,
+    2859,
+    2860,
+    2861,
+    2862,
+    2863,
+    2864,
+    2865,
+    2866,
+    2867,
+    2868,
+    2869,
+    2870,
+    2871,
+    2872,
+    2873,
+    2874,
+    2875,
+    2876,
+    2877,
+    2878,
+    2879,
+    2880,
+    2881,
+    2882,
+    2883,
+    2884,
+    2885,
+    2886,
+    2887,
+    2888,
+    2889,
+    2890,
+    2891,
+    2892,
+    2893,
+    2894,
+    2895,
+    2896,
+    2897,
+    2898,
+    2899,
+    2900,
+    2901,
+    2902,
+    2903,
+    2904,
+    2905,
+    2906,
+    2907,
+    2908,
+    2909,
+    2910,
+    2911,
+    2912,
+    2913,
+    2914,
+    2915,
+    2916,
+    2917,
+    2918,
+    2919,
+    2920,
+    2921,
+    2922,
+    2923,
+    2924,
+    2925,
+    2926,
+    2927,
+    2928,
+    2929,
+    2930,
+    2931,
+    2932,
+    2933,
+    2934,
+    2935,
+    2936,
+    2937,
+    2938,
+    2939,
+    2940,
+    2941,
+    2942,
+    2943,
+    2944,
+    2945,
+    2946,
+    2947,
+    2948,
+    2949,
+    2950,
+    2951,
+    2952,
+    2953,
+    2954,
+    2955,
+    2956,
+    2957,
+    2958,
+    2959,
+    2960,
+    2961,
+    2962,
+    2963,
+    2964,
+    2965,
+    2966,
+    2967,
+    2968,
+    2969,
+    2970,
+    2971,
+    2972,
+    2973,
+    2974,
+    2975,
+    2976,
+    2977,
+    2978,
+    2979,
+    2980,
+    2981,
+    2982,
+    2983,
+    2984,
+    2985,
+    2986,
+    2987,
+    2988,
+    2989,
+    2990,
+    2991,
+    2992,
+    2993,
+    2994,
+    2995,
+    2996,
+    2997,
+    2998,
+    2999,
+    3000
+  ],
+  "grouping_summary": {
+    "channel_count": 30,
+    "group_count": 12,
+    "group_sizes": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "grouped_channel_count": 24,
+    "largest_group_size": 2,
+    "mean_group_size": 2.0,
+    "relation_count": 435,
+    "strongest_negative_relations": [
+      {
+        "absolute_similarity": 0.641877625765087,
+        "channel_a": "member_4_length",
+        "channel_b": "member_8_length",
+        "sample_count": 1001,
+        "similarity": -0.641877625765087
+      },
+      {
+        "absolute_similarity": 0.6418776257650866,
+        "channel_a": "member_4_axial_force",
+        "channel_b": "member_8_axial_force",
+        "sample_count": 1001,
+        "similarity": -0.6418776257650866
+      },
+      {
+        "absolute_similarity": 0.6418776257650863,
+        "channel_a": "member_4_axial_force",
+        "channel_b": "member_8_length",
+        "sample_count": 1001,
+        "similarity": -0.6418776257650863
+      },
+      {
+        "absolute_similarity": 0.6418776257650863,
+        "channel_a": "member_4_length",
+        "channel_b": "member_8_axial_force",
+        "sample_count": 1001,
+        "similarity": -0.6418776257650863
+      },
+      {
+        "absolute_similarity": 0.5803385575727366,
+        "channel_a": "member_8_axial_force",
+        "channel_b": "member_9_length",
+        "sample_count": 1001,
+        "similarity": -0.5803385575727366
+      },
+      {
+        "absolute_similarity": 0.5803385575727362,
+        "channel_a": "member_8_axial_force",
+        "channel_b": "member_9_axial_force",
+        "sample_count": 1001,
+        "similarity": -0.5803385575727362
+      },
+      {
+        "absolute_similarity": 0.5803385575727362,
+        "channel_a": "member_8_length",
+        "channel_b": "member_9_axial_force",
+        "sample_count": 1001,
+        "similarity": -0.5803385575727362
+      },
+      {
+        "absolute_similarity": 0.5803385575727362,
+        "channel_a": "member_8_length",
+        "channel_b": "member_9_length",
+        "sample_count": 1001,
+        "similarity": -0.5803385575727362
+      },
+      {
+        "absolute_similarity": 0.579691197850292,
+        "channel_a": "member_5_length",
+        "channel_b": "member_6_length",
+        "sample_count": 1001,
+        "similarity": -0.579691197850292
+      },
+      {
+        "absolute_similarity": 0.5796911978502919,
+        "channel_a": "member_5_axial_force",
+        "channel_b": "member_6_length",
+        "sample_count": 1001,
+        "similarity": -0.5796911978502919
+      }
+    ],
+    "strongest_positive_relations": [
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_0_axial_force",
+        "channel_b": "member_0_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_11_axial_force",
+        "channel_b": "member_11_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_2_axial_force",
+        "channel_b": "member_2_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_3_axial_force",
+        "channel_b": "member_3_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_5_axial_force",
+        "channel_b": "member_5_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_6_axial_force",
+        "channel_b": "member_6_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_7_axial_force",
+        "channel_b": "member_7_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_8_axial_force",
+        "channel_b": "member_8_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 1.0,
+        "channel_a": "member_9_axial_force",
+        "channel_b": "member_9_length",
+        "sample_count": 1001,
+        "similarity": 1.0
+      },
+      {
+        "absolute_similarity": 0.9999999999999999,
+        "channel_a": "member_4_axial_force",
+        "channel_b": "member_4_length",
+        "sample_count": 1001,
+        "similarity": 0.9999999999999999
+      }
+    ],
+    "ungrouped_channel_count": 6,
+    "ungrouped_channels": [
+      "node_0_accel_norm",
+      "node_1_accel_norm",
+      "node_2_accel_norm",
+      "node_3_accel_norm",
+      "node_4_accel_norm",
+      "node_5_accel_norm"
+    ]
+  },
+  "grouping_window_sha256": "6af48d941edcc0993221218a1284fb2cbd9819aa2e7ab9471e80b464ae41470b",
+  "groups": [
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_0_axial_force",
+        "member_0_length"
+      ],
+      "group_id": 0,
+      "internal_relation_strength": 1.0
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_10_axial_force",
+        "member_10_length"
+      ],
+      "group_id": 1,
+      "internal_relation_strength": 0.9999999999999998
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_11_axial_force",
+        "member_11_length"
+      ],
+      "group_id": 2,
+      "internal_relation_strength": 1.0
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_1_axial_force",
+        "member_1_length"
+      ],
+      "group_id": 3,
+      "internal_relation_strength": 0.9999999999999997
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_2_axial_force",
+        "member_2_length"
+      ],
+      "group_id": 4,
+      "internal_relation_strength": 1.0
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_3_axial_force",
+        "member_3_length"
+      ],
+      "group_id": 5,
+      "internal_relation_strength": 1.0
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_4_axial_force",
+        "member_4_length"
+      ],
+      "group_id": 6,
+      "internal_relation_strength": 0.9999999999999999
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_5_axial_force",
+        "member_5_length"
+      ],
+      "group_id": 7,
+      "internal_relation_strength": 1.0
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_6_axial_force",
+        "member_6_length"
+      ],
+      "group_id": 8,
+      "internal_relation_strength": 1.0
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_7_axial_force",
+        "member_7_length"
+      ],
+      "group_id": 9,
+      "internal_relation_strength": 1.0
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_8_axial_force",
+        "member_8_length"
+      ],
+      "group_id": 10,
+      "internal_relation_strength": 1.0
+    },
+    {
+      "channel_count": 2,
+      "channel_names": [
+        "member_9_axial_force",
+        "member_9_length"
+      ],
+      "group_id": 11,
+      "internal_relation_strength": 1.0
+    }
+  ],
+  "groups_sha256": "cd25da6db59a802200eafb84a2b66446a918f965c7c6296321b4d334d1805e70",
+  "relations": [
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_0_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.24633053355948437,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_10_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.24633053355948437
+    },
+    {
+      "absolute_similarity": 0.24633053355948448,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_10_length",
+      "sample_count": 1001,
+      "similarity": 0.24633053355948448
+    },
+    {
+      "absolute_similarity": 0.44454880649515094,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_11_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.44454880649515094
+    },
+    {
+      "absolute_similarity": 0.44454880649515094,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_11_length",
+      "sample_count": 1001,
+      "similarity": -0.44454880649515094
+    },
+    {
+      "absolute_similarity": 0.4001479173142264,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_1_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.4001479173142264
+    },
+    {
+      "absolute_similarity": 0.40014791731422644,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_1_length",
+      "sample_count": 1001,
+      "similarity": -0.40014791731422644
+    },
+    {
+      "absolute_similarity": 0.2649461964486981,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_2_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.2649461964486981
+    },
+    {
+      "absolute_similarity": 0.26494619644869816,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": -0.26494619644869816
+    },
+    {
+      "absolute_similarity": 0.47698061655891866,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.47698061655891866
+    },
+    {
+      "absolute_similarity": 0.47698061655891866,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": 0.47698061655891866
+    },
+    {
+      "absolute_similarity": 0.10049143281350438,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.10049143281350438
+    },
+    {
+      "absolute_similarity": 0.10049143281350445,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": -0.10049143281350445
+    },
+    {
+      "absolute_similarity": 0.3195131795984563,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.3195131795984563
+    },
+    {
+      "absolute_similarity": 0.3195131795984562,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 0.3195131795984562
+    },
+    {
+      "absolute_similarity": 0.4286072436814301,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.4286072436814301
+    },
+    {
+      "absolute_similarity": 0.42860724368143016,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": 0.42860724368143016
+    },
+    {
+      "absolute_similarity": 0.2574560202862179,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.2574560202862179
+    },
+    {
+      "absolute_similarity": 0.25745602028621806,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.25745602028621806
+    },
+    {
+      "absolute_similarity": 0.19541183269812112,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.19541183269812112
+    },
+    {
+      "absolute_similarity": 0.19541183269812115,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": -0.19541183269812115
+    },
+    {
+      "absolute_similarity": 0.47471505067842246,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.47471505067842246
+    },
+    {
+      "absolute_similarity": 0.47471505067842235,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.47471505067842235
+    },
+    {
+      "absolute_similarity": 0.03848615644402617,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.03848615644402617
+    },
+    {
+      "absolute_similarity": 0.06591208953730325,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.06591208953730325
+    },
+    {
+      "absolute_similarity": 0.05380216711778198,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.05380216711778198
+    },
+    {
+      "absolute_similarity": 0.16057655262898077,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.16057655262898077
+    },
+    {
+      "absolute_similarity": 0.07335470370909133,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.07335470370909133
+    },
+    {
+      "absolute_similarity": 0.26164204363356247,
+      "channel_a": "member_0_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.26164204363356247
+    },
+    {
+      "absolute_similarity": 0.24633053355948437,
+      "channel_a": "member_0_length",
+      "channel_b": "member_10_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.24633053355948437
+    },
+    {
+      "absolute_similarity": 0.2463305335594845,
+      "channel_a": "member_0_length",
+      "channel_b": "member_10_length",
+      "sample_count": 1001,
+      "similarity": 0.2463305335594845
+    },
+    {
+      "absolute_similarity": 0.444548806495151,
+      "channel_a": "member_0_length",
+      "channel_b": "member_11_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.444548806495151
+    },
+    {
+      "absolute_similarity": 0.44454880649515094,
+      "channel_a": "member_0_length",
+      "channel_b": "member_11_length",
+      "sample_count": 1001,
+      "similarity": -0.44454880649515094
+    },
+    {
+      "absolute_similarity": 0.4001479173142263,
+      "channel_a": "member_0_length",
+      "channel_b": "member_1_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.4001479173142263
+    },
+    {
+      "absolute_similarity": 0.4001479173142265,
+      "channel_a": "member_0_length",
+      "channel_b": "member_1_length",
+      "sample_count": 1001,
+      "similarity": -0.4001479173142265
+    },
+    {
+      "absolute_similarity": 0.2649461964486981,
+      "channel_a": "member_0_length",
+      "channel_b": "member_2_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.2649461964486981
+    },
+    {
+      "absolute_similarity": 0.2649461964486981,
+      "channel_a": "member_0_length",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": -0.2649461964486981
+    },
+    {
+      "absolute_similarity": 0.4769806165589187,
+      "channel_a": "member_0_length",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.4769806165589187
+    },
+    {
+      "absolute_similarity": 0.47698061655891855,
+      "channel_a": "member_0_length",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": 0.47698061655891855
+    },
+    {
+      "absolute_similarity": 0.10049143281350448,
+      "channel_a": "member_0_length",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.10049143281350448
+    },
+    {
+      "absolute_similarity": 0.10049143281350426,
+      "channel_a": "member_0_length",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": -0.10049143281350426
+    },
+    {
+      "absolute_similarity": 0.31951317959845604,
+      "channel_a": "member_0_length",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.31951317959845604
+    },
+    {
+      "absolute_similarity": 0.3195131795984562,
+      "channel_a": "member_0_length",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 0.3195131795984562
+    },
+    {
+      "absolute_similarity": 0.42860724368143005,
+      "channel_a": "member_0_length",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.42860724368143005
+    },
+    {
+      "absolute_similarity": 0.4286072436814301,
+      "channel_a": "member_0_length",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": 0.4286072436814301
+    },
+    {
+      "absolute_similarity": 0.25745602028621795,
+      "channel_a": "member_0_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.25745602028621795
+    },
+    {
+      "absolute_similarity": 0.257456020286218,
+      "channel_a": "member_0_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.257456020286218
+    },
+    {
+      "absolute_similarity": 0.19541183269812118,
+      "channel_a": "member_0_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.19541183269812118
+    },
+    {
+      "absolute_similarity": 0.19541183269812118,
+      "channel_a": "member_0_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": -0.19541183269812118
+    },
+    {
+      "absolute_similarity": 0.47471505067842235,
+      "channel_a": "member_0_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.47471505067842235
+    },
+    {
+      "absolute_similarity": 0.4747150506784224,
+      "channel_a": "member_0_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.4747150506784224
+    },
+    {
+      "absolute_similarity": 0.03848615644402619,
+      "channel_a": "member_0_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.03848615644402619
+    },
+    {
+      "absolute_similarity": 0.06591208953730315,
+      "channel_a": "member_0_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.06591208953730315
+    },
+    {
+      "absolute_similarity": 0.05380216711778201,
+      "channel_a": "member_0_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.05380216711778201
+    },
+    {
+      "absolute_similarity": 0.16057655262898052,
+      "channel_a": "member_0_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.16057655262898052
+    },
+    {
+      "absolute_similarity": 0.07335470370909093,
+      "channel_a": "member_0_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.07335470370909093
+    },
+    {
+      "absolute_similarity": 0.26164204363356247,
+      "channel_a": "member_0_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.26164204363356247
+    },
+    {
+      "absolute_similarity": 0.9999999999999998,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_10_length",
+      "sample_count": 1001,
+      "similarity": 0.9999999999999998
+    },
+    {
+      "absolute_similarity": 0.27195079745254613,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_11_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.27195079745254613
+    },
+    {
+      "absolute_similarity": 0.2719507974525462,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_11_length",
+      "sample_count": 1001,
+      "similarity": -0.2719507974525462
+    },
+    {
+      "absolute_similarity": 0.13036968669490573,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_1_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.13036968669490573
+    },
+    {
+      "absolute_similarity": 0.13036968669490573,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_1_length",
+      "sample_count": 1001,
+      "similarity": 0.13036968669490573
+    },
+    {
+      "absolute_similarity": 0.2806816433813346,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_2_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.2806816433813346
+    },
+    {
+      "absolute_similarity": 0.2806816433813347,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": 0.2806816433813347
+    },
+    {
+      "absolute_similarity": 0.3850329937314393,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.3850329937314393
+    },
+    {
+      "absolute_similarity": 0.38503299373143934,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": -0.38503299373143934
+    },
+    {
+      "absolute_similarity": 0.06300696398194444,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.06300696398194444
+    },
+    {
+      "absolute_similarity": 0.06300696398194429,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": -0.06300696398194429
+    },
+    {
+      "absolute_similarity": 0.3793009822928885,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.3793009822928885
+    },
+    {
+      "absolute_similarity": 0.37930098229288867,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": -0.37930098229288867
+    },
+    {
+      "absolute_similarity": 0.5409960907002452,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.5409960907002452
+    },
+    {
+      "absolute_similarity": 0.5409960907002458,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": 0.5409960907002458
+    },
+    {
+      "absolute_similarity": 0.05647710379719855,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.05647710379719855
+    },
+    {
+      "absolute_similarity": 0.056477103797198676,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": -0.056477103797198676
+    },
+    {
+      "absolute_similarity": 0.2210914206145239,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.2210914206145239
+    },
+    {
+      "absolute_similarity": 0.22109142061452394,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.22109142061452394
+    },
+    {
+      "absolute_similarity": 0.4118382125693079,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.4118382125693079
+    },
+    {
+      "absolute_similarity": 0.4118382125693077,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.4118382125693077
+    },
+    {
+      "absolute_similarity": 0.009546609109234827,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.009546609109234827
+    },
+    {
+      "absolute_similarity": 0.2168222016187783,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.2168222016187783
+    },
+    {
+      "absolute_similarity": 0.00020224909616724387,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.00020224909616724387
+    },
+    {
+      "absolute_similarity": 0.07457659487119937,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.07457659487119937
+    },
+    {
+      "absolute_similarity": 0.029834493378893594,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.029834493378893594
+    },
+    {
+      "absolute_similarity": 0.0048826461401806145,
+      "channel_a": "member_10_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.0048826461401806145
+    },
+    {
+      "absolute_similarity": 0.2719507974525463,
+      "channel_a": "member_10_length",
+      "channel_b": "member_11_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.2719507974525463
+    },
+    {
+      "absolute_similarity": 0.27195079745254636,
+      "channel_a": "member_10_length",
+      "channel_b": "member_11_length",
+      "sample_count": 1001,
+      "similarity": -0.27195079745254636
+    },
+    {
+      "absolute_similarity": 0.13036968669490578,
+      "channel_a": "member_10_length",
+      "channel_b": "member_1_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.13036968669490578
+    },
+    {
+      "absolute_similarity": 0.1303696866949058,
+      "channel_a": "member_10_length",
+      "channel_b": "member_1_length",
+      "sample_count": 1001,
+      "similarity": 0.1303696866949058
+    },
+    {
+      "absolute_similarity": 0.2806816433813348,
+      "channel_a": "member_10_length",
+      "channel_b": "member_2_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.2806816433813348
+    },
+    {
+      "absolute_similarity": 0.28068164338133444,
+      "channel_a": "member_10_length",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": 0.28068164338133444
+    },
+    {
+      "absolute_similarity": 0.3850329937314396,
+      "channel_a": "member_10_length",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.3850329937314396
+    },
+    {
+      "absolute_similarity": 0.3850329937314392,
+      "channel_a": "member_10_length",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": -0.3850329937314392
+    },
+    {
+      "absolute_similarity": 0.0630069639819443,
+      "channel_a": "member_10_length",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.0630069639819443
+    },
+    {
+      "absolute_similarity": 0.0630069639819444,
+      "channel_a": "member_10_length",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": -0.0630069639819444
+    },
+    {
+      "absolute_similarity": 0.37930098229288883,
+      "channel_a": "member_10_length",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.37930098229288883
+    },
+    {
+      "absolute_similarity": 0.37930098229288883,
+      "channel_a": "member_10_length",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": -0.37930098229288883
+    },
+    {
+      "absolute_similarity": 0.5409960907002459,
+      "channel_a": "member_10_length",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.5409960907002459
+    },
+    {
+      "absolute_similarity": 0.5409960907002461,
+      "channel_a": "member_10_length",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": 0.5409960907002461
+    },
+    {
+      "absolute_similarity": 0.056477103797198676,
+      "channel_a": "member_10_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.056477103797198676
+    },
+    {
+      "absolute_similarity": 0.05647710379719884,
+      "channel_a": "member_10_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": -0.05647710379719884
+    },
+    {
+      "absolute_similarity": 0.22109142061452405,
+      "channel_a": "member_10_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.22109142061452405
+    },
+    {
+      "absolute_similarity": 0.22109142061452394,
+      "channel_a": "member_10_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.22109142061452394
+    },
+    {
+      "absolute_similarity": 0.4118382125693078,
+      "channel_a": "member_10_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.4118382125693078
+    },
+    {
+      "absolute_similarity": 0.4118382125693082,
+      "channel_a": "member_10_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.4118382125693082
+    },
+    {
+      "absolute_similarity": 0.00954660910923483,
+      "channel_a": "member_10_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.00954660910923483
+    },
+    {
+      "absolute_similarity": 0.2168222016187783,
+      "channel_a": "member_10_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.2168222016187783
+    },
+    {
+      "absolute_similarity": 0.0002022490961671397,
+      "channel_a": "member_10_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.0002022490961671397
+    },
+    {
+      "absolute_similarity": 0.07457659487119944,
+      "channel_a": "member_10_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.07457659487119944
+    },
+    {
+      "absolute_similarity": 0.029834493378894034,
+      "channel_a": "member_10_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.029834493378894034
+    },
+    {
+      "absolute_similarity": 0.0048826461401805625,
+      "channel_a": "member_10_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.0048826461401805625
+    },
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_11_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.8606787342107225,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_1_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.8606787342107225
+    },
+    {
+      "absolute_similarity": 0.8606787342107227,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_1_length",
+      "sample_count": 1001,
+      "similarity": 0.8606787342107227
+    },
+    {
+      "absolute_similarity": 0.8058121143688419,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_2_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.8058121143688419
+    },
+    {
+      "absolute_similarity": 0.8058121143688417,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": 0.8058121143688417
+    },
+    {
+      "absolute_similarity": 0.11879323116266431,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.11879323116266431
+    },
+    {
+      "absolute_similarity": 0.11879323116266417,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": 0.11879323116266417
+    },
+    {
+      "absolute_similarity": 0.6568625239121378,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.6568625239121378
+    },
+    {
+      "absolute_similarity": 0.6568625239121382,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.6568625239121382
+    },
+    {
+      "absolute_similarity": 0.17999566258757757,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.17999566258757757
+    },
+    {
+      "absolute_similarity": 0.17999566258757768,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 0.17999566258757768
+    },
+    {
+      "absolute_similarity": 0.311312017417057,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.311312017417057
+    },
+    {
+      "absolute_similarity": 0.31131201741705716,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.31131201741705716
+    },
+    {
+      "absolute_similarity": 0.07946929481113328,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.07946929481113328
+    },
+    {
+      "absolute_similarity": 0.07946929481113324,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.07946929481113324
+    },
+    {
+      "absolute_similarity": 0.044605266521828446,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.044605266521828446
+    },
+    {
+      "absolute_similarity": 0.04460526652182852,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.04460526652182852
+    },
+    {
+      "absolute_similarity": 0.02060307032480868,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.02060307032480868
+    },
+    {
+      "absolute_similarity": 0.02060307032480858,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.02060307032480858
+    },
+    {
+      "absolute_similarity": 0.0037319941492259335,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.0037319941492259335
+    },
+    {
+      "absolute_similarity": 0.05225988282950407,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.05225988282950407
+    },
+    {
+      "absolute_similarity": 0.0749866387476098,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.0749866387476098
+    },
+    {
+      "absolute_similarity": 0.008837468031648744,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.008837468031648744
+    },
+    {
+      "absolute_similarity": 0.03923878645671028,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.03923878645671028
+    },
+    {
+      "absolute_similarity": 0.0019892002420392792,
+      "channel_a": "member_11_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.0019892002420392792
+    },
+    {
+      "absolute_similarity": 0.8606787342107222,
+      "channel_a": "member_11_length",
+      "channel_b": "member_1_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.8606787342107222
+    },
+    {
+      "absolute_similarity": 0.8606787342107223,
+      "channel_a": "member_11_length",
+      "channel_b": "member_1_length",
+      "sample_count": 1001,
+      "similarity": 0.8606787342107223
+    },
+    {
+      "absolute_similarity": 0.8058121143688415,
+      "channel_a": "member_11_length",
+      "channel_b": "member_2_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.8058121143688415
+    },
+    {
+      "absolute_similarity": 0.8058121143688416,
+      "channel_a": "member_11_length",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": 0.8058121143688416
+    },
+    {
+      "absolute_similarity": 0.11879323116266417,
+      "channel_a": "member_11_length",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.11879323116266417
+    },
+    {
+      "absolute_similarity": 0.11879323116266426,
+      "channel_a": "member_11_length",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": 0.11879323116266426
+    },
+    {
+      "absolute_similarity": 0.656862523912138,
+      "channel_a": "member_11_length",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.656862523912138
+    },
+    {
+      "absolute_similarity": 0.6568625239121381,
+      "channel_a": "member_11_length",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.6568625239121381
+    },
+    {
+      "absolute_similarity": 0.17999566258757763,
+      "channel_a": "member_11_length",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.17999566258757763
+    },
+    {
+      "absolute_similarity": 0.17999566258757754,
+      "channel_a": "member_11_length",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 0.17999566258757754
+    },
+    {
+      "absolute_similarity": 0.31131201741705694,
+      "channel_a": "member_11_length",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.31131201741705694
+    },
+    {
+      "absolute_similarity": 0.31131201741705705,
+      "channel_a": "member_11_length",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.31131201741705705
+    },
+    {
+      "absolute_similarity": 0.07946929481113323,
+      "channel_a": "member_11_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.07946929481113323
+    },
+    {
+      "absolute_similarity": 0.07946929481113335,
+      "channel_a": "member_11_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.07946929481113335
+    },
+    {
+      "absolute_similarity": 0.04460526652182851,
+      "channel_a": "member_11_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.04460526652182851
+    },
+    {
+      "absolute_similarity": 0.04460526652182851,
+      "channel_a": "member_11_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.04460526652182851
+    },
+    {
+      "absolute_similarity": 0.0206030703248086,
+      "channel_a": "member_11_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.0206030703248086
+    },
+    {
+      "absolute_similarity": 0.020603070324808542,
+      "channel_a": "member_11_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.020603070324808542
+    },
+    {
+      "absolute_similarity": 0.003731994149225936,
+      "channel_a": "member_11_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.003731994149225936
+    },
+    {
+      "absolute_similarity": 0.05225988282950411,
+      "channel_a": "member_11_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.05225988282950411
+    },
+    {
+      "absolute_similarity": 0.07498663874760976,
+      "channel_a": "member_11_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.07498663874760976
+    },
+    {
+      "absolute_similarity": 0.00883746803164877,
+      "channel_a": "member_11_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.00883746803164877
+    },
+    {
+      "absolute_similarity": 0.03923878645671035,
+      "channel_a": "member_11_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.03923878645671035
+    },
+    {
+      "absolute_similarity": 0.0019892002420392493,
+      "channel_a": "member_11_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.0019892002420392493
+    },
+    {
+      "absolute_similarity": 0.9999999999999997,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_1_length",
+      "sample_count": 1001,
+      "similarity": 0.9999999999999997
+    },
+    {
+      "absolute_similarity": 0.9492908137090948,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_2_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.9492908137090948
+    },
+    {
+      "absolute_similarity": 0.9492908137090952,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": 0.9492908137090952
+    },
+    {
+      "absolute_similarity": 0.07359754019145555,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.07359754019145555
+    },
+    {
+      "absolute_similarity": 0.07359754019145538,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": -0.07359754019145538
+    },
+    {
+      "absolute_similarity": 0.4055271446847637,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.4055271446847637
+    },
+    {
+      "absolute_similarity": 0.40552714468476375,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.40552714468476375
+    },
+    {
+      "absolute_similarity": 0.06504687637339371,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.06504687637339371
+    },
+    {
+      "absolute_similarity": 0.06504687637339364,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 0.06504687637339364
+    },
+    {
+      "absolute_similarity": 0.03083556114527219,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.03083556114527219
+    },
+    {
+      "absolute_similarity": 0.030835561145272146,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.030835561145272146
+    },
+    {
+      "absolute_similarity": 0.11611037090691255,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.11611037090691255
+    },
+    {
+      "absolute_similarity": 0.11611037090691245,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.11611037090691245
+    },
+    {
+      "absolute_similarity": 0.43077962053294777,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.43077962053294777
+    },
+    {
+      "absolute_similarity": 0.4307796205329478,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.4307796205329478
+    },
+    {
+      "absolute_similarity": 0.01216709342721406,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.01216709342721406
+    },
+    {
+      "absolute_similarity": 0.012167093427214042,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": -0.012167093427214042
+    },
+    {
+      "absolute_similarity": 0.004416011410861674,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.004416011410861674
+    },
+    {
+      "absolute_similarity": 0.04464557299314741,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.04464557299314741
+    },
+    {
+      "absolute_similarity": 0.11451094345551513,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.11451094345551513
+    },
+    {
+      "absolute_similarity": 0.04079544165331193,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.04079544165331193
+    },
+    {
+      "absolute_similarity": 0.1286196485794126,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.1286196485794126
+    },
+    {
+      "absolute_similarity": 0.032622340897453625,
+      "channel_a": "member_1_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.032622340897453625
+    },
+    {
+      "absolute_similarity": 0.9492908137090956,
+      "channel_a": "member_1_length",
+      "channel_b": "member_2_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.9492908137090956
+    },
+    {
+      "absolute_similarity": 0.9492908137090952,
+      "channel_a": "member_1_length",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": 0.9492908137090952
+    },
+    {
+      "absolute_similarity": 0.07359754019145541,
+      "channel_a": "member_1_length",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.07359754019145541
+    },
+    {
+      "absolute_similarity": 0.0735975401914555,
+      "channel_a": "member_1_length",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": -0.0735975401914555
+    },
+    {
+      "absolute_similarity": 0.4055271446847637,
+      "channel_a": "member_1_length",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.4055271446847637
+    },
+    {
+      "absolute_similarity": 0.40552714468476403,
+      "channel_a": "member_1_length",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.40552714468476403
+    },
+    {
+      "absolute_similarity": 0.06504687637339361,
+      "channel_a": "member_1_length",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.06504687637339361
+    },
+    {
+      "absolute_similarity": 0.06504687637339372,
+      "channel_a": "member_1_length",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 0.06504687637339372
+    },
+    {
+      "absolute_similarity": 0.030835561145272142,
+      "channel_a": "member_1_length",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.030835561145272142
+    },
+    {
+      "absolute_similarity": 0.030835561145272177,
+      "channel_a": "member_1_length",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.030835561145272177
+    },
+    {
+      "absolute_similarity": 0.11611037090691248,
+      "channel_a": "member_1_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.11611037090691248
+    },
+    {
+      "absolute_similarity": 0.11611037090691266,
+      "channel_a": "member_1_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.11611037090691266
+    },
+    {
+      "absolute_similarity": 0.4307796205329479,
+      "channel_a": "member_1_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.4307796205329479
+    },
+    {
+      "absolute_similarity": 0.43077962053294777,
+      "channel_a": "member_1_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.43077962053294777
+    },
+    {
+      "absolute_similarity": 0.012167093427214008,
+      "channel_a": "member_1_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.012167093427214008
+    },
+    {
+      "absolute_similarity": 0.012167093427214046,
+      "channel_a": "member_1_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": -0.012167093427214046
+    },
+    {
+      "absolute_similarity": 0.004416011410861675,
+      "channel_a": "member_1_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.004416011410861675
+    },
+    {
+      "absolute_similarity": 0.04464557299314731,
+      "channel_a": "member_1_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.04464557299314731
+    },
+    {
+      "absolute_similarity": 0.11451094345551519,
+      "channel_a": "member_1_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.11451094345551519
+    },
+    {
+      "absolute_similarity": 0.040795441653312,
+      "channel_a": "member_1_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.040795441653312
+    },
+    {
+      "absolute_similarity": 0.12861964857941255,
+      "channel_a": "member_1_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.12861964857941255
+    },
+    {
+      "absolute_similarity": 0.03262234089745356,
+      "channel_a": "member_1_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.03262234089745356
+    },
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_2_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.10784652394866197,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.10784652394866197
+    },
+    {
+      "absolute_similarity": 0.10784652394866187,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": -0.10784652394866187
+    },
+    {
+      "absolute_similarity": 0.509536311731708,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.509536311731708
+    },
+    {
+      "absolute_similarity": 0.5095363117317083,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.5095363117317083
+    },
+    {
+      "absolute_similarity": 0.057906959772226575,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.057906959772226575
+    },
+    {
+      "absolute_similarity": 0.057906959772226665,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": -0.057906959772226665
+    },
+    {
+      "absolute_similarity": 0.11218654696350991,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.11218654696350991
+    },
+    {
+      "absolute_similarity": 0.11218654696350981,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": 0.11218654696350981
+    },
+    {
+      "absolute_similarity": 0.24369003856763163,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.24369003856763163
+    },
+    {
+      "absolute_similarity": 0.24369003856763174,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.24369003856763174
+    },
+    {
+      "absolute_similarity": 0.31761604174772656,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.31761604174772656
+    },
+    {
+      "absolute_similarity": 0.31761604174772645,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.31761604174772645
+    },
+    {
+      "absolute_similarity": 0.186416744561396,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.186416744561396
+    },
+    {
+      "absolute_similarity": 0.18641674456139606,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.18641674456139606
+    },
+    {
+      "absolute_similarity": 0.01034888384869376,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.01034888384869376
+    },
+    {
+      "absolute_similarity": 0.07625775144634543,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.07625775144634543
+    },
+    {
+      "absolute_similarity": 0.03834283071518609,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.03834283071518609
+    },
+    {
+      "absolute_similarity": 0.0006476932488813102,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.0006476932488813102
+    },
+    {
+      "absolute_similarity": 0.014888725225951825,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.014888725225951825
+    },
+    {
+      "absolute_similarity": 0.02324951149853261,
+      "channel_a": "member_2_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.02324951149853261
+    },
+    {
+      "absolute_similarity": 0.10784652394866194,
+      "channel_a": "member_2_length",
+      "channel_b": "member_3_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.10784652394866194
+    },
+    {
+      "absolute_similarity": 0.10784652394866201,
+      "channel_a": "member_2_length",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": -0.10784652394866201
+    },
+    {
+      "absolute_similarity": 0.5095363117317081,
+      "channel_a": "member_2_length",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.5095363117317081
+    },
+    {
+      "absolute_similarity": 0.5095363117317082,
+      "channel_a": "member_2_length",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.5095363117317082
+    },
+    {
+      "absolute_similarity": 0.05790695977222666,
+      "channel_a": "member_2_length",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.05790695977222666
+    },
+    {
+      "absolute_similarity": 0.0579069597722266,
+      "channel_a": "member_2_length",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": -0.0579069597722266
+    },
+    {
+      "absolute_similarity": 0.1121865469635098,
+      "channel_a": "member_2_length",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.1121865469635098
+    },
+    {
+      "absolute_similarity": 0.11218654696350977,
+      "channel_a": "member_2_length",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": 0.11218654696350977
+    },
+    {
+      "absolute_similarity": 0.24369003856763172,
+      "channel_a": "member_2_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.24369003856763172
+    },
+    {
+      "absolute_similarity": 0.24369003856763177,
+      "channel_a": "member_2_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.24369003856763177
+    },
+    {
+      "absolute_similarity": 0.31761604174772645,
+      "channel_a": "member_2_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.31761604174772645
+    },
+    {
+      "absolute_similarity": 0.3176160417477266,
+      "channel_a": "member_2_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.3176160417477266
+    },
+    {
+      "absolute_similarity": 0.186416744561396,
+      "channel_a": "member_2_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.186416744561396
+    },
+    {
+      "absolute_similarity": 0.18641674456139604,
+      "channel_a": "member_2_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.18641674456139604
+    },
+    {
+      "absolute_similarity": 0.010348883848693754,
+      "channel_a": "member_2_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.010348883848693754
+    },
+    {
+      "absolute_similarity": 0.07625775144634535,
+      "channel_a": "member_2_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.07625775144634535
+    },
+    {
+      "absolute_similarity": 0.03834283071518619,
+      "channel_a": "member_2_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.03834283071518619
+    },
+    {
+      "absolute_similarity": 0.0006476932488814625,
+      "channel_a": "member_2_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.0006476932488814625
+    },
+    {
+      "absolute_similarity": 0.014888725225951884,
+      "channel_a": "member_2_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.014888725225951884
+    },
+    {
+      "absolute_similarity": 0.023249511498532542,
+      "channel_a": "member_2_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.023249511498532542
+    },
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_3_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.051410439247018394,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.051410439247018394
+    },
+    {
+      "absolute_similarity": 0.05141043924701832,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.05141043924701832
+    },
+    {
+      "absolute_similarity": 0.946038978559248,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.946038978559248
+    },
+    {
+      "absolute_similarity": 0.9460389785592482,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 0.9460389785592482
+    },
+    {
+      "absolute_similarity": 0.5150801515523978,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.5150801515523978
+    },
+    {
+      "absolute_similarity": 0.5150801515523977,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.5150801515523977
+    },
+    {
+      "absolute_similarity": 0.23475224170189488,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.23475224170189488
+    },
+    {
+      "absolute_similarity": 0.23475224170189493,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": -0.23475224170189493
+    },
+    {
+      "absolute_similarity": 0.11745972066989872,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.11745972066989872
+    },
+    {
+      "absolute_similarity": 0.11745972066989864,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": -0.11745972066989864
+    },
+    {
+      "absolute_similarity": 0.20805966932595213,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.20805966932595213
+    },
+    {
+      "absolute_similarity": 0.20805966932595207,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": -0.20805966932595207
+    },
+    {
+      "absolute_similarity": 0.055862964172111985,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.055862964172111985
+    },
+    {
+      "absolute_similarity": 0.12250729266440662,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.12250729266440662
+    },
+    {
+      "absolute_similarity": 0.24776437253513475,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.24776437253513475
+    },
+    {
+      "absolute_similarity": 0.37396536374159073,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.37396536374159073
+    },
+    {
+      "absolute_similarity": 0.07004189688362246,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.07004189688362246
+    },
+    {
+      "absolute_similarity": 0.4023518839124487,
+      "channel_a": "member_3_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.4023518839124487
+    },
+    {
+      "absolute_similarity": 0.05141043924701829,
+      "channel_a": "member_3_length",
+      "channel_b": "member_4_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.05141043924701829
+    },
+    {
+      "absolute_similarity": 0.05141043924701832,
+      "channel_a": "member_3_length",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.05141043924701832
+    },
+    {
+      "absolute_similarity": 0.9460389785592482,
+      "channel_a": "member_3_length",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.9460389785592482
+    },
+    {
+      "absolute_similarity": 0.9460389785592479,
+      "channel_a": "member_3_length",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 0.9460389785592479
+    },
+    {
+      "absolute_similarity": 0.5150801515523976,
+      "channel_a": "member_3_length",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.5150801515523976
+    },
+    {
+      "absolute_similarity": 0.5150801515523981,
+      "channel_a": "member_3_length",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.5150801515523981
+    },
+    {
+      "absolute_similarity": 0.2347522417018949,
+      "channel_a": "member_3_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.2347522417018949
+    },
+    {
+      "absolute_similarity": 0.23475224170189488,
+      "channel_a": "member_3_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": -0.23475224170189488
+    },
+    {
+      "absolute_similarity": 0.11745972066989861,
+      "channel_a": "member_3_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.11745972066989861
+    },
+    {
+      "absolute_similarity": 0.11745972066989878,
+      "channel_a": "member_3_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": -0.11745972066989878
+    },
+    {
+      "absolute_similarity": 0.20805966932595202,
+      "channel_a": "member_3_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.20805966932595202
+    },
+    {
+      "absolute_similarity": 0.20805966932595207,
+      "channel_a": "member_3_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": -0.20805966932595207
+    },
+    {
+      "absolute_similarity": 0.05586296417211201,
+      "channel_a": "member_3_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.05586296417211201
+    },
+    {
+      "absolute_similarity": 0.12250729266440658,
+      "channel_a": "member_3_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.12250729266440658
+    },
+    {
+      "absolute_similarity": 0.24776437253513475,
+      "channel_a": "member_3_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.24776437253513475
+    },
+    {
+      "absolute_similarity": 0.37396536374159073,
+      "channel_a": "member_3_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.37396536374159073
+    },
+    {
+      "absolute_similarity": 0.07004189688362251,
+      "channel_a": "member_3_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.07004189688362251
+    },
+    {
+      "absolute_similarity": 0.40235188391244875,
+      "channel_a": "member_3_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.40235188391244875
+    },
+    {
+      "absolute_similarity": 0.9999999999999999,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_4_length",
+      "sample_count": 1001,
+      "similarity": 0.9999999999999999
+    },
+    {
+      "absolute_similarity": 0.07176212452128873,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.07176212452128873
+    },
+    {
+      "absolute_similarity": 0.07176212452128883,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": -0.07176212452128883
+    },
+    {
+      "absolute_similarity": 0.1422661863139141,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.1422661863139141
+    },
+    {
+      "absolute_similarity": 0.14226618631391433,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.14226618631391433
+    },
+    {
+      "absolute_similarity": 0.010776804926292044,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.010776804926292044
+    },
+    {
+      "absolute_similarity": 0.010776804926292165,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.010776804926292165
+    },
+    {
+      "absolute_similarity": 0.6418776257650866,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.6418776257650866
+    },
+    {
+      "absolute_similarity": 0.6418776257650863,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": -0.6418776257650863
+    },
+    {
+      "absolute_similarity": 0.6074140656294612,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.6074140656294612
+    },
+    {
+      "absolute_similarity": 0.6074140656294617,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.6074140656294617
+    },
+    {
+      "absolute_similarity": 0.019455297605532867,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.019455297605532867
+    },
+    {
+      "absolute_similarity": 0.16619573369020604,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.16619573369020604
+    },
+    {
+      "absolute_similarity": 0.07288499352887894,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.07288499352887894
+    },
+    {
+      "absolute_similarity": 0.1429121444378675,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.1429121444378675
+    },
+    {
+      "absolute_similarity": 0.015877354580039624,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.015877354580039624
+    },
+    {
+      "absolute_similarity": 0.1931762796804887,
+      "channel_a": "member_4_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.1931762796804887
+    },
+    {
+      "absolute_similarity": 0.07176212452128886,
+      "channel_a": "member_4_length",
+      "channel_b": "member_5_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.07176212452128886
+    },
+    {
+      "absolute_similarity": 0.07176212452128876,
+      "channel_a": "member_4_length",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": -0.07176212452128876
+    },
+    {
+      "absolute_similarity": 0.14226618631391438,
+      "channel_a": "member_4_length",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.14226618631391438
+    },
+    {
+      "absolute_similarity": 0.14226618631391416,
+      "channel_a": "member_4_length",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.14226618631391416
+    },
+    {
+      "absolute_similarity": 0.01077680492629221,
+      "channel_a": "member_4_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.01077680492629221
+    },
+    {
+      "absolute_similarity": 0.010776804926292119,
+      "channel_a": "member_4_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.010776804926292119
+    },
+    {
+      "absolute_similarity": 0.6418776257650863,
+      "channel_a": "member_4_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.6418776257650863
+    },
+    {
+      "absolute_similarity": 0.641877625765087,
+      "channel_a": "member_4_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": -0.641877625765087
+    },
+    {
+      "absolute_similarity": 0.6074140656294617,
+      "channel_a": "member_4_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.6074140656294617
+    },
+    {
+      "absolute_similarity": 0.6074140656294617,
+      "channel_a": "member_4_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.6074140656294617
+    },
+    {
+      "absolute_similarity": 0.019455297605532863,
+      "channel_a": "member_4_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.019455297605532863
+    },
+    {
+      "absolute_similarity": 0.16619573369020607,
+      "channel_a": "member_4_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.16619573369020607
+    },
+    {
+      "absolute_similarity": 0.07288499352887898,
+      "channel_a": "member_4_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.07288499352887898
+    },
+    {
+      "absolute_similarity": 0.14291214443786757,
+      "channel_a": "member_4_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.14291214443786757
+    },
+    {
+      "absolute_similarity": 0.01587735458003964,
+      "channel_a": "member_4_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.01587735458003964
+    },
+    {
+      "absolute_similarity": 0.1931762796804889,
+      "channel_a": "member_4_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.1931762796804889
+    },
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_5_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.5796911978502917,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.5796911978502917
+    },
+    {
+      "absolute_similarity": 0.5796911978502919,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.5796911978502919
+    },
+    {
+      "absolute_similarity": 0.3614202490496636,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.3614202490496636
+    },
+    {
+      "absolute_similarity": 0.36142024904966336,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": -0.36142024904966336
+    },
+    {
+      "absolute_similarity": 0.09533043869399366,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.09533043869399366
+    },
+    {
+      "absolute_similarity": 0.09533043869399374,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.09533043869399374
+    },
+    {
+      "absolute_similarity": 0.3852620758874595,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.3852620758874595
+    },
+    {
+      "absolute_similarity": 0.3852620758874595,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": -0.3852620758874595
+    },
+    {
+      "absolute_similarity": 0.06832379196946324,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.06832379196946324
+    },
+    {
+      "absolute_similarity": 0.1301109355035129,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.1301109355035129
+    },
+    {
+      "absolute_similarity": 0.16595735285649596,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.16595735285649596
+    },
+    {
+      "absolute_similarity": 0.3186789834231741,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.3186789834231741
+    },
+    {
+      "absolute_similarity": 0.05050319718516931,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.05050319718516931
+    },
+    {
+      "absolute_similarity": 0.4544531548021157,
+      "channel_a": "member_5_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.4544531548021157
+    },
+    {
+      "absolute_similarity": 0.5796911978502917,
+      "channel_a": "member_5_length",
+      "channel_b": "member_6_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.5796911978502917
+    },
+    {
+      "absolute_similarity": 0.579691197850292,
+      "channel_a": "member_5_length",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": -0.579691197850292
+    },
+    {
+      "absolute_similarity": 0.3614202490496633,
+      "channel_a": "member_5_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.3614202490496633
+    },
+    {
+      "absolute_similarity": 0.3614202490496635,
+      "channel_a": "member_5_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": -0.3614202490496635
+    },
+    {
+      "absolute_similarity": 0.0953304386939937,
+      "channel_a": "member_5_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.0953304386939937
+    },
+    {
+      "absolute_similarity": 0.09533043869399381,
+      "channel_a": "member_5_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.09533043869399381
+    },
+    {
+      "absolute_similarity": 0.3852620758874593,
+      "channel_a": "member_5_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.3852620758874593
+    },
+    {
+      "absolute_similarity": 0.38526207588745953,
+      "channel_a": "member_5_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": -0.38526207588745953
+    },
+    {
+      "absolute_similarity": 0.06832379196946321,
+      "channel_a": "member_5_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.06832379196946321
+    },
+    {
+      "absolute_similarity": 0.13011093550351283,
+      "channel_a": "member_5_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.13011093550351283
+    },
+    {
+      "absolute_similarity": 0.16595735285649604,
+      "channel_a": "member_5_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.16595735285649604
+    },
+    {
+      "absolute_similarity": 0.31867898342317386,
+      "channel_a": "member_5_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.31867898342317386
+    },
+    {
+      "absolute_similarity": 0.05050319718516927,
+      "channel_a": "member_5_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.05050319718516927
+    },
+    {
+      "absolute_similarity": 0.45445315480211534,
+      "channel_a": "member_5_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.45445315480211534
+    },
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "member_6_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.7156998664675995,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.7156998664675995
+    },
+    {
+      "absolute_similarity": 0.7156998664675993,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.7156998664675993
+    },
+    {
+      "absolute_similarity": 0.16591938176309864,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.16591938176309864
+    },
+    {
+      "absolute_similarity": 0.16591938176309878,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.16591938176309878
+    },
+    {
+      "absolute_similarity": 0.5868550978311557,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.5868550978311557
+    },
+    {
+      "absolute_similarity": 0.5868550978311561,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.5868550978311561
+    },
+    {
+      "absolute_similarity": 0.013818642584259511,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.013818642584259511
+    },
+    {
+      "absolute_similarity": 0.06642152742040419,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.06642152742040419
+    },
+    {
+      "absolute_similarity": 0.22643277284943292,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.22643277284943292
+    },
+    {
+      "absolute_similarity": 0.18417707518821635,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.18417707518821635
+    },
+    {
+      "absolute_similarity": 0.03938070492208557,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.03938070492208557
+    },
+    {
+      "absolute_similarity": 0.1277664087880852,
+      "channel_a": "member_6_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.1277664087880852
+    },
+    {
+      "absolute_similarity": 0.7156998664675993,
+      "channel_a": "member_6_length",
+      "channel_b": "member_7_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.7156998664675993
+    },
+    {
+      "absolute_similarity": 0.7156998664675999,
+      "channel_a": "member_6_length",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 0.7156998664675999
+    },
+    {
+      "absolute_similarity": 0.1659193817630989,
+      "channel_a": "member_6_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.1659193817630989
+    },
+    {
+      "absolute_similarity": 0.16591938176309856,
+      "channel_a": "member_6_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.16591938176309856
+    },
+    {
+      "absolute_similarity": 0.586855097831156,
+      "channel_a": "member_6_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.586855097831156
+    },
+    {
+      "absolute_similarity": 0.5868550978311557,
+      "channel_a": "member_6_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.5868550978311557
+    },
+    {
+      "absolute_similarity": 0.013818642584259513,
+      "channel_a": "member_6_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.013818642584259513
+    },
+    {
+      "absolute_similarity": 0.06642152742040426,
+      "channel_a": "member_6_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.06642152742040426
+    },
+    {
+      "absolute_similarity": 0.22643277284943317,
+      "channel_a": "member_6_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.22643277284943317
+    },
+    {
+      "absolute_similarity": 0.18417707518821613,
+      "channel_a": "member_6_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.18417707518821613
+    },
+    {
+      "absolute_similarity": 0.03938070492208551,
+      "channel_a": "member_6_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.03938070492208551
+    },
+    {
+      "absolute_similarity": 0.1277664087880852,
+      "channel_a": "member_6_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.1277664087880852
+    },
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "member_7_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.14163093283512684,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.14163093283512684
+    },
+    {
+      "absolute_similarity": 0.14163093283512676,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.14163093283512676
+    },
+    {
+      "absolute_similarity": 0.34152682694017067,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.34152682694017067
+    },
+    {
+      "absolute_similarity": 0.3415268269401709,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.3415268269401709
+    },
+    {
+      "absolute_similarity": 0.024261864770325006,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.024261864770325006
+    },
+    {
+      "absolute_similarity": 0.12247872447518761,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.12247872447518761
+    },
+    {
+      "absolute_similarity": 0.09547440923728755,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.09547440923728755
+    },
+    {
+      "absolute_similarity": 0.005981250984255996,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.005981250984255996
+    },
+    {
+      "absolute_similarity": 0.09294359098402961,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.09294359098402961
+    },
+    {
+      "absolute_similarity": 0.14549859545825464,
+      "channel_a": "member_7_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.14549859545825464
+    },
+    {
+      "absolute_similarity": 0.1416309328351268,
+      "channel_a": "member_7_length",
+      "channel_b": "member_8_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.1416309328351268
+    },
+    {
+      "absolute_similarity": 0.14163093283512673,
+      "channel_a": "member_7_length",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 0.14163093283512673
+    },
+    {
+      "absolute_similarity": 0.3415268269401708,
+      "channel_a": "member_7_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": 0.3415268269401708
+    },
+    {
+      "absolute_similarity": 0.3415268269401706,
+      "channel_a": "member_7_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 0.3415268269401706
+    },
+    {
+      "absolute_similarity": 0.024261864770325017,
+      "channel_a": "member_7_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.024261864770325017
+    },
+    {
+      "absolute_similarity": 0.12247872447518764,
+      "channel_a": "member_7_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.12247872447518764
+    },
+    {
+      "absolute_similarity": 0.09547440923728756,
+      "channel_a": "member_7_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.09547440923728756
+    },
+    {
+      "absolute_similarity": 0.005981250984255919,
+      "channel_a": "member_7_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.005981250984255919
+    },
+    {
+      "absolute_similarity": 0.0929435909840296,
+      "channel_a": "member_7_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.0929435909840296
+    },
+    {
+      "absolute_similarity": 0.1454985954582548,
+      "channel_a": "member_7_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.1454985954582548
+    },
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "member_8_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.5803385575727362,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.5803385575727362
+    },
+    {
+      "absolute_similarity": 0.5803385575727366,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": -0.5803385575727366
+    },
+    {
+      "absolute_similarity": 0.019637947636350152,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.019637947636350152
+    },
+    {
+      "absolute_similarity": 0.2141647968269606,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.2141647968269606
+    },
+    {
+      "absolute_similarity": 0.011138897503620415,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.011138897503620415
+    },
+    {
+      "absolute_similarity": 0.12954556997890132,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.12954556997890132
+    },
+    {
+      "absolute_similarity": 0.09994475466032596,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.09994475466032596
+    },
+    {
+      "absolute_similarity": 0.19440448115953565,
+      "channel_a": "member_8_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.19440448115953565
+    },
+    {
+      "absolute_similarity": 0.5803385575727362,
+      "channel_a": "member_8_length",
+      "channel_b": "member_9_axial_force",
+      "sample_count": 1001,
+      "similarity": -0.5803385575727362
+    },
+    {
+      "absolute_similarity": 0.5803385575727362,
+      "channel_a": "member_8_length",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": -0.5803385575727362
+    },
+    {
+      "absolute_similarity": 0.019637947636350163,
+      "channel_a": "member_8_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.019637947636350163
+    },
+    {
+      "absolute_similarity": 0.2141647968269606,
+      "channel_a": "member_8_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.2141647968269606
+    },
+    {
+      "absolute_similarity": 0.011138897503620503,
+      "channel_a": "member_8_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.011138897503620503
+    },
+    {
+      "absolute_similarity": 0.1295455699789013,
+      "channel_a": "member_8_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.1295455699789013
+    },
+    {
+      "absolute_similarity": 0.09994475466032596,
+      "channel_a": "member_8_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.09994475466032596
+    },
+    {
+      "absolute_similarity": 0.19440448115953562,
+      "channel_a": "member_8_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.19440448115953562
+    },
+    {
+      "absolute_similarity": 1.0,
+      "channel_a": "member_9_axial_force",
+      "channel_b": "member_9_length",
+      "sample_count": 1001,
+      "similarity": 1.0
+    },
+    {
+      "absolute_similarity": 0.015707335754031184,
+      "channel_a": "member_9_axial_force",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.015707335754031184
+    },
+    {
+      "absolute_similarity": 0.147072834615541,
+      "channel_a": "member_9_axial_force",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.147072834615541
+    },
+    {
+      "absolute_similarity": 0.19688408395322257,
+      "channel_a": "member_9_axial_force",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.19688408395322257
+    },
+    {
+      "absolute_similarity": 0.22893785095952532,
+      "channel_a": "member_9_axial_force",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.22893785095952532
+    },
+    {
+      "absolute_similarity": 0.022901062923445112,
+      "channel_a": "member_9_axial_force",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.022901062923445112
+    },
+    {
+      "absolute_similarity": 0.15372965240933636,
+      "channel_a": "member_9_axial_force",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.15372965240933636
+    },
+    {
+      "absolute_similarity": 0.015707335754031188,
+      "channel_a": "member_9_length",
+      "channel_b": "node_0_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.015707335754031188
+    },
+    {
+      "absolute_similarity": 0.147072834615541,
+      "channel_a": "member_9_length",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.147072834615541
+    },
+    {
+      "absolute_similarity": 0.19688408395322263,
+      "channel_a": "member_9_length",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.19688408395322263
+    },
+    {
+      "absolute_similarity": 0.22893785095952535,
+      "channel_a": "member_9_length",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.22893785095952535
+    },
+    {
+      "absolute_similarity": 0.02290106292344529,
+      "channel_a": "member_9_length",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.02290106292344529
+    },
+    {
+      "absolute_similarity": 0.15372965240933628,
+      "channel_a": "member_9_length",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.15372965240933628
+    },
+    {
+      "absolute_similarity": 0.08133340655017968,
+      "channel_a": "node_0_accel_norm",
+      "channel_b": "node_1_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.08133340655017968
+    },
+    {
+      "absolute_similarity": 0.06947284281357304,
+      "channel_a": "node_0_accel_norm",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.06947284281357304
+    },
+    {
+      "absolute_similarity": 0.07421634134095068,
+      "channel_a": "node_0_accel_norm",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.07421634134095068
+    },
+    {
+      "absolute_similarity": 0.008212188865034647,
+      "channel_a": "node_0_accel_norm",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.008212188865034647
+    },
+    {
+      "absolute_similarity": 0.096758912607487,
+      "channel_a": "node_0_accel_norm",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.096758912607487
+    },
+    {
+      "absolute_similarity": 0.8080286655783405,
+      "channel_a": "node_1_accel_norm",
+      "channel_b": "node_2_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.8080286655783405
+    },
+    {
+      "absolute_similarity": 0.0031879798709745894,
+      "channel_a": "node_1_accel_norm",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.0031879798709745894
+    },
+    {
+      "absolute_similarity": 0.018267328760574804,
+      "channel_a": "node_1_accel_norm",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.018267328760574804
+    },
+    {
+      "absolute_similarity": 0.037570167409188275,
+      "channel_a": "node_1_accel_norm",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.037570167409188275
+    },
+    {
+      "absolute_similarity": 0.2212394501020925,
+      "channel_a": "node_2_accel_norm",
+      "channel_b": "node_3_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.2212394501020925
+    },
+    {
+      "absolute_similarity": 0.11219431374609398,
+      "channel_a": "node_2_accel_norm",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.11219431374609398
+    },
+    {
+      "absolute_similarity": 0.19323474184384906,
+      "channel_a": "node_2_accel_norm",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.19323474184384906
+    },
+    {
+      "absolute_similarity": 0.058734973332276445,
+      "channel_a": "node_3_accel_norm",
+      "channel_b": "node_4_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.058734973332276445
+    },
+    {
+      "absolute_similarity": 0.6882472563871566,
+      "channel_a": "node_3_accel_norm",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": 0.6882472563871566
+    },
+    {
+      "absolute_similarity": 0.24358665797958587,
+      "channel_a": "node_4_accel_norm",
+      "channel_b": "node_5_accel_norm",
+      "sample_count": 1001,
+      "similarity": -0.24358665797958587
+    }
+  ],
+  "relations_sha256": "33d70ace03fa8d64859bba17bc71315f7a015d475c1a8ddee5e3af7d0f634f0f",
+  "run_sha256": "e42b11ca50350ef9cd250ce9eeafc9a8d051d2080dfbbb41a1ba45331c7f5a4c"
+}
