@@ -1,0 +1,125 @@
+{
+  "benchmark": "roif_rda_1_first_endogenous_difference_v1",
+  "configuration": {
+    "baseline_duration": 1.0,
+    "baseline_sample_count": 1001,
+    "dt": 0.001,
+    "duration": 5.0,
+    "profile_count": 4000
+  },
+  "developmental_stage": "RDA-1",
+  "epistemic_boundary": {
+    "analyzer_received_body_part_labels": false,
+    "analyzer_received_event_label": false,
+    "analyzer_received_force_vector": false,
+    "analyzer_received_goal": false,
+    "analyzer_received_ground_truth": false,
+    "analyzer_received_perturbation_node": false,
+    "analyzer_received_perturbation_time": false,
+    "analyzer_received_reward": false,
+    "analyzer_received_valence": false,
+    "analyzer_received_world_coordinates": false
+  },
+  "experience": "first_endogenous_difference",
+  "experience_summary": {
+    "experienced_duration": 5.000000000000004,
+    "total_sample_count": 5001
+  },
+  "frozen_analyzer": {
+    "absolute_scale_floor": 1e-09,
+    "commit": "0aee759",
+    "parameters_modified_after_freeze": false
+  },
+  "ground_truth_evaluation_only": {
+    "perturbation_force": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "perturbation_node": 0,
+    "perturbation_step": 2000,
+    "perturbation_time": 2.0
+  },
+  "maximum_profile_summary": {
+    "experimenter_step_index": 2000,
+    "l2_deviation_norm": 1000000021.0185108,
+    "maximum_absolute_deviation": 999999999.9999944,
+    "sequence_index": 2000,
+    "timestamp": 1.9999999999998905
+  },
+  "perturbation_profile_summary": {
+    "approximately_unchanged_channel_count": 0,
+    "channel_count": 30,
+    "l2_deviation_norm": 1000000021.0185108,
+    "maximum_absolute_deviation": 999999999.9999944,
+    "negative_signed_channel_count": 8,
+    "nonzero_channel_count": 30,
+    "positive_signed_channel_count": 22,
+    "sequence_index": 2000,
+    "timestamp": 1.9999999999998905,
+    "top_10_strongest_channels": [
+      {
+        "absolute_deviation": 999999999.9999944,
+        "channel_name": "node_0_accel_norm",
+        "rank": 1,
+        "signed_deviation": 999999999.9999944
+      },
+      {
+        "absolute_deviation": 164102.87697610215,
+        "channel_name": "member_0_axial_force",
+        "rank": 2,
+        "signed_deviation": 164102.87697610215
+      },
+      {
+        "absolute_deviation": 86602.54758119378,
+        "channel_name": "member_3_axial_force",
+        "rank": 3,
+        "signed_deviation": 86602.54758119378
+      },
+      {
+        "absolute_deviation": 86602.54758119378,
+        "channel_name": "member_5_axial_force",
+        "rank": 4,
+        "signed_deviation": 86602.54758119378
+      },
+      {
+        "absolute_deviation": 10251.480419221081,
+        "channel_name": "member_9_axial_force",
+        "rank": 5,
+        "signed_deviation": 10251.480419221081
+      },
+      {
+        "absolute_deviation": 866.0255006454065,
+        "channel_name": "member_5_length",
+        "rank": 6,
+        "signed_deviation": 866.0255006454065
+      },
+      {
+        "absolute_deviation": 866.0255002013173,
+        "channel_name": "member_3_length",
+        "rank": 7,
+        "signed_deviation": 866.0255002013173
+      },
+      {
+        "absolute_deviation": 820.5143946504734,
+        "channel_name": "member_0_length",
+        "rank": 8,
+        "signed_deviation": 820.5143946504734
+      },
+      {
+        "absolute_deviation": 102.51479332090696,
+        "channel_name": "member_9_length",
+        "rank": 9,
+        "signed_deviation": 102.51479332090696
+      },
+      {
+        "absolute_deviation": 0.00017763568394002505,
+        "channel_name": "member_1_axial_force",
+        "rank": 10,
+        "signed_deviation": 0.00017763568394002505
+      }
+    ]
+  },
+  "profile_records_sha256": "15bd5308a708edeea5a930f1c6be273ea14c9e9fb39b1b5d56ae0b9c7346d828",
+  "run_sha256": "df02dd9dc6044db3e1ed3611db37ca7d26671b0dca697c2352707c29678fe28b"
+}
