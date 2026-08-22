@@ -1,3 +1,8 @@
+from .endogenous_difference import (
+    ChannelDeviation,
+    DifferenceProfile,
+    EndogenousDifferenceAnalyzer,
+)
 from .familiar_state_change import (
     ChangeDetection,
     FamiliarStateChangeDetector,
@@ -17,6 +22,9 @@ from .observation import (
 )
 
 __all__ = [
+    "ChannelDeviation",
+    "DifferenceProfile",
+    "EndogenousDifferenceAnalyzer",
     "ChangeDetection",
     "FamiliarStateChangeDetector",
     "BodyGroundTruth",
