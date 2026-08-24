@@ -4,6 +4,10 @@ from dataclasses import dataclass
 from typing import Protocol
 
 from .expression_gate import ExpressionDecision
+from .expression_validator import (
+    ExpressionValidator,
+    ValidationStatus,
+)
 from .language_adapter import LanguageAdapter
 
 
@@ -24,12 +28,18 @@ class VerbalizationRequest:
 @dataclass(frozen=True, slots=True)
 class VerbalizationResult:
     """
-    Result produced by the verbalization layer.
+    Final outward result of the verbalization layer.
+
+    The text field is always the validated outward expression.
     """
 
     text: str
     model_name: str
     used_llm: bool
+    validation_status: str
+    validation_reasons: tuple[str, ...]
+    candidate_text: str
+    canonical_text: str
 
 
 class LLMBackend(Protocol):
@@ -69,15 +79,24 @@ class LLMVerbalizer:
         LLMVerbalizer must not create the internal state.
 
     ExpressionDecision is formed before this layer.
-    A future LLM backend may alter linguistic form only.
+
+    Any generative candidate is subordinate to:
+        ExpressionDecision
+        + canonical expression
+        + ExpressionValidator
+
+    No candidate text is allowed to leave this layer without
+    validation.
     """
 
     def __init__(
         self,
         backend: LLMBackend | None = None,
+        validator: ExpressionValidator | None = None,
     ) -> None:
         self._backend = backend or CanonicalBackend()
         self._adapter = LanguageAdapter()
+        self._validator = validator or ExpressionValidator()
 
     def speak(
         self,
@@ -93,13 +112,23 @@ class LLMVerbalizer:
             language=language,
         )
 
-        text = self._backend.generate(request)
+        candidate_text = self._backend.generate(request)
+
+        validation = self._validator.validate(
+            decision=decision,
+            canonical_text=canonical.text,
+            candidate_text=candidate_text,
+        )
 
         return VerbalizationResult(
-            text=text,
+            text=validation.output_text,
             model_name=self._backend.__class__.__name__,
             used_llm=not isinstance(
                 self._backend,
                 CanonicalBackend,
             ),
+            validation_status=validation.status.value,
+            validation_reasons=validation.reasons,
+            candidate_text=candidate_text,
+            canonical_text=canonical.text,
         )

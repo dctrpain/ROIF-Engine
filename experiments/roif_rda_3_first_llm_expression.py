@@ -17,7 +17,6 @@ def main() -> None:
     )
 
     gate = ExpressionGate()
-
     decision = gate.decide(
         dimensional_growth=assessment,
     )
@@ -31,7 +30,7 @@ def main() -> None:
         )
     )
 
-    natural = verbalizer.speak(
+    verbalization = verbalizer.speak(
         decision,
         language="ru",
     )
@@ -42,9 +41,26 @@ def main() -> None:
     print(canonical.text or "[no expression]")
 
     print()
-    print("=== RDA LLM VERBALIZATION ===")
+    print("=== LLM CANDIDATE ===")
     print()
-    print(natural.text or "[no expression]")
+    print(verbalization.candidate_text or "[empty candidate]")
+
+    print()
+    print("=== VALIDATION STATUS ===")
+    print(verbalization.validation_status)
+
+    print()
+    print("=== VALIDATION REASONS ===")
+    if verbalization.validation_reasons:
+        for reason in verbalization.validation_reasons:
+            print(reason)
+    else:
+        print("[none]")
+
+    print()
+    print("=== FINAL RDA EXPRESSION ===")
+    print()
+    print(verbalization.text or "[no expression]")
 
     print()
     print("=== EXPRESSION KIND ===")
@@ -72,8 +88,11 @@ def main() -> None:
                 ],
                 "experience": result["experience"],
                 "run_sha256": result["run_sha256"],
-                "verbalizer": natural.model_name,
-                "used_llm": natural.used_llm,
+                "verbalizer": verbalization.model_name,
+                "used_llm": verbalization.used_llm,
+                "validation_status": (
+                    verbalization.validation_status
+                ),
             },
             indent=2,
             ensure_ascii=False,
