@@ -327,7 +327,9 @@ def _build_endogenous_representation(
 
 def run_first_dimensional_growth(
     config: FirstDimensionalGrowthConfig | None = None,
-) -> dict[str, Any]:
+    *,
+    return_internal: bool = False,
+) -> dict[str, Any] | tuple[dict[str, Any], Any]:
     """
     Первый реальный слепой опыт размерностного роста.
 
@@ -773,6 +775,9 @@ def run_first_dimensional_growth(
         }
     )
 
+    if return_internal:
+        return result, assessment
+
     return result
 
 
@@ -918,3 +923,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
