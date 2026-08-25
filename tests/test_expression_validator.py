@@ -275,3 +275,135 @@ def test_scientific_notation_preserves_supported_deviation_score():
     assert result.status is ValidationStatus.ACCEPTED
     assert result.reasons == ()
     assert result.output_text == canonical
+
+
+def _difference_decision() -> ExpressionDecision:
+    evidence = ExpressionEvidence(
+        sequence_index=2000,
+        timestamp=1.9999999999998905,
+        deviation_score=None,
+        maximum_absolute_deviation=999999999.9999944,
+        l2_deviation_norm=1000000021.0185108,
+        group_count=0,
+        strongest_group_strength=None,
+        represented_dimension=None,
+        residual_variance_fraction=None,
+        persistent_residual_dimension_count=None,
+        growth_supported=None,
+    )
+
+    return ExpressionDecision(
+        kind=ExpressionKind.DIFFERENCE_STRUCTURE,
+        evidence=evidence,
+    )
+
+
+def _difference_canonical_text() -> str:
+    return (
+        "Обнаруженное внутреннее различие имеет распределённую "
+        "структуру по моим внутренним каналам. "
+        "Максимальное абсолютное отклонение: 1e+09. "
+        "Общая величина многоканального отклонения: 1000000021.0185."
+    )
+
+
+def test_difference_structure_canonical_expression_is_accepted():
+    validator = ExpressionValidator()
+
+    canonical = _difference_canonical_text()
+
+    result = validator.validate(
+        decision=_difference_decision(),
+        canonical_text=canonical,
+        candidate_text=canonical,
+    )
+
+    assert result.status is ValidationStatus.ACCEPTED
+    assert result.reasons == ()
+    assert result.output_text == canonical
+
+
+def test_difference_structure_safe_rephrasing_is_accepted():
+    validator = ExpressionValidator()
+
+    candidate = (
+        "Внутреннее различие имеет структуру по нескольким каналам. "
+        "Максимальное абсолютное отклонение равно 1e+09, "
+        "а L2-норма отклонения равна 1000000021.0185."
+    )
+
+    result = validator.validate(
+        decision=_difference_decision(),
+        canonical_text=_difference_canonical_text(),
+        candidate_text=candidate,
+    )
+
+    assert result.status is ValidationStatus.ACCEPTED
+    assert result.reasons == ()
+    assert result.output_text == candidate
+
+
+def test_difference_structure_missing_maximum_deviation_is_rejected():
+    validator = ExpressionValidator()
+
+    candidate = (
+        "Обнаруженное внутреннее различие имеет структуру. "
+        "L2-норма отклонения равна 1000000021.0185."
+    )
+
+    result = validator.validate(
+        decision=_difference_decision(),
+        canonical_text=_difference_canonical_text(),
+        candidate_text=candidate,
+    )
+
+    assert result.status is ValidationStatus.REJECTED
+
+    assert (
+        "missing_required_numeric_claim:"
+        "maximum_absolute_deviation"
+        in result.reasons
+    )
+
+
+def test_difference_structure_missing_l2_norm_is_rejected():
+    validator = ExpressionValidator()
+
+    candidate = (
+        "Обнаруженное внутреннее различие имеет структуру. "
+        "Максимальное абсолютное отклонение равно 1e+09."
+    )
+
+    result = validator.validate(
+        decision=_difference_decision(),
+        canonical_text=_difference_canonical_text(),
+        candidate_text=candidate,
+    )
+
+    assert result.status is ValidationStatus.REJECTED
+
+    assert (
+        "missing_required_numeric_claim:"
+        "l2_deviation_norm"
+        in result.reasons
+    )
+
+
+def test_difference_structure_unsupported_number_is_rejected():
+    validator = ExpressionValidator()
+
+    candidate = (
+        "Обнаруженное внутреннее различие имеет структуру. "
+        "Максимальное абсолютное отклонение равно 1e+09, "
+        "L2-норма отклонения равна 1000000021.0185, "
+        "а дополнительная величина равна 7."
+    )
+
+    result = validator.validate(
+        decision=_difference_decision(),
+        canonical_text=_difference_canonical_text(),
+        candidate_text=candidate,
+    )
+
+    assert result.status is ValidationStatus.REJECTED
+    assert "unsupported_numeric_claim:7.0" in result.reasons

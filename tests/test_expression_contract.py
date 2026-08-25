@@ -14,6 +14,8 @@ from roif.development.expression_gate import (
 def _evidence(
     *,
     deviation_score=None,
+    maximum_absolute_deviation=None,
+    l2_deviation_norm=None,
     group_count=0,
     strongest_group_strength=None,
     represented_dimension=None,
@@ -25,8 +27,8 @@ def _evidence(
         sequence_index=None,
         timestamp=None,
         deviation_score=deviation_score,
-        maximum_absolute_deviation=None,
-        l2_deviation_norm=None,
+        maximum_absolute_deviation=maximum_absolute_deviation,
+        l2_deviation_norm=l2_deviation_norm,
         group_count=group_count,
         strongest_group_strength=strongest_group_strength,
         represented_dimension=represented_dimension,
@@ -212,4 +214,43 @@ def test_missing_optional_numeric_evidence_does_not_create_claims():
 
     assert not contract.has(
         ExpressionClaimKind.RESIDUAL_VARIANCE_FRACTION
+    )
+
+
+def test_difference_structure_contract_preserves_profile_claims():
+    builder = ExpressionContractBuilder()
+
+    decision = ExpressionDecision(
+        kind=ExpressionKind.DIFFERENCE_STRUCTURE,
+        evidence=_evidence(
+            maximum_absolute_deviation=999999999.9999944,
+            l2_deviation_norm=1000000021.0185108,
+        ),
+    )
+
+    contract = builder.build(decision)
+
+    assert contract.has(
+        ExpressionClaimKind.DIFFERENCE_STRUCTURE_PRESENT
+    )
+
+    assert (
+        contract.value(
+            ExpressionClaimKind.DIFFERENCE_STRUCTURE_PRESENT
+        )
+        is True
+    )
+
+    assert (
+        contract.value(
+            ExpressionClaimKind.MAXIMUM_ABSOLUTE_DEVIATION
+        )
+        == 999999999.9999944
+    )
+
+    assert (
+        contract.value(
+            ExpressionClaimKind.L2_DEVIATION_NORM
+        )
+        == 1000000021.0185108
     )

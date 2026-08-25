@@ -6,6 +6,9 @@ from typing import Any
 from experiments.roif_rda_0_first_self_detected_change import (
     run_first_self_detected_change,
 )
+from experiments.roif_rda_1_first_detected_difference import (
+    run_first_detected_difference,
+)
 from experiments.roif_rda_2_first_endogenous_grouping import (
     run_first_endogenous_grouping,
 )
@@ -161,6 +164,64 @@ def main() -> None:
     }
 
     # ---------------------------------------------------------
+    # RDA-1
+    #
+    # Real internal sources:
+    #     ChangeDetection
+    #     DifferenceProfile
+    #
+    # DifferenceProfile is selected by the first
+    # endogenous changed=True detection.
+    # ---------------------------------------------------------
+
+    (
+        rda1_result,
+        rda1_detection,
+        rda1_profile,
+    ) = run_first_detected_difference(
+        return_internal=True,
+    )
+
+    rda1_speech = _verbalize(
+        gate=gate,
+        adapter=adapter,
+        verbalizer=verbalizer,
+        gate_kwargs={
+            "change": rda1_detection,
+            "difference": rda1_profile,
+        },
+    )
+
+    rda1 = {
+        "stage": "RDA-1",
+        "experience": rda1_result["experience"],
+        "benchmark": rda1_result["benchmark"],
+        "run_sha256": rda1_result["run_sha256"],
+        "internal_source_type": (
+            "ChangeDetection + DifferenceProfile"
+        ),
+        "internal_state": {
+            "sequence_index": rda1_profile.sequence_index,
+            "timestamp": rda1_profile.timestamp,
+            "changed": rda1_detection.changed,
+            "detection_deviation_score": (
+                rda1_detection.deviation_score
+            ),
+            "maximum_absolute_deviation": (
+                rda1_profile.maximum_absolute_deviation
+            ),
+            "l2_deviation_norm": (
+                rda1_profile.l2_deviation_norm
+            ),
+            "channel_count": len(
+                rda1_profile.channel_deviations
+            ),
+        },
+        "identity_check": rda1_result["identity_check"],
+        "selection_rule": rda1_result["selection_rule"],
+        "speech": rda1_speech,
+    }
+    # ---------------------------------------------------------
     # RDA-2
     #
     # Real internal source:
@@ -287,6 +348,7 @@ def main() -> None:
 
     stages = [
         rda0,
+        rda1,
         rda2,
         rda3,
     ]

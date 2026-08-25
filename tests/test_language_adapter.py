@@ -58,6 +58,33 @@ def test_state_change_renders_traceable_text():
     assert result.trace["deviation_score"] == 12.0
 
 
+def test_difference_structure_renders_profile_information():
+    adapter = LanguageAdapter()
+
+    decision = ExpressionDecision(
+        kind=ExpressionKind.DIFFERENCE_STRUCTURE,
+        evidence=make_evidence(
+            sequence_index=2000,
+            timestamp=1.9999999999998905,
+            maximum_absolute_deviation=999999999.9999944,
+            l2_deviation_norm=1000000021.0185108,
+        ),
+    )
+
+    result = adapter.render(decision)
+
+    assert result.kind is ExpressionKind.DIFFERENCE_STRUCTURE
+    assert "1e+09" in result.text
+    assert "1000000021.0185" in result.text
+    assert (
+        result.trace["maximum_absolute_deviation"]
+        == 999999999.9999944
+    )
+    assert (
+        result.trace["l2_deviation_norm"]
+        == 1000000021.0185108
+    )
+
 def test_relational_structure_renders_group_information():
     adapter = LanguageAdapter()
 

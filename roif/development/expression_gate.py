@@ -23,6 +23,7 @@ class ExpressionKind(str, Enum):
 
     NO_EXPRESSION = "no_expression"
     STATE_CHANGE = "state_change"
+    DIFFERENCE_STRUCTURE = "difference_structure"
     RELATIONAL_STRUCTURE = "relational_structure"
     REPRESENTATIONAL_INSUFFICIENCY = "representational_insufficiency"
 
@@ -178,6 +179,9 @@ class ExpressionGate:
 
         elif grouping is not None and grouping.groups:
             kind = ExpressionKind.RELATIONAL_STRUCTURE
+
+        elif difference is not None:
+            kind = ExpressionKind.DIFFERENCE_STRUCTURE
 
         elif change is not None and change.changed:
             kind = ExpressionKind.STATE_CHANGE

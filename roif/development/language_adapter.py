@@ -86,6 +86,23 @@ class LanguageAdapter:
                     f"{evidence.deviation_score:.6g}."
                 )
 
+        elif decision.kind is ExpressionKind.DIFFERENCE_STRUCTURE:
+            text = (
+                "Обнаруженное внутреннее различие имеет распределённую "
+                "структуру по моим внутренним каналам."
+            )
+
+            if evidence.maximum_absolute_deviation is not None:
+                text += (
+                    " Максимальное абсолютное отклонение: "
+                    f"{evidence.maximum_absolute_deviation:.6g}."
+                )
+
+            if evidence.l2_deviation_norm is not None:
+                text += (
+                    " Общая величина многоканального отклонения: "
+                    f"{evidence.l2_deviation_norm:.4f}."
+                )
         elif decision.kind is ExpressionKind.RELATIONAL_STRUCTURE:
             text = (
                 "В изменениях моих внутренних каналов обнаружилась "

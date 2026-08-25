@@ -205,6 +205,22 @@ class ExpressionValidator:
 
         if (
             kind
+            is ExpressionClaimKind.DIFFERENCE_STRUCTURE_PRESENT
+        ):
+            return self._contains_any(
+                candidate_lower,
+                (
+                    "различ",
+                    "отклон",
+                    "несовпад",
+                    "разниц",
+                    "структур",
+                    "профил",
+                ),
+            )
+
+        if (
+            kind
             is ExpressionClaimKind.RELATIONAL_STRUCTURE_PRESENT
         ):
             return self._contains_any(
@@ -291,6 +307,8 @@ class ExpressionValidator:
             .PERSISTENT_RESIDUAL_DIMENSION_COUNT,
             ExpressionClaimKind.RESIDUAL_VARIANCE_FRACTION,
             ExpressionClaimKind.DEVIATION_SCORE,
+            ExpressionClaimKind.MAXIMUM_ABSOLUTE_DEVIATION,
+            ExpressionClaimKind.L2_DEVIATION_NORM,
         }
 
     _RUSSIAN_INTEGER_FORMS = {

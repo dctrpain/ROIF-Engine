@@ -24,6 +24,14 @@ class ExpressionClaimKind(str, Enum):
 
     STATE_CHANGE_PRESENT = "state_change_present"
 
+    DIFFERENCE_STRUCTURE_PRESENT = (
+        "difference_structure_present"
+    )
+    MAXIMUM_ABSOLUTE_DEVIATION = (
+        "maximum_absolute_deviation"
+    )
+    L2_DEVIATION_NORM = "l2_deviation_norm"
+
     RELATIONAL_STRUCTURE_PRESENT = (
         "relational_structure_present"
     )
@@ -149,6 +157,48 @@ class ExpressionContractBuilder:
                             .DEVIATION_SCORE
                         ),
                         value=evidence.deviation_score,
+                    )
+                )
+
+        elif (
+            decision.kind
+            is ExpressionKind.DIFFERENCE_STRUCTURE
+        ):
+            claims.append(
+                ExpressionClaim(
+                    kind=(
+                        ExpressionClaimKind
+                        .DIFFERENCE_STRUCTURE_PRESENT
+                    ),
+                    value=True,
+                )
+            )
+
+            if (
+                evidence.maximum_absolute_deviation
+                is not None
+            ):
+                claims.append(
+                    ExpressionClaim(
+                        kind=(
+                            ExpressionClaimKind
+                            .MAXIMUM_ABSOLUTE_DEVIATION
+                        ),
+                        value=(
+                            evidence
+                            .maximum_absolute_deviation
+                        ),
+                    )
+                )
+
+            if evidence.l2_deviation_norm is not None:
+                claims.append(
+                    ExpressionClaim(
+                        kind=(
+                            ExpressionClaimKind
+                            .L2_DEVIATION_NORM
+                        ),
+                        value=evidence.l2_deviation_norm,
                     )
                 )
 

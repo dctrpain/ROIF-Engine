@@ -13,6 +13,26 @@ from roif.development.llm_verbalizer import (
 )
 
 
+def _difference_decision() -> ExpressionDecision:
+    evidence = ExpressionEvidence(
+        sequence_index=2000,
+        timestamp=1.9999999999998905,
+        deviation_score=None,
+        maximum_absolute_deviation=999999999.9999944,
+        l2_deviation_norm=1000000021.0185108,
+        group_count=0,
+        strongest_group_strength=None,
+        represented_dimension=None,
+        residual_variance_fraction=None,
+        persistent_residual_dimension_count=None,
+        growth_supported=None,
+    )
+
+    return ExpressionDecision(
+        kind=ExpressionKind.DIFFERENCE_STRUCTURE,
+        evidence=evidence,
+    )
+
 def _growth_decision() -> ExpressionDecision:
     evidence = ExpressionEvidence(
         sequence_index=None,
@@ -229,3 +249,78 @@ def test_retry_is_limited_to_one_and_falls_back_to_canonical():
         reason.startswith("unsupported_numeric_claim:")
         for reason in result.validation_reasons
     )
+
+
+def test_verbalizer_accepts_traceable_difference_structure():
+    decision = _difference_decision()
+
+    safe_candidate = (
+        "Внутреннее различие имеет структуру. "
+        "Максимальное абсолютное отклонение равно 1e+09, "
+        "а L2-норма отклонения равна 1000000021.0185."
+    )
+
+    class DifferenceBackend:
+        def generate(
+            self,
+            request: VerbalizationRequest,
+        ) -> str:
+            return safe_candidate
+
+    verbalizer = LLMVerbalizer(
+        backend=DifferenceBackend(),
+    )
+
+    result = verbalizer.speak(decision)
+
+    assert result.validation_status == "accepted"
+    assert result.attempt_count == 1
+    assert result.text == safe_candidate
+    assert "1e+09" in result.text
+    assert "1000000021.0185" in result.text
+
+
+def test_difference_structure_retry_restores_missing_claim():
+    decision = _difference_decision()
+
+    safe_retry = (
+        "Внутреннее различие имеет структуру. "
+        "Максимальное абсолютное отклонение равно 1e+09, "
+        "а L2-норма отклонения равна 1000000021.0185."
+    )
+
+    class RetryDifferenceBackend:
+        def __init__(self) -> None:
+            self.requests = []
+
+        def generate(
+            self,
+            request: VerbalizationRequest,
+        ) -> str:
+            self.requests.append(request)
+
+            if len(self.requests) == 1:
+                return (
+                    "Внутреннее различие имеет структуру. "
+                    "L2-норма отклонения равна "
+                    "1000000021.0185."
+                )
+
+            return safe_retry
+
+    backend = RetryDifferenceBackend()
+    verbalizer = LLMVerbalizer(backend=backend)
+
+    result = verbalizer.speak(decision)
+
+    assert len(backend.requests) == 2
+    assert backend.requests[0].is_retry is False
+    assert backend.requests[1].is_retry is True
+    assert (
+        "missing_required_numeric_claim:"
+        "maximum_absolute_deviation"
+        in backend.requests[1].retry_reasons
+    )
+    assert result.attempt_count == 2
+    assert result.validation_status == "accepted"
+    assert result.text == safe_retry
