@@ -41,16 +41,43 @@ def main() -> None:
     print(canonical.text or "[no expression]")
 
     print()
-    print("=== LLM CANDIDATE ===")
-    print()
-    print(verbalization.candidate_text or "[empty candidate]")
+    print("=== VERBALIZATION TRACE ===")
 
     print()
-    print("=== VALIDATION STATUS ===")
+    print("ATTEMPT COUNT:")
+    print(verbalization.attempt_count)
+
+    print()
+    print("=== FIRST CANDIDATE ===")
+    print()
+    print(
+        verbalization.first_candidate_text
+        or "[empty candidate]"
+    )
+
+    if verbalization.retry_candidate_text is not None:
+        print()
+        print("=== RETRY OCCURRED ===")
+        print("yes")
+
+        print()
+        print("=== RETRY CANDIDATE ===")
+        print()
+        print(
+            verbalization.retry_candidate_text
+            or "[empty retry candidate]"
+        )
+    else:
+        print()
+        print("=== RETRY OCCURRED ===")
+        print("no")
+
+    print()
+    print("=== FINAL VALIDATION STATUS ===")
     print(verbalization.validation_status)
 
     print()
-    print("=== VALIDATION REASONS ===")
+    print("=== FINAL VALIDATION REASONS ===")
     if verbalization.validation_reasons:
         for reason in verbalization.validation_reasons:
             print(reason)
@@ -103,3 +130,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
