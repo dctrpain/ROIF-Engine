@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
@@ -389,7 +389,7 @@ class ExpressionValidator:
         text: str,
     ) -> tuple[float, ...]:
         matches = re.findall(
-            r"(?<![\w])[-+]?\d+(?:[.,]\d+)?",
+            r"(?<![\w])[-+]?(?:\d+(?:[.,]\d+)?|\.[0-9]+)(?:[eE][-+]?\d+)?",
             text,
         )
 

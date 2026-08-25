@@ -136,7 +136,9 @@ def _integer_step(
 
 def run_first_self_detected_change(
     config: FirstSelfDetectedChangeConfig | None = None,
-) -> dict[str, Any]:
+    *,
+    return_internal: bool = False,
+) -> dict[str, Any] | tuple[dict[str, Any], Any]:
     """
     First blind exposure of the frozen familiar-state detector.
 
@@ -252,6 +254,7 @@ def run_first_self_detected_change(
         Any,
     ] | None = None
     first_detection_step: int | None = None
+    first_detection_object = None
 
     maximum_score = 0.0
     maximum_score_timestamp: float | None = None
@@ -330,6 +333,7 @@ def run_first_self_detected_change(
                 first_detection = dict(
                     record
                 )
+                first_detection_object = detection
                 first_detection_step = step_index
 
             if (
@@ -502,6 +506,14 @@ def run_first_self_detected_change(
             if key != "run_sha256"
         }
     )
+
+    if return_internal:
+        if first_detection_object is None:
+            raise RuntimeError(
+                "No self-detected change was available for expression."
+            )
+
+        return result, first_detection_object
 
     return result
 

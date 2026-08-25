@@ -231,3 +231,47 @@ def test_numeric_claim_preserved_when_integer_is_written_as_russian_word():
         "persistent_residual_dimension_count"
         not in result.reasons
     )
+
+def test_scientific_notation_preserves_supported_deviation_score():
+    from roif.development.expression_gate import (
+        ExpressionDecision,
+        ExpressionEvidence,
+        ExpressionKind,
+    )
+
+    validator = ExpressionValidator()
+
+    evidence = ExpressionEvidence(
+        sequence_index=2000,
+        timestamp=1.9999999999998905,
+        deviation_score=999999999.9999944,
+        maximum_absolute_deviation=None,
+        l2_deviation_norm=None,
+        group_count=0,
+        strongest_group_strength=None,
+        represented_dimension=None,
+        residual_variance_fraction=None,
+        persistent_residual_dimension_count=None,
+        growth_supported=None,
+    )
+
+    decision = ExpressionDecision(
+        kind=ExpressionKind.STATE_CHANGE,
+        evidence=evidence,
+    )
+
+    canonical = (
+        "Моё текущее внутреннее состояние отличается от ранее "
+        "сформированной знакомой регулярности. "
+        "Величина внутреннего отклонения: 1e+09."
+    )
+
+    result = validator.validate(
+        decision=decision,
+        canonical_text=canonical,
+        candidate_text=canonical,
+    )
+
+    assert result.status is ValidationStatus.ACCEPTED
+    assert result.reasons == ()
+    assert result.output_text == canonical
