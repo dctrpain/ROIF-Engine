@@ -161,3 +161,73 @@ def test_candidate_without_canonical_expression_is_rejected():
         "candidate_exists_without_canonical_expression"
         in result.reasons
     )
+
+def test_missing_repeating_experience_structure_is_rejected():
+    validator = ExpressionValidator()
+
+    candidate = (
+        "Моё внутреннее представление недостаточно для полного описания "
+        "моего опыта. Сейчас представлена размерность 3, "
+        "с двумя дополнительными остаточными направлениями "
+        "и 0.4576 необъяснённой вариативности."
+    )
+
+    result = validator.validate(
+        decision=_decision(),
+        canonical_text=_canonical_text(),
+        candidate_text=candidate,
+    )
+
+    assert result.status is ValidationStatus.REJECTED
+    assert result.output_text == _canonical_text()
+
+    assert (
+        "missing_required_claim:"
+        "repeating_experience_structure_present"
+        in result.reasons
+    )
+
+
+def test_free_rephrasing_preserving_repeating_structure_is_accepted():
+    validator = ExpressionValidator()
+
+    candidate = (
+        "Моего текущего представления недостаточно, чтобы полностью "
+        "описать устойчиво повторяющуюся структуру моего опыта. "
+        "Сейчас я представляю 3 измерения, однако сохраняются "
+        "2 дополнительных остаточных направления, а доля "
+        "необъяснённой вариативности равна 0.4576."
+    )
+
+    result = validator.validate(
+        decision=_decision(),
+        canonical_text=_canonical_text(),
+        candidate_text=candidate,
+    )
+
+    assert result.status is ValidationStatus.ACCEPTED
+    assert result.output_text == candidate
+    assert result.reasons == ()
+
+def test_numeric_claim_preserved_when_integer_is_written_as_russian_word():
+    validator = ExpressionValidator()
+
+    candidate = (
+        "Моего текущего представления недостаточно, чтобы полностью "
+        "описать устойчиво повторяющуюся структуру моего опыта. "
+        "Сейчас представлена размерность 3, при этом сохраняются "
+        "двумя дополнительными остаточными направлениями описываемые "
+        "различия, а необъяснённая вариативность равна 0.4576."
+    )
+
+    result = validator.validate(
+        decision=_decision(),
+        canonical_text=_canonical_text(),
+        candidate_text=candidate,
+    )
+
+    assert (
+        "missing_required_numeric_claim:"
+        "persistent_residual_dimension_count"
+        not in result.reasons
+    )

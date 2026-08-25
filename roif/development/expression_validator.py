@@ -5,6 +5,11 @@ from enum import Enum
 import math
 import re
 
+from .expression_contract import (
+    ExpressionClaim,
+    ExpressionClaimKind,
+    ExpressionContractBuilder,
+)
 from .expression_gate import ExpressionDecision
 
 
@@ -16,12 +21,15 @@ class ValidationStatus(str, Enum):
 @dataclass(frozen=True, slots=True)
 class ExpressionValidationResult:
     """
-    Result of validating a generated linguistic candidate against
-    an already admitted RDA expression.
+    Result of validating generated language against an already
+    admitted and contract-bound RDA expression.
 
-    Validation does not determine internal state or meaning.
-    It only protects the boundary between supported evidence and
-    outward linguistic expression.
+    Validation does not determine RDA internal state.
+
+    It protects against:
+        - unsupported added content,
+        - unsupported numeric claims,
+        - loss of required admitted claims.
     """
 
     status: ValidationStatus
@@ -37,18 +45,19 @@ class ExpressionValidationResult:
 
 class ExpressionValidator:
     """
-    Conservative validator for optional generative verbalization.
+    Conservative outward-expression validator.
 
-    Fundamental invariant:
+    Authoritative chain:
 
-        RDA evidence -> ExpressionDecision -> canonical expression
+        RDA evidence
+            -> ExpressionDecision
+            -> ExpressionContract
+            -> canonical expression
 
-    is authoritative.
+    Generated language is subordinate to this chain.
 
-    Generated language is subordinate to that chain.
-
-    The validator may reject generated language, but it must never
-    create, strengthen, reinterpret, or repair RDA evidence.
+    The validator must never create, repair, strengthen, or
+    reinterpret RDA evidence.
     """
 
     _FORBIDDEN_SEMANTIC_TERMS = (
@@ -69,6 +78,9 @@ class ExpressionValidator:
         "мои потребности",
         "моя внутренняя модель",
     )
+
+    def __init__(self) -> None:
+        self._contract_builder = ExpressionContractBuilder()
 
     def validate(
         self,
@@ -105,11 +117,19 @@ class ExpressionValidator:
 
         candidate_lower = candidate.casefold()
 
+        # -----------------------------------------------------
+        # 1. Unsupported semantic additions.
+        # -----------------------------------------------------
+
         for term in self._FORBIDDEN_SEMANTIC_TERMS:
             if term.casefold() in candidate_lower:
                 reasons.append(
                     f"unsupported_semantic_term:{term}"
                 )
+
+        # -----------------------------------------------------
+        # 2. Unsupported numeric additions.
+        # -----------------------------------------------------
 
         expected_numbers = self._supported_numeric_tokens(
             decision
@@ -126,14 +146,248 @@ class ExpressionValidator:
                     f"unsupported_numeric_claim:{number}"
                 )
 
+        # -----------------------------------------------------
+        # 3. Semantic-preservation contract.
+        # -----------------------------------------------------
+
+        contract = self._contract_builder.build(decision)
+
+        for claim in contract.claims:
+            if not self._claim_preserved(
+                claim=claim,
+                candidate_lower=candidate_lower,
+                candidate_numbers=candidate_numbers,
+            ):
+                if self._is_numeric_claim(claim.kind):
+                    reasons.append(
+                        "missing_required_numeric_claim:"
+                        f"{claim.kind.value}"
+                    )
+                else:
+                    reasons.append(
+                        "missing_required_claim:"
+                        f"{claim.kind.value}"
+                    )
+
         return self._result(
             canonical=canonical,
             candidate=candidate,
-            reasons=reasons,
+            reasons=self._deduplicate(reasons),
+        )
+
+    def _claim_preserved(
+        self,
+        *,
+        claim: ExpressionClaim,
+        candidate_lower: str,
+        candidate_numbers: tuple[float, ...],
+    ) -> bool:
+        kind = claim.kind
+
+        if self._is_numeric_claim(kind):
+            return self._numeric_claim_preserved(
+                claim=claim,
+                candidate_numbers=candidate_numbers,
+                candidate_lower=candidate_lower,
+            )
+
+        if kind is ExpressionClaimKind.STATE_CHANGE_PRESENT:
+            return self._contains_any(
+                candidate_lower,
+                (
+                    "измен",
+                    "отлич",
+                    "отклон",
+                    "не совпад",
+                    "выш",
+                ),
+            )
+
+        if (
+            kind
+            is ExpressionClaimKind.RELATIONAL_STRUCTURE_PRESENT
+        ):
+            return self._contains_any(
+                candidate_lower,
+                (
+                    "совместн",
+                    "связ",
+                    "отношен",
+                    "структур",
+                    "групп",
+                ),
+            )
+
+        if (
+            kind
+            is ExpressionClaimKind
+            .REPRESENTATIONAL_INSUFFICIENCY_PRESENT
+        ):
+            return self._contains_any(
+                candidate_lower,
+                (
+                    "недостаточ",
+                    "не хватает",
+                    "не охватыва",
+                    "не описыва",
+                    "не позволяет полностью",
+                ),
+            )
+
+        if (
+            kind
+            is ExpressionClaimKind
+            .REPEATING_EXPERIENCE_STRUCTURE_PRESENT
+        ):
+            has_experience = self._contains_any(
+                candidate_lower,
+                (
+                    "опыт",
+                    "пережива",
+                ),
+            )
+
+            has_repetition = self._contains_any(
+                candidate_lower,
+                (
+                    "повторя",
+                    "повторн",
+                    "повторяем",
+                    "устойчив",
+                    "регуляр",
+                ),
+            )
+
+            has_structure = self._contains_any(
+                candidate_lower,
+                (
+                    "структур",
+                    "закономер",
+                    "паттерн",
+                    "отношен",
+                    "организац",
+                ),
+            )
+
+            return (
+                has_experience
+                and has_repetition
+                and has_structure
+            )
+
+        raise ValueError(
+            f"Unsupported ExpressionClaimKind: {kind!r}"
         )
 
     @staticmethod
-    def _extract_numbers(text: str) -> tuple[float, ...]:
+    def _is_numeric_claim(
+        kind: ExpressionClaimKind,
+    ) -> bool:
+        return kind in {
+            ExpressionClaimKind.GROUP_COUNT,
+            ExpressionClaimKind.STRONGEST_GROUP_STRENGTH,
+            ExpressionClaimKind.REPRESENTED_DIMENSION,
+            ExpressionClaimKind
+            .PERSISTENT_RESIDUAL_DIMENSION_COUNT,
+            ExpressionClaimKind.RESIDUAL_VARIANCE_FRACTION,
+            ExpressionClaimKind.DEVIATION_SCORE,
+        }
+
+    _RUSSIAN_INTEGER_FORMS = {
+        0: ("ноль", "нулевой", "нулевая", "нулевое"),
+        1: (
+            "один", "одна", "одно",
+            "одного", "одной",
+            "одним", "одною",
+        ),
+        2: (
+            "два", "две",
+            "двух",
+            "двум", "двумя",
+        ),
+        3: (
+            "три",
+            "трёх", "трех",
+            "трём", "трем",
+            "тремя",
+        ),
+        4: (
+            "четыре",
+            "четырёх", "четырех",
+            "четырём", "четырем",
+            "четырьмя",
+        ),
+        5: (
+            "пять",
+            "пяти",
+            "пятью",
+        ),
+    }
+
+    @classmethod
+    def _numeric_claim_preserved(
+        cls,
+        *,
+        claim: ExpressionClaim,
+        candidate_numbers: tuple[float, ...],
+        candidate_lower: str = "",
+    ) -> bool:
+        expected = float(claim.value)
+
+        allowed = (
+            expected,
+            round(expected, 4),
+        )
+
+        if any(
+            math.isclose(
+                candidate,
+                allowed_value,
+                rel_tol=1e-9,
+                abs_tol=1e-9,
+            )
+            for candidate in candidate_numbers
+            for allowed_value in allowed
+        ):
+            return True
+
+        if expected.is_integer():
+            integer_value = int(expected)
+
+            forms = cls._RUSSIAN_INTEGER_FORMS.get(
+                integer_value,
+                (),
+            )
+
+            words = set(
+                re.findall(
+                    r"[а-яё]+",
+                    candidate_lower,
+                )
+            )
+
+            if any(
+                form in words
+                for form in forms
+            ):
+                return True
+
+        return False
+
+    @staticmethod
+    def _contains_any(
+        text: str,
+        fragments: tuple[str, ...],
+    ) -> bool:
+        return any(
+            fragment in text
+            for fragment in fragments
+        )
+
+    @staticmethod
+    def _extract_numbers(
+        text: str,
+    ) -> tuple[float, ...]:
         matches = re.findall(
             r"(?<![\w])[-+]?\d+(?:[.,]\d+)?",
             text,
@@ -183,9 +437,6 @@ class ExpressionValidator:
 
             if math.isfinite(numeric):
                 values.append(numeric)
-
-                # Canonical adapters may deliberately round evidence
-                # for human-readable expression.
                 values.append(round(numeric, 4))
 
         return tuple(values)
@@ -204,6 +455,12 @@ class ExpressionValidator:
             )
             for expected in supported
         )
+
+    @staticmethod
+    def _deduplicate(
+        reasons: list[str],
+    ) -> list[str]:
+        return list(dict.fromkeys(reasons))
 
     @staticmethod
     def _result(
@@ -228,3 +485,4 @@ class ExpressionValidator:
             canonical_text=canonical,
             reasons=(),
         )
+
