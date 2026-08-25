@@ -228,7 +228,9 @@ def _profile_from_observation(
 
 def run_first_endogenous_grouping(
     config: FirstEndogenousGroupingConfig | None = None,
-) -> dict[str, Any]:
+    *,
+    return_internal: bool = False,
+) -> dict[str, Any] | tuple[dict[str, Any], GroupingResult]:
     """
     First blind real exposure of the frozen endogenous grouping analyzer.
 
@@ -670,6 +672,9 @@ def run_first_endogenous_grouping(
             if key != "run_sha256"
         }
     )
+
+    if return_internal:
+        return result, grouping
 
     return result
 
