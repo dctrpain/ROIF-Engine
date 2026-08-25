@@ -18,11 +18,20 @@ class VerbalizationRequest:
 
     The backend receives only content already admitted by the
     ExpressionGate and rendered canonically by LanguageAdapter.
+
+    Retry metadata may describe why a previous linguistic candidate
+    was rejected, but it must never introduce new RDA evidence.
     """
 
     decision: ExpressionDecision
     canonical_text: str
     language: str = "ru"
+    retry_reasons: tuple[str, ...] = ()
+    previous_candidate: str | None = None
+
+    @property
+    def is_retry(self) -> bool:
+        return bool(self.retry_reasons)
 
 
 @dataclass(frozen=True, slots=True)
@@ -40,11 +49,14 @@ class VerbalizationResult:
     validation_reasons: tuple[str, ...]
     candidate_text: str
     canonical_text: str
+    attempt_count: int
+    first_candidate_text: str
+    retry_candidate_text: str | None
 
 
 class LLMBackend(Protocol):
     """
-    Minimal protocol for any future language backend.
+    Minimal protocol for any language backend.
     """
 
     def generate(
@@ -85,18 +97,24 @@ class LLMVerbalizer:
         + canonical expression
         + ExpressionValidator
 
-    No candidate text is allowed to leave this layer without
-    validation.
+    A generative backend receives at most one corrective retry.
+
+    The retry may repair linguistic preservation of already admitted
+    claims, but it may not create, strengthen, or reinterpret RDA
+    evidence.
     """
 
     def __init__(
         self,
         backend: LLMBackend | None = None,
         validator: ExpressionValidator | None = None,
+        *,
+        allow_retry: bool = True,
     ) -> None:
         self._backend = backend or CanonicalBackend()
         self._adapter = LanguageAdapter()
         self._validator = validator or ExpressionValidator()
+        self._allow_retry = allow_retry
 
     def speak(
         self,
@@ -106,29 +124,69 @@ class LLMVerbalizer:
     ) -> VerbalizationResult:
         canonical = self._adapter.render(decision)
 
-        request = VerbalizationRequest(
+        first_request = VerbalizationRequest(
             decision=decision,
             canonical_text=canonical.text,
             language=language,
         )
 
-        candidate_text = self._backend.generate(request)
+        first_candidate = self._backend.generate(first_request)
 
-        validation = self._validator.validate(
+        first_validation = self._validator.validate(
             decision=decision,
             canonical_text=canonical.text,
-            candidate_text=candidate_text,
+            candidate_text=first_candidate,
+        )
+
+        is_llm = not isinstance(
+            self._backend,
+            CanonicalBackend,
+        )
+
+        if (
+            first_validation.status is ValidationStatus.ACCEPTED
+            or not is_llm
+            or not self._allow_retry
+            or not canonical.text.strip()
+        ):
+            return VerbalizationResult(
+                text=first_validation.output_text,
+                model_name=self._backend.__class__.__name__,
+                used_llm=is_llm,
+                validation_status=first_validation.status.value,
+                validation_reasons=first_validation.reasons,
+                candidate_text=first_candidate,
+                canonical_text=canonical.text,
+                attempt_count=1,
+                first_candidate_text=first_candidate,
+                retry_candidate_text=None,
+            )
+
+        retry_request = VerbalizationRequest(
+            decision=decision,
+            canonical_text=canonical.text,
+            language=language,
+            retry_reasons=first_validation.reasons,
+            previous_candidate=first_candidate,
+        )
+
+        retry_candidate = self._backend.generate(retry_request)
+
+        retry_validation = self._validator.validate(
+            decision=decision,
+            canonical_text=canonical.text,
+            candidate_text=retry_candidate,
         )
 
         return VerbalizationResult(
-            text=validation.output_text,
+            text=retry_validation.output_text,
             model_name=self._backend.__class__.__name__,
-            used_llm=not isinstance(
-                self._backend,
-                CanonicalBackend,
-            ),
-            validation_status=validation.status.value,
-            validation_reasons=validation.reasons,
-            candidate_text=candidate_text,
+            used_llm=True,
+            validation_status=retry_validation.status.value,
+            validation_reasons=retry_validation.reasons,
+            candidate_text=retry_candidate,
             canonical_text=canonical.text,
+            attempt_count=2,
+            first_candidate_text=first_candidate,
+            retry_candidate_text=retry_candidate,
         )

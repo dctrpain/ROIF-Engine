@@ -102,3 +102,130 @@ def test_backend_receives_original_expression_decision():
 
     assert result.model_name == "RecordingBackend"
     assert result.used_llm is True
+
+def test_retry_is_not_used_when_first_candidate_is_accepted():
+    decision = _growth_decision()
+
+    class AcceptedBackend:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def generate(
+            self,
+            request: VerbalizationRequest,
+        ) -> str:
+            self.calls += 1
+            return request.canonical_text
+
+    backend = AcceptedBackend()
+    verbalizer = LLMVerbalizer(backend=backend)
+
+    result = verbalizer.speak(decision)
+
+    assert backend.calls == 1
+    assert result.attempt_count == 1
+    assert result.validation_status == "accepted"
+    assert result.retry_candidate_text is None
+    assert result.text == result.canonical_text
+
+
+def test_retry_is_used_once_and_second_candidate_can_be_accepted():
+    decision = _growth_decision()
+
+    safe_retry = (
+        "Моего текущего представления недостаточно, чтобы полностью "
+        "описать устойчиво повторяющуюся структуру моего опыта. "
+        "Сейчас представлена размерность 3, сохраняются "
+        "2 дополнительных остаточных направления, а доля "
+        "необъяснённой вариативности равна 0.4576."
+    )
+
+    class RetryBackend:
+        def __init__(self) -> None:
+            self.requests = []
+
+        def generate(
+            self,
+            request: VerbalizationRequest,
+        ) -> str:
+            self.requests.append(request)
+
+            if len(self.requests) == 1:
+                return (
+                    "Моё внутреннее представление недостаточно "
+                    "для полного описания моего опыта. "
+                    "Сейчас представлена размерность 3, "
+                    "с двумя дополнительными остаточными направлениями "
+                    "и 0.4576 необъяснённой вариативности."
+                )
+
+            return safe_retry
+
+    backend = RetryBackend()
+    verbalizer = LLMVerbalizer(backend=backend)
+
+    result = verbalizer.speak(decision)
+
+    assert len(backend.requests) == 2
+
+    first_request = backend.requests[0]
+    retry_request = backend.requests[1]
+
+    assert first_request.is_retry is False
+    assert retry_request.is_retry is True
+
+    assert (
+        "missing_required_claim:"
+        "repeating_experience_structure_present"
+        in retry_request.retry_reasons
+    )
+
+    assert retry_request.previous_candidate is not None
+
+    assert result.attempt_count == 2
+    assert result.validation_status == "accepted"
+    assert result.text == safe_retry
+    assert result.first_candidate_text != safe_retry
+    assert result.retry_candidate_text == safe_retry
+
+
+def test_retry_is_limited_to_one_and_falls_back_to_canonical():
+    decision = _growth_decision()
+
+    class AlwaysInvalidBackend:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def generate(
+            self,
+            request: VerbalizationRequest,
+        ) -> str:
+            self.calls += 1
+
+            return (
+                "Я чувствую, что моего представления недостаточно. "
+                "Сейчас представлена размерность 7."
+            )
+
+    backend = AlwaysInvalidBackend()
+    verbalizer = LLMVerbalizer(backend=backend)
+
+    result = verbalizer.speak(decision)
+
+    assert backend.calls == 2
+    assert result.attempt_count == 2
+    assert result.validation_status == "rejected"
+
+    assert result.text == result.canonical_text
+
+    assert result.retry_candidate_text is not None
+
+    assert any(
+        reason.startswith("unsupported_semantic_term:")
+        for reason in result.validation_reasons
+    )
+
+    assert any(
+        reason.startswith("unsupported_numeric_claim:")
+        for reason in result.validation_reasons
+    )
