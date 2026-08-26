@@ -92,7 +92,7 @@ def _verbalize(
     }
 
 
-def main() -> None:
+def build_developmental_speech_sequence() -> dict[str, Any]:
     # ---------------------------------------------------------
     # Shared expression layer.
     #
@@ -354,15 +354,42 @@ def main() -> None:
     ]
 
     # ---------------------------------------------------------
-    # Human-readable developmental speech sequence.
+    # Machine-readable audit.
     # ---------------------------------------------------------
+
+    audit = {
+        "sequence": (
+            "roif_developmental_speech_v1"
+        ),
+        "language": LANGUAGE,
+        "model": MODEL_NAME,
+        "stage_count": len(stages),
+        "stages": stages,
+        "architectural_boundary": {
+            "speech_reads_real_internal_objects": True,
+            "speech_reads_benchmark_ground_truth": False,
+            "llm_creates_developmental_state": False,
+            "llm_role": (
+                "validated_verbalization_only"
+            ),
+        },
+        "continuity_claim": (
+            "independent_frozen_developmental_benchmarks"
+        ),
+    }
+
+    return audit
+
+
+def main() -> None:
+    audit = build_developmental_speech_sequence()
 
     print()
     print("==============================================")
     print("ROIF DEVELOPMENTAL SPEECH")
     print("==============================================")
 
-    for stage in stages:
+    for stage in audit["stages"]:
         print()
         print(
             "----------------------------------------------"
@@ -414,31 +441,6 @@ def main() -> None:
         print()
         print("RUN SHA256:")
         print(stage["run_sha256"])
-
-    # ---------------------------------------------------------
-    # Machine-readable audit.
-    # ---------------------------------------------------------
-
-    audit = {
-        "sequence": (
-            "roif_developmental_speech_v1"
-        ),
-        "language": LANGUAGE,
-        "model": MODEL_NAME,
-        "stage_count": len(stages),
-        "stages": stages,
-        "architectural_boundary": {
-            "speech_reads_real_internal_objects": True,
-            "speech_reads_benchmark_ground_truth": False,
-            "llm_creates_developmental_state": False,
-            "llm_role": (
-                "validated_verbalization_only"
-            ),
-        },
-        "continuity_claim": (
-            "independent_frozen_developmental_benchmarks"
-        ),
-    }
 
     print()
     print("==============================================")
