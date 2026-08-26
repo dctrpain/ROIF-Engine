@@ -355,3 +355,177 @@ def test_difference_and_grouping_processes_do_not_reference_each_other():
             grouping,
             name,
         )
+
+
+def test_familiar_change_process_does_not_run_without_enough_observations():
+    from roif.development.developmental_process import (
+        FamiliarStateChangeProcess,
+    )
+
+    state = DevelopmentalState()
+    process = FamiliarStateChangeProcess()
+
+    result = process.run(state)
+
+    assert result.executed is False
+    assert result.produced_object is None
+    assert state.change_detection_count == 0
+
+
+def test_familiar_change_process_produces_real_change_detection():
+    from roif.development.developmental_process import (
+        FamiliarStateChangeProcess,
+    )
+    from roif.development.familiar_state_change import (
+        ChangeDetection,
+    )
+    from roif.development.observation import (
+        Observation,
+        ObservationChannel,
+        ObservationProvenance,
+    )
+
+    def observation(
+        sequence_index: int,
+        value: float,
+    ) -> Observation:
+        return Observation(
+            timestamp=float(sequence_index),
+            channels={
+                "sensor": ObservationChannel(
+                    name="sensor",
+                    value=value,
+                ),
+            },
+            provenance=ObservationProvenance(
+                source_id="familiar-change-test",
+                source_type="synthetic-test",
+                sequence_index=sequence_index,
+            ),
+        )
+
+    state = DevelopmentalState()
+
+    state.record_observation(
+        observation(0, 0.0)
+    )
+    state.record_observation(
+        observation(1, 0.1)
+    )
+    state.record_observation(
+        observation(2, 10.0)
+    )
+
+    process = FamiliarStateChangeProcess()
+
+    assert process.can_run(state) is True
+
+    result = process.run(state)
+
+    assert result.executed is True
+
+    assert isinstance(
+        result.produced_object,
+        ChangeDetection,
+    )
+
+    assert state.change_detection_count == 1
+
+    assert (
+        state.latest_change_detection
+        is result.produced_object
+    )
+
+    assert (
+        result.produced_object.sequence_index
+        == 2
+    )
+
+    assert (
+        result.produced_object.timestamp
+        == 2.0
+    )
+
+
+def test_familiar_change_and_difference_can_run_from_same_state():
+    from roif.development.developmental_process import (
+        EndogenousDifferenceProcess,
+        FamiliarStateChangeProcess,
+    )
+    from roif.development.observation import (
+        Observation,
+        ObservationChannel,
+        ObservationProvenance,
+    )
+
+    def observation(
+        sequence_index: int,
+        value: float,
+    ) -> Observation:
+        return Observation(
+            timestamp=float(sequence_index),
+            channels={
+                "sensor": ObservationChannel(
+                    name="sensor",
+                    value=value,
+                ),
+            },
+            provenance=ObservationProvenance(
+                source_id="parallel-process-test",
+                source_type="synthetic-test",
+                sequence_index=sequence_index,
+            ),
+        )
+
+    state = DevelopmentalState()
+
+    state.record_observation(
+        observation(0, 0.0)
+    )
+    state.record_observation(
+        observation(1, 0.1)
+    )
+    state.record_observation(
+        observation(2, 10.0)
+    )
+
+    familiar = FamiliarStateChangeProcess()
+    difference = EndogenousDifferenceProcess()
+
+    assert familiar.can_run(state) is True
+    assert difference.can_run(state) is True
+
+    familiar_result = familiar.run(state)
+    difference_result = difference.run(state)
+
+    assert familiar_result.executed is True
+    assert difference_result.executed is True
+
+    assert state.change_detection_count == 1
+    assert state.difference_profile_count == 1
+
+
+def test_parallel_processes_have_no_prescribed_order():
+    from roif.development.developmental_process import (
+        EndogenousDifferenceProcess,
+        FamiliarStateChangeProcess,
+    )
+
+    familiar = FamiliarStateChangeProcess()
+    difference = EndogenousDifferenceProcess()
+
+    forbidden = (
+        "priority",
+        "order",
+        "next_process",
+        "previous_process",
+        "successor",
+        "predecessor",
+        "transition",
+        "advance",
+        "schedule",
+    )
+
+    for name in forbidden:
+        assert not hasattr(familiar, name)
+        assert not hasattr(difference, name)

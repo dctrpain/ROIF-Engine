@@ -251,3 +251,118 @@ class EndogenousDifferenceProcess:
                 "Observation."
             ),
         )
+
+
+class FamiliarStateChangeProcess:
+    """
+    Independently executable familiar-state change process.
+
+    Fundamental invariant:
+
+        process != stage
+        process != transition
+        process != scheduler
+
+    The process reads accumulated Observation memory only.
+
+    All observations except the most recent one define the prior
+    familiar baseline. The most recent observation is evaluated
+    against that baseline.
+
+    The process does not know:
+        - RDA stage numbers,
+        - any predecessor process,
+        - any successor process,
+        - any transition table,
+        - any priority ordering,
+        - any developmental target.
+    """
+
+    capability = (
+        DevelopmentalCapability
+        .DETECT_FAMILIAR_STATE_CHANGE
+    )
+
+    def __init__(
+        self,
+        *,
+        detector=None,
+        activation_inspector=None,
+    ) -> None:
+        from .familiar_state_change import (
+            FamiliarStateChangeDetector,
+        )
+
+        self._detector = (
+            detector
+            if detector is not None
+            else FamiliarStateChangeDetector()
+        )
+
+        self._activation_inspector = (
+            activation_inspector
+            if activation_inspector is not None
+            else DevelopmentalActivationInspector()
+        )
+
+    def can_run(
+        self,
+        state: DevelopmentalState,
+    ) -> bool:
+        if not isinstance(state, DevelopmentalState):
+            raise TypeError(
+                "state must be a DevelopmentalState."
+            )
+
+        return self.capability in (
+            self._activation_inspector
+            .activatable_capabilities(state)
+        )
+
+    def run(
+        self,
+        state: DevelopmentalState,
+    ) -> DevelopmentalProcessResult:
+        if not isinstance(state, DevelopmentalState):
+            raise TypeError(
+                "state must be a DevelopmentalState."
+            )
+
+        if not self.can_run(state):
+            return DevelopmentalProcessResult(
+                capability=self.capability,
+                executed=False,
+                produced_object=None,
+                reason=(
+                    "Current developmental state does not "
+                    "support familiar-state change detection."
+                ),
+            )
+
+        baseline = tuple(
+            state.observations[:-1]
+        )
+
+        current = state.observations[-1]
+
+        self._detector.fit(
+            baseline
+        )
+
+        detection = self._detector.detect(
+            current
+        )
+
+        state.record_change_detection(
+            detection
+        )
+
+        return DevelopmentalProcessResult(
+            capability=self.capability,
+            executed=True,
+            produced_object=detection,
+            reason=(
+                "A ChangeDetection was produced from prior "
+                "Observation memory and the current Observation."
+            ),
+        )
