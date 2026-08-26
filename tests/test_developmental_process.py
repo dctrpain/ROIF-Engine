@@ -176,3 +176,182 @@ def test_process_execution_does_not_consume_source_memory():
     assert tuple(state.difference_profiles) == before
     assert state.difference_profile_count == 3
     assert state.grouping_result_count == 1
+
+
+def test_difference_process_does_not_run_without_enough_observations():
+    from roif.development.developmental_process import (
+        EndogenousDifferenceProcess,
+    )
+
+    state = DevelopmentalState()
+    process = EndogenousDifferenceProcess()
+
+    result = process.run(state)
+
+    assert result.executed is False
+    assert result.produced_object is None
+    assert state.difference_profile_count == 0
+
+
+def test_difference_process_produces_real_difference_profile():
+    from roif.development.developmental_process import (
+        EndogenousDifferenceProcess,
+    )
+    from roif.development.endogenous_difference import (
+        DifferenceProfile,
+    )
+    from roif.development.observation import (
+        Observation,
+        ObservationChannel,
+        ObservationProvenance,
+    )
+
+    def observation(
+        sequence_index: int,
+        a: float,
+        b: float,
+    ) -> Observation:
+        return Observation(
+            timestamp=float(sequence_index),
+            channels={
+                "a": ObservationChannel(
+                    name="a",
+                    value=a,
+                ),
+                "b": ObservationChannel(
+                    name="b",
+                    value=b,
+                ),
+            },
+            provenance=ObservationProvenance(
+                source_id="difference-process-test",
+                source_type="synthetic-test",
+                sequence_index=sequence_index,
+            ),
+        )
+
+    state = DevelopmentalState()
+
+    state.record_observation(
+        observation(0, 0.0, 0.0)
+    )
+    state.record_observation(
+        observation(1, 0.1, 0.0)
+    )
+    state.record_observation(
+        observation(2, 1.0, 0.5)
+    )
+
+    process = EndogenousDifferenceProcess()
+
+    assert process.can_run(state) is True
+
+    result = process.run(state)
+
+    assert result.executed is True
+
+    assert isinstance(
+        result.produced_object,
+        DifferenceProfile,
+    )
+
+    assert state.difference_profile_count == 1
+
+    assert (
+        state.latest_difference_profile
+        is result.produced_object
+    )
+
+    assert (
+        result.produced_object.sequence_index
+        == 2
+    )
+
+    assert (
+        result.produced_object.timestamp
+        == 2.0
+    )
+
+
+def test_difference_process_does_not_consume_observation_memory():
+    from roif.development.developmental_process import (
+        EndogenousDifferenceProcess,
+    )
+    from roif.development.observation import (
+        Observation,
+        ObservationChannel,
+        ObservationProvenance,
+    )
+
+    def observation(
+        sequence_index: int,
+        value: float,
+    ) -> Observation:
+        return Observation(
+            timestamp=float(sequence_index),
+            channels={
+                "sensor": ObservationChannel(
+                    name="sensor",
+                    value=value,
+                ),
+            },
+            provenance=ObservationProvenance(
+                source_id="difference-memory-test",
+                source_type="synthetic-test",
+                sequence_index=sequence_index,
+            ),
+        )
+
+    state = DevelopmentalState()
+
+    state.record_observation(
+        observation(0, 0.0)
+    )
+    state.record_observation(
+        observation(1, 0.1)
+    )
+    state.record_observation(
+        observation(2, 1.0)
+    )
+
+    before = tuple(
+        state.observations
+    )
+
+    process = EndogenousDifferenceProcess()
+    result = process.run(state)
+
+    assert result.executed is True
+
+    assert tuple(state.observations) == before
+    assert state.observation_count == 3
+    assert state.difference_profile_count == 1
+
+
+def test_difference_and_grouping_processes_do_not_reference_each_other():
+    from roif.development.developmental_process import (
+        EndogenousDifferenceProcess,
+    )
+
+    difference = EndogenousDifferenceProcess()
+    grouping = EndogenousGroupingProcess()
+
+    forbidden = (
+        "next_process",
+        "previous_process",
+        "successor",
+        "predecessor",
+        "transition",
+        "advance",
+        "schedule",
+    )
+
+    for name in forbidden:
+        assert not hasattr(
+            difference,
+            name,
+        )
+        assert not hasattr(
+            grouping,
+            name,
+        )
