@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass, field
@@ -237,17 +237,12 @@ class Network:
                 "element must be an instance of Element"
             )
 
-        if element.node_a not in self.nodes:
-            raise ValueError(
-                "element.node_a must be added to the "
-                "network first"
-            )
-
-        if element.node_b not in self.nodes:
-            raise ValueError(
-                "element.node_b must be added to the "
-                "network first"
-            )
+        for connected_node in element.connected_nodes():
+            if connected_node not in self.nodes:
+                raise ValueError(
+                    "all element-connected nodes must be "
+                    "added to the network first"
+                )
 
         element_id = getattr(
             element,
@@ -315,10 +310,7 @@ class Network:
         connected = [
             element
             for element in self.elements
-            if (
-                element.node_a is node
-                or element.node_b is node
-            )
+            if node in element.connected_nodes()
         ]
 
         if connected and not remove_connected:
@@ -494,17 +486,12 @@ class Network:
             self._validate_node(node)
 
         for element in self.elements:
-            if element.node_a not in self.nodes:
-                raise ValueError(
-                    "an element references node_a outside "
-                    "the network"
-                )
-
-            if element.node_b not in self.nodes:
-                raise ValueError(
-                    "an element references node_b outside "
-                    "the network"
-                )
+            for connected_node in element.connected_nodes():
+                if connected_node not in self.nodes:
+                    raise ValueError(
+                        "an element references a connected "
+                        "node outside the network"
+                    )
 
     # =========================================================
     # Force control
@@ -1170,7 +1157,7 @@ class Network:
             record = self.record_history
 
         # -----------------------------------------------------
-        # 1. Biological evolution — exactly once
+        # 1. Biological evolution вЂ” exactly once
         # -----------------------------------------------------
 
         if update_materials:
@@ -1487,7 +1474,7 @@ class Network:
         """
         Potential energy relative to the coordinate origin.
 
-        U = -m * g·x
+        U = -m * gВ·x
         """
 
         if self.gravity is None:
@@ -2048,3 +2035,7 @@ class Network:
             f"time={self.time:.6f}, "
             f"step={self.step_index})"
         )
+
+
+
+

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass
@@ -124,6 +124,52 @@ class Element:
         self.node_a = node_a
         self.node_b = node_b
 
+        self._validate_node_dimensions()
+
+        self._initialize_common(
+            material=material,
+            rest_length=rest_length,
+            element_id=element_id,
+            name=name,
+            stiffness=stiffness,
+            damping=damping,
+            pretension=pretension,
+            tension_only=tension_only,
+            compression_only=compression_only,
+            enabled=enabled,
+            record_history=record_history,
+            epsilon=epsilon,
+        )
+
+        self.validate()
+
+    def _initialize_common(
+        self,
+        *,
+        material: Material | None = None,
+        rest_length: float | None = None,
+        element_id: int | str | None = None,
+        name: str | None = None,
+        stiffness: float = 1.0,
+        damping: float = 0.0,
+        pretension: float = 0.0,
+        tension_only: bool = False,
+        compression_only: bool = False,
+        enabled: bool = True,
+        record_history: bool = True,
+        epsilon: float = 1e-12,
+    ) -> None:
+        """
+        Initialize geometry-independent element state.
+
+        Subclasses with non-two-point geometry may call this
+        after their own geometry has been initialized.
+
+        This method does not validate node_a/node_b and does not
+        call validate(); geometry-specific subclasses remain
+        responsible for their own validation.
+        """
+
         self.epsilon = float(epsilon)
 
         if not np.isfinite(self.epsilon):
@@ -135,8 +181,6 @@ class Element:
             raise ValueError(
                 "epsilon must be positive"
             )
-
-        self._validate_node_dimensions()
 
         if rest_length is None:
             rest_length = self.current_length()
@@ -239,11 +283,29 @@ class Element:
         }
 
         self.synchronize_material_length()
-        self.validate()
-
     # =========================================================
     # Validation
     # =========================================================
+
+    # =========================================================
+    # Connectivity
+    # =========================================================
+
+    def connected_nodes(
+        self,
+    ) -> tuple[Any, ...]:
+        """
+        Return all network nodes mechanically connected
+        by this element.
+
+        The base axial Element connects exactly node_a
+        and node_b. More general element geometries may
+        override this contract without changing Network.
+        """
+        return (
+            self.node_a,
+            self.node_b,
+        )
 
     @staticmethod
     def _validate_length(
@@ -2099,3 +2161,6 @@ class Element:
             f"{self.last_force.total:.6f}, "
             f"enabled={self.enabled})"
         )
+
+
+
