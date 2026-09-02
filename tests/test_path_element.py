@@ -1,4 +1,4 @@
-﻿import numpy as np
+import numpy as np
 
 from core.attachment import Attachment
 from core.node import Node

@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass, field
@@ -1157,7 +1157,7 @@ class Network:
             record = self.record_history
 
         # -----------------------------------------------------
-        # 1. Biological evolution вЂ” exactly once
+        # 1. Biological evolution — exactly once
         # -----------------------------------------------------
 
         if update_materials:
@@ -1474,7 +1474,7 @@ class Network:
         """
         Potential energy relative to the coordinate origin.
 
-        U = -m * gВ·x
+        U = -m * g·x
         """
 
         if self.gravity is None:
