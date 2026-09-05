@@ -257,3 +257,257 @@ def test_surface_closest_point_rejects_non_finite_point() -> None:
         mesh.closest_point(
             (0.0, np.nan, 0.0)
         )
+
+
+def test_closest_points_on_segments_intersecting() -> None:
+    closest_1, closest_2 = SurfaceMesh.closest_points_on_segments(
+        np.array((0.0, 0.0, 0.0)),
+        np.array((1.0, 1.0, 0.0)),
+        np.array((0.0, 1.0, 0.0)),
+        np.array((1.0, 0.0, 0.0)),
+    )
+
+    expected = np.array((0.5, 0.5, 0.0))
+
+    assert np.allclose(
+        closest_1,
+        expected,
+    )
+
+    assert np.allclose(
+        closest_2,
+        expected,
+    )
+
+
+def test_closest_points_on_segments_parallel() -> None:
+    closest_1, closest_2 = SurfaceMesh.closest_points_on_segments(
+        np.array((0.0, 0.0, 0.0)),
+        np.array((1.0, 0.0, 0.0)),
+        np.array((0.0, 2.0, 0.0)),
+        np.array((1.0, 2.0, 0.0)),
+    )
+
+    assert np.allclose(
+        closest_1,
+        (0.0, 0.0, 0.0),
+    )
+
+    assert np.allclose(
+        closest_2,
+        (0.0, 2.0, 0.0),
+    )
+
+
+def test_closest_points_on_segments_handles_degenerate_segment() -> None:
+    closest_1, closest_2 = SurfaceMesh.closest_points_on_segments(
+        np.array((0.5, 1.0, 0.0)),
+        np.array((0.5, 1.0, 0.0)),
+        np.array((0.0, 0.0, 0.0)),
+        np.array((1.0, 0.0, 0.0)),
+    )
+
+    assert np.allclose(
+        closest_1,
+        (0.5, 1.0, 0.0),
+    )
+
+    assert np.allclose(
+        closest_2,
+        (0.5, 0.0, 0.0),
+    )
+
+
+def test_closest_points_on_triangles_parallel_separated() -> None:
+    point_a, point_b, distance = SurfaceMesh.closest_points_on_triangles(
+        np.array((0.0, 0.0, 0.0)),
+        np.array((1.0, 0.0, 0.0)),
+        np.array((0.0, 1.0, 0.0)),
+        np.array((0.0, 0.0, 2.0)),
+        np.array((1.0, 0.0, 2.0)),
+        np.array((0.0, 1.0, 2.0)),
+    )
+
+    assert distance == pytest.approx(2.0)
+
+    assert point_a[2] == pytest.approx(0.0)
+    assert point_b[2] == pytest.approx(2.0)
+
+    assert np.allclose(
+        point_a[:2],
+        point_b[:2],
+    )
+
+
+def test_closest_points_on_triangles_edge_edge_minimum() -> None:
+    point_a, point_b, distance = SurfaceMesh.closest_points_on_triangles(
+        np.array((-1.0, 0.0, 0.0)),
+        np.array((1.0, 0.0, 0.0)),
+        np.array((0.72940745, -2.86544745, -0.66946019)),
+        np.array((0.0, -1.0, 1.0)),
+        np.array((0.0, 1.0, 1.0)),
+        np.array((0.96092953, -1.29637640, 3.53023627)),
+    )
+
+    assert distance == pytest.approx(1.0)
+
+    assert np.allclose(
+        point_a,
+        (0.0, 0.0, 0.0),
+        atol=1e-12,
+    )
+
+    assert np.allclose(
+        point_b,
+        (0.0, 0.0, 1.0),
+        atol=1e-12,
+    )
+
+
+def test_closest_points_on_triangles_intersecting() -> None:
+    point_a, point_b, distance = SurfaceMesh.closest_points_on_triangles(
+        np.array((0.0, 0.0, 0.0)),
+        np.array((2.0, 0.0, 0.0)),
+        np.array((0.0, 2.0, 0.0)),
+        np.array((0.5, 0.5, -1.0)),
+        np.array((0.5, 0.5, 1.0)),
+        np.array((1.5, 0.5, 0.0)),
+    )
+
+    assert distance == pytest.approx(
+        0.0,
+        abs=1e-12,
+    )
+
+    assert np.allclose(
+        point_a,
+        point_b,
+        atol=1e-12,
+    )
+
+
+def test_closest_points_to_mesh_finds_global_minimum() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (1.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 3.0),
+            (1.0, 0.0, 3.0),
+            (0.0, 1.0, 3.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    (
+        point_a,
+        point_b,
+        triangle_a,
+        triangle_b,
+        distance,
+    ) = mesh_a.closest_points_to_mesh(mesh_b)
+
+    assert triangle_a == 0
+    assert triangle_b == 0
+    assert distance == pytest.approx(3.0)
+
+    assert np.allclose(
+        point_a[:2],
+        point_b[:2],
+    )
+
+
+def test_closest_points_to_mesh_selects_correct_triangle_pair() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (1.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+            (10.0, 0.0, 0.0),
+            (11.0, 0.0, 0.0),
+            (10.0, 1.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+            (3, 4, 5),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (10.0, 0.0, 2.0),
+            (11.0, 0.0, 2.0),
+            (10.0, 1.0, 2.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    (
+        _,
+        _,
+        triangle_a,
+        triangle_b,
+        distance,
+    ) = mesh_a.closest_points_to_mesh(mesh_b)
+
+    assert triangle_a == 1
+    assert triangle_b == 0
+    assert distance == pytest.approx(2.0)
+
+
+def test_closest_points_to_mesh_intersection_has_zero_distance() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (2.0, 0.0, 0.0),
+            (0.0, 2.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (0.5, 0.5, -1.0),
+            (0.5, 0.5, 1.0),
+            (1.5, 0.5, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    (
+        point_a,
+        point_b,
+        triangle_a,
+        triangle_b,
+        distance,
+    ) = mesh_a.closest_points_to_mesh(mesh_b)
+
+    assert triangle_a == 0
+    assert triangle_b == 0
+
+    assert distance == pytest.approx(
+        0.0,
+        abs=1e-12,
+    )
+
+    assert np.allclose(
+        point_a,
+        point_b,
+        atol=1e-12,
+    )

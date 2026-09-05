@@ -414,6 +414,130 @@ class SurfaceMesh:
             closest_1,
             closest_2,
         )
+
+    @staticmethod
+    def closest_points_on_triangles(
+        a0: np.ndarray,
+        a1: np.ndarray,
+        a2: np.ndarray,
+        b0: np.ndarray,
+        b1: np.ndarray,
+        b2: np.ndarray,
+    ) -> tuple[np.ndarray, np.ndarray, float]:
+        """
+        Return closest points between two 3D triangles.
+
+        Considers:
+        - each vertex of A projected onto triangle B,
+        - each vertex of B projected onto triangle A,
+        - all 3 x 3 edge-pair closest points.
+        """
+        triangle_a = (
+            np.asarray(a0, dtype=float),
+            np.asarray(a1, dtype=float),
+            np.asarray(a2, dtype=float),
+        )
+
+        triangle_b = (
+            np.asarray(b0, dtype=float),
+            np.asarray(b1, dtype=float),
+            np.asarray(b2, dtype=float),
+        )
+
+        best_a: np.ndarray | None = None
+        best_b: np.ndarray | None = None
+        best_distance_squared = float("inf")
+
+        def consider(
+            point_a: np.ndarray,
+            point_b: np.ndarray,
+        ) -> None:
+            nonlocal best_a
+            nonlocal best_b
+            nonlocal best_distance_squared
+
+            delta = point_a - point_b
+
+            distance_squared = float(
+                np.dot(
+                    delta,
+                    delta,
+                )
+            )
+
+            if distance_squared < best_distance_squared:
+                best_a = point_a.copy()
+                best_b = point_b.copy()
+                best_distance_squared = distance_squared
+
+        for vertex_a in triangle_a:
+            point_b = SurfaceMesh.closest_point_on_triangle(
+                vertex_a,
+                triangle_b[0],
+                triangle_b[1],
+                triangle_b[2],
+            )
+
+            consider(
+                vertex_a,
+                point_b,
+            )
+
+        for vertex_b in triangle_b:
+            point_a = SurfaceMesh.closest_point_on_triangle(
+                vertex_b,
+                triangle_a[0],
+                triangle_a[1],
+                triangle_a[2],
+            )
+
+            consider(
+                point_a,
+                vertex_b,
+            )
+
+        edges_a = (
+            (triangle_a[0], triangle_a[1]),
+            (triangle_a[1], triangle_a[2]),
+            (triangle_a[2], triangle_a[0]),
+        )
+
+        edges_b = (
+            (triangle_b[0], triangle_b[1]),
+            (triangle_b[1], triangle_b[2]),
+            (triangle_b[2], triangle_b[0]),
+        )
+
+        for edge_a_start, edge_a_end in edges_a:
+            for edge_b_start, edge_b_end in edges_b:
+                point_a, point_b = (
+                    SurfaceMesh.closest_points_on_segments(
+                        edge_a_start,
+                        edge_a_end,
+                        edge_b_start,
+                        edge_b_end,
+                    )
+                )
+
+                consider(
+                    point_a,
+                    point_b,
+                )
+
+        if best_a is None or best_b is None:
+            raise RuntimeError(
+                "triangle pair produced no geometric candidates"
+            )
+
+        return (
+            best_a,
+            best_b,
+            float(
+                np.sqrt(
+                    best_distance_squared
+                )
+            ),
+        )
     def closest_point(
         self,
         point: Sequence[float] | np.ndarray,
@@ -497,6 +621,88 @@ class SurfaceMesh:
                     best_distance_squared
                 )
             ),
+        )
+
+    def closest_points_to_mesh(
+        self,
+        other: SurfaceMesh,
+    ) -> tuple[
+        np.ndarray,
+        np.ndarray,
+        int,
+        int,
+        float,
+    ]:
+        """
+        Return the globally closest points between two surface meshes.
+
+        Returns:
+            point_on_self,
+            point_on_other,
+            triangle_index_self,
+            triangle_index_other,
+            distance.
+        """
+        if not isinstance(other, SurfaceMesh):
+            raise TypeError(
+                "other must be a SurfaceMesh"
+            )
+
+        best_self: np.ndarray | None = None
+        best_other: np.ndarray | None = None
+        best_triangle_self = -1
+        best_triangle_other = -1
+        best_distance = float("inf")
+
+        for triangle_index_self in range(
+            self.triangle_count
+        ):
+            a0, a1, a2 = self.triangle_vertices(
+                triangle_index_self
+            )
+
+            for triangle_index_other in range(
+                other.triangle_count
+            ):
+                b0, b1, b2 = other.triangle_vertices(
+                    triangle_index_other
+                )
+
+                (
+                    point_self,
+                    point_other,
+                    distance,
+                ) = self.closest_points_on_triangles(
+                    a0,
+                    a1,
+                    a2,
+                    b0,
+                    b1,
+                    b2,
+                )
+
+                if distance < best_distance:
+                    best_self = point_self
+                    best_other = point_other
+                    best_triangle_self = (
+                        triangle_index_self
+                    )
+                    best_triangle_other = (
+                        triangle_index_other
+                    )
+                    best_distance = distance
+
+        if best_self is None or best_other is None:
+            raise RuntimeError(
+                "surface pair produced no geometric candidates"
+            )
+
+        return (
+            best_self.copy(),
+            best_other.copy(),
+            best_triangle_self,
+            best_triangle_other,
+            float(best_distance),
         )
     @classmethod
     def from_obj(
