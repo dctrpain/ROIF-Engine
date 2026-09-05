@@ -511,3 +511,367 @@ def test_closest_points_to_mesh_intersection_has_zero_distance() -> None:
         point_b,
         atol=1e-12,
     )
+
+
+def test_near_triangle_pairs_returns_all_pairs_within_distance() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (1.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+            (10.0, 0.0, 0.0),
+            (11.0, 0.0, 0.0),
+            (10.0, 1.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+            (3, 4, 5),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 1.0),
+            (1.0, 0.0, 1.0),
+            (0.0, 1.0, 1.0),
+            (10.0, 0.0, 2.0),
+            (11.0, 0.0, 2.0),
+            (10.0, 1.0, 2.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+            (3, 4, 5),
+        ],
+    )
+
+    pairs = mesh_a.near_triangle_pairs(
+        mesh_b,
+        max_distance=2.0,
+    )
+
+    indices = {
+        (triangle_a, triangle_b)
+        for (
+            triangle_a,
+            triangle_b,
+            _,
+            _,
+            _,
+        ) in pairs
+    }
+
+    assert indices == {
+        (0, 0),
+        (1, 1),
+    }
+
+    distances = {
+        (triangle_a, triangle_b): distance
+        for (
+            triangle_a,
+            triangle_b,
+            _,
+            _,
+            distance,
+        ) in pairs
+    }
+
+    assert distances[(0, 0)] == pytest.approx(1.0)
+    assert distances[(1, 1)] == pytest.approx(2.0)
+
+
+def test_near_triangle_pairs_excludes_pairs_beyond_distance() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (1.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 3.0),
+            (1.0, 0.0, 3.0),
+            (0.0, 1.0, 3.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    pairs = mesh_a.near_triangle_pairs(
+        mesh_b,
+        max_distance=2.999,
+    )
+
+    assert pairs == []
+
+
+def test_near_triangle_pairs_includes_intersection_at_zero_distance() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (2.0, 0.0, 0.0),
+            (0.0, 2.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (0.5, 0.5, -1.0),
+            (0.5, 0.5, 1.0),
+            (1.5, 0.5, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    pairs = mesh_a.near_triangle_pairs(
+        mesh_b,
+        max_distance=0.0,
+    )
+
+    assert len(pairs) == 1
+
+    (
+        triangle_a,
+        triangle_b,
+        point_a,
+        point_b,
+        distance,
+    ) = pairs[0]
+
+    assert triangle_a == 0
+    assert triangle_b == 0
+
+    assert distance == pytest.approx(
+        0.0,
+        abs=1e-12,
+    )
+
+    assert np.allclose(
+        point_a,
+        point_b,
+        atol=1e-12,
+    )
+
+
+def test_near_triangle_pairs_validates_max_distance() -> None:
+    mesh = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (1.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    with pytest.raises(ValueError):
+        mesh.near_triangle_pairs(
+            mesh,
+            max_distance=-1.0,
+        )
+
+    with pytest.raises(ValueError):
+        mesh.near_triangle_pairs(
+            mesh,
+            max_distance=np.inf,
+        )
+
+    with pytest.raises(ValueError):
+        mesh.near_triangle_pairs(
+            mesh,
+            max_distance=np.nan,
+        )
+
+
+def test_near_triangle_pairs_returns_all_pairs_within_distance() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (1.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+            (10.0, 0.0, 0.0),
+            (11.0, 0.0, 0.0),
+            (10.0, 1.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+            (3, 4, 5),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 1.0),
+            (1.0, 0.0, 1.0),
+            (0.0, 1.0, 1.0),
+            (10.0, 0.0, 2.0),
+            (11.0, 0.0, 2.0),
+            (10.0, 1.0, 2.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+            (3, 4, 5),
+        ],
+    )
+
+    pairs = mesh_a.near_triangle_pairs(
+        mesh_b,
+        max_distance=2.0,
+    )
+
+    indices = {
+        (triangle_a, triangle_b)
+        for (
+            triangle_a,
+            triangle_b,
+            _,
+            _,
+            _,
+        ) in pairs
+    }
+
+    assert indices == {
+        (0, 0),
+        (1, 1),
+    }
+
+    distances = {
+        (triangle_a, triangle_b): distance
+        for (
+            triangle_a,
+            triangle_b,
+            _,
+            _,
+            distance,
+        ) in pairs
+    }
+
+    assert distances[(0, 0)] == pytest.approx(1.0)
+    assert distances[(1, 1)] == pytest.approx(2.0)
+
+
+def test_near_triangle_pairs_excludes_pairs_beyond_distance() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (1.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 3.0),
+            (1.0, 0.0, 3.0),
+            (0.0, 1.0, 3.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    pairs = mesh_a.near_triangle_pairs(
+        mesh_b,
+        max_distance=2.999,
+    )
+
+    assert pairs == []
+
+
+def test_near_triangle_pairs_includes_intersection_at_zero_distance() -> None:
+    mesh_a = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (2.0, 0.0, 0.0),
+            (0.0, 2.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    mesh_b = SurfaceMesh(
+        vertices=[
+            (0.5, 0.5, -1.0),
+            (0.5, 0.5, 1.0),
+            (1.5, 0.5, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    pairs = mesh_a.near_triangle_pairs(
+        mesh_b,
+        max_distance=0.0,
+    )
+
+    assert len(pairs) == 1
+
+    (
+        triangle_a,
+        triangle_b,
+        point_a,
+        point_b,
+        distance,
+    ) = pairs[0]
+
+    assert triangle_a == 0
+    assert triangle_b == 0
+
+    assert distance == pytest.approx(
+        0.0,
+        abs=1e-12,
+    )
+
+    assert np.allclose(
+        point_a,
+        point_b,
+        atol=1e-12,
+    )
+
+
+def test_near_triangle_pairs_validates_max_distance() -> None:
+    mesh = SurfaceMesh(
+        vertices=[
+            (0.0, 0.0, 0.0),
+            (1.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0),
+        ],
+        triangles=[
+            (0, 1, 2),
+        ],
+    )
+
+    with pytest.raises(ValueError):
+        mesh.near_triangle_pairs(
+            mesh,
+            max_distance=-1.0,
+        )
+
+    with pytest.raises(ValueError):
+        mesh.near_triangle_pairs(
+            mesh,
+            max_distance=np.inf,
+        )
+
+    with pytest.raises(ValueError):
+        mesh.near_triangle_pairs(
+            mesh,
+            max_distance=np.nan,
+        )

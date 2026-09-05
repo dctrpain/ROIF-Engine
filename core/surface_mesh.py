@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from collections.abc import Sequence
 from pathlib import Path
@@ -623,6 +623,99 @@ class SurfaceMesh:
             ),
         )
 
+    def near_triangle_pairs(
+        self,
+        other: SurfaceMesh,
+        max_distance: float,
+    ) -> list[
+        tuple[
+            int,
+            int,
+            np.ndarray,
+            np.ndarray,
+            float,
+        ]
+    ]:
+        """
+        Return all triangle pairs whose unsigned geometric
+        distance is not greater than max_distance.
+
+        Each result contains:
+            triangle_index_self,
+            triangle_index_other,
+            point_on_self,
+            point_on_other,
+            distance.
+
+        This is a geometric query only. It does not classify
+        contact, penetration, force, or joint state.
+        """
+        if not isinstance(other, SurfaceMesh):
+            raise TypeError(
+                "other must be a SurfaceMesh"
+            )
+
+        max_distance = float(max_distance)
+
+        if not np.isfinite(max_distance):
+            raise ValueError(
+                "max_distance must be finite"
+            )
+
+        if max_distance < 0.0:
+            raise ValueError(
+                "max_distance must be non-negative"
+            )
+
+        pairs: list[
+            tuple[
+                int,
+                int,
+                np.ndarray,
+                np.ndarray,
+                float,
+            ]
+        ] = []
+
+        for triangle_index_self in range(
+            self.triangle_count
+        ):
+            a0, a1, a2 = self.triangle_vertices(
+                triangle_index_self
+            )
+
+            for triangle_index_other in range(
+                other.triangle_count
+            ):
+                b0, b1, b2 = other.triangle_vertices(
+                    triangle_index_other
+                )
+
+                (
+                    point_self,
+                    point_other,
+                    distance,
+                ) = self.closest_points_on_triangles(
+                    a0,
+                    a1,
+                    a2,
+                    b0,
+                    b1,
+                    b2,
+                )
+
+                if distance <= max_distance:
+                    pairs.append(
+                        (
+                            triangle_index_self,
+                            triangle_index_other,
+                            point_self.copy(),
+                            point_other.copy(),
+                            float(distance),
+                        )
+                    )
+
+        return pairs
     def closest_points_to_mesh(
         self,
         other: SurfaceMesh,
