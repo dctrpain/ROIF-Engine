@@ -1,7 +1,7 @@
 ﻿import numpy as np
 import pytest
 
-from core.surface_contact import SurfaceContactCandidate
+from core.surface_contact import SurfaceContactCandidate, make_surface_contact_state
 from core.surface_mesh import SurfaceMesh
 
 
@@ -629,3 +629,30 @@ def test_normal_interval_gap_overlapping() -> None:
         ),
         -0.2,
     )
+
+
+
+def test_surface_contact_state_classifies_normal_motion() -> None:
+    separated = make_surface_contact_state(
+        gap=1.0,
+        relative_normal_velocity=-1.0,
+    )
+    assert separated.active_closing is False
+
+    touching_static = make_surface_contact_state(
+        gap=0.0,
+        relative_normal_velocity=0.0,
+    )
+    assert touching_static.active_closing is False
+
+    overlapping_closing = make_surface_contact_state(
+        gap=-1.0,
+        relative_normal_velocity=-1.0,
+    )
+    assert overlapping_closing.active_closing is True
+
+    overlapping_separating = make_surface_contact_state(
+        gap=-1.0,
+        relative_normal_velocity=1.0,
+    )
+    assert overlapping_separating.active_closing is False

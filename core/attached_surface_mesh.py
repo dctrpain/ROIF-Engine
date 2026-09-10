@@ -125,3 +125,40 @@ class AttachedSurfaceMesh:
         )
 
         return weights[:, None] * force_vector[None, :]
+
+    def nodal_force_map_for_triangle_point(
+        self,
+        triangle_index: int,
+        point: np.ndarray,
+        force: np.ndarray,
+    ) -> dict[Node, np.ndarray]:
+        node_forces = self.node_forces_for_triangle_point(
+            triangle_index,
+            point,
+            force,
+        )
+
+        return {
+            node: node_force
+            for node, node_force in zip(
+                self.nodes,
+                node_forces,
+                strict=True,
+            )
+        }
+
+    def velocity_for_triangle_point(
+        self,
+        triangle_index: int,
+        point: np.ndarray,
+    ) -> np.ndarray:
+        weights = self.node_weights_for_triangle_point(
+            triangle_index,
+            point,
+        )
+
+        node_velocities = np.vstack(
+            [node.velocity for node in self.nodes]
+        )
+
+        return weights @ node_velocities

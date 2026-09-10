@@ -6,6 +6,7 @@ import numpy as np
 
 from core.attached_surface_mesh import AttachedSurfaceMesh
 from core.node import Node
+from core.network import Network
 from core.surface_contact import (
     SurfaceContactCandidate,
     normal_interval_gap,
@@ -122,6 +123,77 @@ def main() -> None:
     normal = candidate.contact_normal
     assert normal is not None
 
+    velocity_tibia = (
+        tibia_attached.velocity_for_triangle_point(
+            candidate.triangle_a,
+            candidate.point_a,
+        )
+    )
+
+    velocity_talus = (
+        talus_attached.velocity_for_triangle_point(
+            candidate.triangle_b,
+            candidate.point_b,
+        )
+    )
+
+    relative_velocity = (
+        velocity_talus - velocity_tibia
+    )
+
+    relative_normal_velocity = float(
+        np.dot(
+            relative_velocity,
+            normal,
+        )
+    )
+
+    print(
+        "relative_normal_velocity:",
+        relative_normal_velocity,
+    )
+    closing_speed = 1.0
+
+    for node in talus_nodes:
+        node.velocity = (
+            -closing_speed * normal
+        )
+
+    dynamic_velocity_tibia = (
+        tibia_attached.velocity_for_triangle_point(
+            candidate.triangle_a,
+            candidate.point_a,
+        )
+    )
+
+    dynamic_velocity_talus = (
+        talus_attached.velocity_for_triangle_point(
+            candidate.triangle_b,
+            candidate.point_b,
+        )
+    )
+
+    dynamic_relative_normal_velocity = float(
+        np.dot(
+            dynamic_velocity_talus
+            - dynamic_velocity_tibia,
+            normal,
+        )
+    )
+
+    print(
+        "dynamic_relative_normal_velocity:",
+        dynamic_relative_normal_velocity,
+    )
+
+    if dynamic_relative_normal_velocity >= 0.0:
+        raise RuntimeError(
+            "closing contact must have negative "
+            "relative normal velocity"
+        )
+
+    for node in talus_nodes:
+        node.velocity = np.zeros(3, dtype=float)
     reaction_magnitude = 1.0
 
     force_on_tibia = (
@@ -198,6 +270,92 @@ def main() -> None:
         )
     )
 
+    tibia_force_map = (
+        tibia_attached.nodal_force_map_for_triangle_point(
+            candidate.triangle_a,
+            candidate.point_a,
+            force_on_tibia,
+        )
+    )
+
+    talus_force_map = (
+        talus_attached.nodal_force_map_for_triangle_point(
+            candidate.triangle_b,
+            candidate.point_b,
+            force_on_talus,
+        )
+    )
+
+    external_forces: dict[Node, np.ndarray] = {}
+
+    for force_map in (
+        tibia_force_map,
+        talus_force_map,
+    ):
+        for node, node_force in force_map.items():
+            if node in external_forces:
+                external_forces[node] = (
+                    external_forces[node] + node_force
+                )
+            else:
+                external_forces[node] = node_force.copy()
+
+    network = Network(record_history=False)
+
+    for node in tibia_nodes + talus_nodes:
+        network.add_node(node)
+
+    dt = 0.01
+
+    network.step(
+        dt=dt,
+        external_forces=external_forces,
+        update_materials=False,
+        include_active=False,
+        solve_constraints=False,
+        record=False,
+    )
+
+    tibia_momentum = np.sum(
+        np.vstack(
+            [
+                node.mass * node.velocity
+                for node in tibia_nodes
+            ]
+        ),
+        axis=0,
+    )
+
+    talus_momentum = np.sum(
+        np.vstack(
+            [
+                node.mass * node.velocity
+                for node in talus_nodes
+            ]
+        ),
+        axis=0,
+    )
+
+    tibia_impulse_error = float(
+        np.linalg.norm(
+            tibia_momentum - force_on_tibia * dt
+        )
+    )
+
+    talus_impulse_error = float(
+        np.linalg.norm(
+            talus_momentum - force_on_talus * dt
+        )
+    )
+
+    print(
+        "tibia_impulse_error:",
+        tibia_impulse_error,
+    )
+    print(
+        "talus_impulse_error:",
+        talus_impulse_error,
+    )
     print("selected_gap_mm:", gap)
     print(
         "selected_triangle_tibia:",
@@ -245,3 +403,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+
+

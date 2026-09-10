@@ -347,3 +347,37 @@ def normal_interval_gap(
         np.min(projection_b)
         - np.max(projection_a)
     )
+
+
+@dataclass(frozen=True)
+class SurfaceContactState:
+    gap: float
+    relative_normal_velocity: float
+    active_closing: bool
+
+
+def make_surface_contact_state(
+    gap: float,
+    relative_normal_velocity: float,
+) -> SurfaceContactState:
+    gap = float(gap)
+    relative_normal_velocity = float(
+        relative_normal_velocity
+    )
+
+    if not np.isfinite(gap):
+        raise ValueError("gap must be finite")
+
+    if not np.isfinite(relative_normal_velocity):
+        raise ValueError(
+            "relative_normal_velocity must be finite"
+        )
+
+    return SurfaceContactState(
+        gap=gap,
+        relative_normal_velocity=relative_normal_velocity,
+        active_closing=(
+            gap <= 0.0
+            and relative_normal_velocity < 0.0
+        ),
+    )
