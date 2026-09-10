@@ -291,3 +291,59 @@ class SurfaceContactCandidate:
         return candidates
 
 
+
+
+def normal_interval_gap(
+    triangle_a: np.ndarray,
+    triangle_b: np.ndarray,
+    normal: np.ndarray,
+) -> float:
+    """
+    Signed gap between triangle projection intervals along a normal.
+
+    Positive: separated projection intervals.
+    Zero: touching projection intervals.
+    Negative: overlapping projection intervals.
+
+    This is a geometric directional measure only. A negative value
+    does not by itself prove physical surface penetration.
+    """
+    a = np.asarray(triangle_a, dtype=float)
+    b = np.asarray(triangle_b, dtype=float)
+    n = np.asarray(normal, dtype=float)
+
+    if a.shape != (3, 3) or b.shape != (3, 3):
+        raise ValueError(
+            "triangles must have shape (3, 3)"
+        )
+
+    if n.shape != (3,):
+        raise ValueError(
+            "normal must have shape (3,)"
+        )
+
+    if (
+        not np.all(np.isfinite(a))
+        or not np.all(np.isfinite(b))
+        or not np.all(np.isfinite(n))
+    ):
+        raise ValueError(
+            "triangle coordinates and normal must be finite"
+        )
+
+    norm = float(np.linalg.norm(n))
+
+    if norm <= 1e-12:
+        raise ValueError(
+            "normal must have non-zero length"
+        )
+
+    unit_normal = n / norm
+
+    projection_a = a @ unit_normal
+    projection_b = b @ unit_normal
+
+    return float(
+        np.min(projection_b)
+        - np.max(projection_a)
+    )

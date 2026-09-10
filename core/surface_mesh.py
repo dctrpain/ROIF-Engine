@@ -677,6 +677,18 @@ class SurfaceMesh:
             ]
         ] = []
 
+        other_triangle_vertices = other.vertices[
+            other.triangles
+        ]
+        other_bbox_min = np.min(
+            other_triangle_vertices,
+            axis=1,
+        )
+        other_bbox_max = np.max(
+            other_triangle_vertices,
+            axis=1,
+        )
+
         for triangle_index_self in range(
             self.triangle_count
         ):
@@ -684,11 +696,31 @@ class SurfaceMesh:
                 triangle_index_self
             )
 
-            for triangle_index_other in range(
-                other.triangle_count
+            triangle_self = np.vstack(
+                (a0, a1, a2)
+            )
+            bbox_min_self = (
+                np.min(triangle_self, axis=0)
+                - max_distance
+            )
+            bbox_max_self = (
+                np.max(triangle_self, axis=0)
+                + max_distance
+            )
+
+            candidate_mask = np.all(
+                other_bbox_max >= bbox_min_self,
+                axis=1,
+            ) & np.all(
+                other_bbox_min <= bbox_max_self,
+                axis=1,
+            )
+
+            for triangle_index_other in np.flatnonzero(
+                candidate_mask
             ):
                 b0, b1, b2 = other.triangle_vertices(
-                    triangle_index_other
+                    int(triangle_index_other)
                 )
 
                 (
@@ -708,7 +740,7 @@ class SurfaceMesh:
                     pairs.append(
                         (
                             triangle_index_self,
-                            triangle_index_other,
+                            int(triangle_index_other),
                             point_self.copy(),
                             point_other.copy(),
                             float(distance),
@@ -869,3 +901,4 @@ class SurfaceMesh:
             vertices=vertices,
             triangles=triangles,
         )
+

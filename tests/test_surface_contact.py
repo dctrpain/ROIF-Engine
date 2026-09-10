@@ -551,3 +551,81 @@ def test_from_facing_nearby_meshes_filters_non_facing_pair() -> None:
     )
 
     assert candidates == []
+
+
+def test_normal_interval_gap_separated() -> None:
+    from core.surface_contact import normal_interval_gap
+
+    triangle_a = np.array(
+        [
+            [0.0, 0.0, 0.0],
+            [1.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+        ]
+    )
+    triangle_b = np.array(
+        [
+            [0.0, 0.0, 1.0],
+            [0.0, 1.0, 1.0],
+            [1.0, 0.0, 1.0],
+        ]
+    )
+
+    assert normal_interval_gap(
+        triangle_a,
+        triangle_b,
+        np.array([0.0, 0.0, 1.0]),
+    ) == 1.0
+
+
+def test_normal_interval_gap_touching() -> None:
+    from core.surface_contact import normal_interval_gap
+
+    triangle_a = np.array(
+        [
+            [0.0, 0.0, 0.0],
+            [1.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+        ]
+    )
+    triangle_b = np.array(
+        [
+            [0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [1.0, 0.0, 0.0],
+        ]
+    )
+
+    assert normal_interval_gap(
+        triangle_a,
+        triangle_b,
+        np.array([0.0, 0.0, 1.0]),
+    ) == 0.0
+
+
+def test_normal_interval_gap_overlapping() -> None:
+    from core.surface_contact import normal_interval_gap
+
+    triangle_a = np.array(
+        [
+            [0.0, 0.0, 0.0],
+            [1.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+        ]
+    )
+    triangle_b = np.array(
+        [
+            [0.0, 0.0, -0.2],
+            [0.0, 1.0, 0.2],
+            [1.0, 0.0, 0.2],
+        ]
+    )
+
+    assert np.isclose(
+        normal_interval_gap(
+            triangle_a,
+            triangle_b,
+            np.array([0.0, 0.0, 1.0]),
+        ),
+        -0.2,
+    )

@@ -203,3 +203,82 @@ class Attachment:
             f"weights={self.weights.tolist()}"
             ")"
         )
+
+
+def affine_weights_for_point(
+    nodes: Sequence[Node],
+    point: Iterable[float] | np.ndarray,
+) -> np.ndarray:
+    """
+    Compute affine coordinates of a 3D point relative to four
+    non-coplanar ROIF nodes.
+
+    The returned weights satisfy:
+
+        point = sum_i w_i * node_i.position
+        sum_i w_i = 1
+
+    Negative weights are valid affine coordinates.
+    """
+    nodes = tuple(nodes)
+
+    if len(nodes) != 4:
+        raise ValueError(
+            "affine 3D coordinates require exactly four nodes"
+        )
+
+    for node in nodes:
+        if not isinstance(node, Node):
+            raise TypeError(
+                "all affine reference nodes must be Node instances"
+            )
+
+        if node.dimension != 3:
+            raise ValueError(
+                "affine 3D coordinates require 3D nodes"
+            )
+
+    point_vector = np.asarray(
+        point,
+        dtype=float,
+    )
+
+    if point_vector.shape != (3,):
+        raise ValueError(
+            "affine point must have shape (3,)"
+        )
+
+    if not np.all(np.isfinite(point_vector)):
+        raise ValueError(
+            "affine point must be finite"
+        )
+
+    positions = np.column_stack(
+        [node.position for node in nodes]
+    )
+
+    system = np.vstack(
+        [
+            positions,
+            np.ones(4, dtype=float),
+        ]
+    )
+
+    target = np.concatenate(
+        [
+            point_vector,
+            np.ones(1, dtype=float),
+        ]
+    )
+
+    try:
+        weights = np.linalg.solve(
+            system,
+            target,
+        )
+    except np.linalg.LinAlgError as exc:
+        raise ValueError(
+            "affine reference nodes must be non-coplanar"
+        ) from exc
+
+    return weights
