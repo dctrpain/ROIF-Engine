@@ -381,3 +381,84 @@ def make_surface_contact_state(
             and relative_normal_velocity < 0.0
         ),
     )
+
+
+def unilateral_normal_reaction(
+    compression: float,
+    relative_normal_velocity: float,
+    stiffness: float,
+    damping: float,
+) -> float:
+    compression = float(compression)
+    relative_normal_velocity = float(
+        relative_normal_velocity
+    )
+    stiffness = float(stiffness)
+    damping = float(damping)
+
+    values = (
+        compression,
+        relative_normal_velocity,
+        stiffness,
+        damping,
+    )
+
+    if not all(np.isfinite(value) for value in values):
+        raise ValueError(
+            "contact reaction inputs must be finite"
+        )
+
+    if compression < 0.0:
+        raise ValueError(
+            "compression cannot be negative"
+        )
+
+    if stiffness <= 0.0:
+        raise ValueError(
+            "stiffness must be > 0"
+        )
+
+    if damping < 0.0:
+        raise ValueError(
+            "damping cannot be negative"
+        )
+
+    reaction = (
+        stiffness * compression
+        - damping * relative_normal_velocity
+    )
+
+    return max(0.0, float(reaction))
+
+
+def compliant_layer_compression(
+    surface_distance: float,
+    reference_thickness: float,
+) -> float:
+    surface_distance = float(surface_distance)
+    reference_thickness = float(reference_thickness)
+
+    if not np.isfinite(surface_distance):
+        raise ValueError(
+            "surface_distance must be finite"
+        )
+
+    if not np.isfinite(reference_thickness):
+        raise ValueError(
+            "reference_thickness must be finite"
+        )
+
+    if surface_distance < 0.0:
+        raise ValueError(
+            "surface_distance cannot be negative"
+        )
+
+    if reference_thickness < 0.0:
+        raise ValueError(
+            "reference_thickness cannot be negative"
+        )
+
+    return max(
+        0.0,
+        reference_thickness - surface_distance,
+    )

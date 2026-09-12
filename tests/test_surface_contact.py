@@ -656,3 +656,103 @@ def test_surface_contact_state_classifies_normal_motion() -> None:
         relative_normal_velocity=1.0,
     )
     assert overlapping_separating.active_closing is False
+
+
+def test_unilateral_normal_reaction() -> None:
+    from core.surface_contact import (
+        unilateral_normal_reaction,
+    )
+
+    assert unilateral_normal_reaction(
+        compression=0.002,
+        relative_normal_velocity=0.0,
+        stiffness=5000.0,
+        damping=50.0,
+    ) == pytest.approx(10.0)
+
+    assert unilateral_normal_reaction(
+        compression=0.002,
+        relative_normal_velocity=-0.1,
+        stiffness=5000.0,
+        damping=50.0,
+    ) == pytest.approx(15.0)
+
+    assert unilateral_normal_reaction(
+        compression=0.002,
+        relative_normal_velocity=0.1,
+        stiffness=5000.0,
+        damping=50.0,
+    ) == pytest.approx(5.0)
+
+    assert unilateral_normal_reaction(
+        compression=0.002,
+        relative_normal_velocity=1.0,
+        stiffness=5000.0,
+        damping=50.0,
+    ) == 0.0
+
+
+def test_unilateral_normal_reaction_validates_inputs() -> None:
+    from core.surface_contact import (
+        unilateral_normal_reaction,
+    )
+
+    with pytest.raises(ValueError):
+        unilateral_normal_reaction(-0.001, 0.0, 5000.0, 50.0)
+
+    with pytest.raises(ValueError):
+        unilateral_normal_reaction(0.001, 0.0, 0.0, 50.0)
+
+    with pytest.raises(ValueError):
+        unilateral_normal_reaction(0.001, 0.0, 5000.0, -1.0)
+
+    with pytest.raises(ValueError):
+        unilateral_normal_reaction(
+            float("nan"),
+            0.0,
+            5000.0,
+            50.0,
+        )
+
+
+def test_compliant_layer_compression() -> None:
+    from core.surface_contact import (
+        compliant_layer_compression,
+    )
+
+    assert compliant_layer_compression(
+        surface_distance=3.0,
+        reference_thickness=2.0,
+    ) == 0.0
+
+    assert compliant_layer_compression(
+        surface_distance=2.0,
+        reference_thickness=2.0,
+    ) == 0.0
+
+    assert compliant_layer_compression(
+        surface_distance=1.5,
+        reference_thickness=2.0,
+    ) == pytest.approx(0.5)
+
+
+def test_compliant_layer_drives_unilateral_reaction() -> None:
+    from core.surface_contact import (
+        compliant_layer_compression,
+        unilateral_normal_reaction,
+    )
+
+    compression = compliant_layer_compression(
+        surface_distance=1.5,
+        reference_thickness=2.0,
+    )
+
+    reaction = unilateral_normal_reaction(
+        compression=compression,
+        relative_normal_velocity=-0.1,
+        stiffness=5000.0,
+        damping=50.0,
+    )
+
+    assert compression == pytest.approx(0.5)
+    assert reaction == pytest.approx(2505.0)

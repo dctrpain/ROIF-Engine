@@ -9,7 +9,9 @@ from core.node import Node
 from core.network import Network
 from core.surface_contact import (
     SurfaceContactCandidate,
+    compliant_layer_compression,
     normal_interval_gap,
+    unilateral_normal_reaction,
 )
 from core.surface_mesh import SurfaceMesh
 
@@ -203,9 +205,33 @@ def main() -> None:
             "relative normal velocity"
         )
 
+    # Synthetic SI parameters for mechanics proof only.
+    # These are not physiological tibiotalar cartilage values.
+    synthetic_reference_thickness = 0.002
+    synthetic_stiffness = 5000.0
+    synthetic_damping = 50.0
+
+    surface_distance = float(candidate.distance)
+
+    compression = compliant_layer_compression(
+        surface_distance=surface_distance,
+        reference_thickness=synthetic_reference_thickness,
+    )
+
+    reaction_magnitude = unilateral_normal_reaction(
+        compression=compression,
+        relative_normal_velocity=dynamic_relative_normal_velocity,
+        stiffness=synthetic_stiffness,
+        damping=synthetic_damping,
+    )
+
+    print("surface_distance_m:", surface_distance)
+    print("synthetic_reference_thickness_m:", synthetic_reference_thickness)
+    print("compression_m:", compression)
+    print("reaction_magnitude_N:", reaction_magnitude)
+
     for node in talus_nodes:
         node.velocity = np.zeros(3, dtype=float)
-    reaction_magnitude = 1.0
 
     force_on_tibia = (
         -reaction_magnitude * normal
@@ -414,6 +440,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 
