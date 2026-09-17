@@ -1,0 +1,221 @@
+{
+  "after_identical_write": {
+    "connections_A": {
+      "A_B": {
+        "contractile_capacity": 0.7318749999999999,
+        "effective_transfer_gain": 0.711163171928711,
+        "fatigue": 0.18,
+        "reflex_gain": 1.2068750000000001,
+        "remodeling_bias": 0.037500000000000006,
+        "stiffness": 0.981875
+      },
+      "B_C": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 1.0,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.0
+      }
+    },
+    "connections_B": {
+      "A_B": {
+        "contractile_capacity": 0.7318749999999999,
+        "effective_transfer_gain": 0.7443770316943361,
+        "fatigue": 0.18,
+        "reflex_gain": 1.0068750000000002,
+        "remodeling_bias": 0.037500000000000006,
+        "stiffness": 1.231875
+      },
+      "B_C": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 1.0,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.0
+      }
+    },
+    "prestress_A": [
+      0.2,
+      0.1,
+      0.0
+    ],
+    "prestress_B": [
+      0.2,
+      0.1,
+      0.0
+    ],
+    "prestress_distance": 0.0,
+    "z7_A": [
+      0.2,
+      0.1,
+      0.0,
+      0.711163171928711,
+      0.7318749999999999,
+      1.0,
+      1.0
+    ],
+    "z7_B": [
+      0.2,
+      0.1,
+      0.0,
+      0.7443770316943361,
+      0.7318749999999999,
+      1.0,
+      1.0
+    ],
+    "z7_closed_under_write": false,
+    "z7_distance": 0.033213859765625076
+  },
+  "benchmark": "transition_sufficient_z7_falsification",
+  "benchmark_version": "transition_sufficient_z7_falsification_v1",
+  "claim_scope": {
+    "all_possible_reductions_falsified": false,
+    "biological_validity_tested": false,
+    "clinical_validity_tested": false,
+    "explicit_history_required_proved": false,
+    "full_state_globally_minimal_proved": false,
+    "registered_claim": "The benchmark tests only whether the registered Z7 interface reduction is transition-sufficient over the registered production event sequence."
+  },
+  "direct_positive_control": {
+    "distance": 0.0,
+    "equivalent": true,
+    "prestress_A": [
+      -0.04999999999999999,
+      -0.0875,
+      -0.140625
+    ],
+    "prestress_B": [
+      -0.04999999999999999,
+      -0.0875,
+      -0.140625
+    ]
+  },
+  "future_identical_read": {
+    "discriminates": true,
+    "distance": 0.0077844983825683944,
+    "prestress_A": [
+      -0.04999999999999999,
+      -0.0333430947366333,
+      -0.10000732105247498
+    ],
+    "prestress_B": [
+      -0.04999999999999999,
+      -0.039570693442688015,
+      -0.10467802008201602
+    ]
+  },
+  "initial_state": {
+    "connections_A": {
+      "A_B": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 1.0,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.0
+      },
+      "B_C": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 1.0,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.0
+      }
+    },
+    "connections_B": {
+      "A_B": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 0.8,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.25
+      },
+      "B_C": {
+        "contractile_capacity": 1.0,
+        "effective_transfer_gain": 1.0,
+        "fatigue": 0.0,
+        "reflex_gain": 1.0,
+        "remodeling_bias": 0.0,
+        "stiffness": 1.0
+      }
+    },
+    "full_state_A": [
+      0.2,
+      0.1,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "full_state_B": [
+      0.2,
+      0.1,
+      0.0,
+      1.25,
+      1.0,
+      0.8,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "full_state_distance": 0.3201562118716424,
+    "full_states_distinct": true,
+    "z7_A": [
+      0.2,
+      0.1,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "z7_B": [
+      0.2,
+      0.1,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "z7_collision": true,
+    "z7_distance": 0.0
+  },
+  "negative_controls": {
+    "A_repeat_distance": 0.0,
+    "B_repeat_distance": 0.0,
+    "valid": true
+  },
+  "registered_decision": {
+    "benchmark_valid": true,
+    "decision": "Z7_NOT_TRANSITION_SUFFICIENT_OVER_REGISTERED_DOMAIN",
+    "z7_falsified": true
+  },
+  "registered_reduction": [
+    "P_A",
+    "P_B",
+    "P_C",
+    "g_AB",
+    "c_AB",
+    "g_BC",
+    "c_BC"
+  ],
+  "registered_reduction_dimension": 7,
+  "registered_state_dimension": 13,
+  "tolerance": 1e-12
+}

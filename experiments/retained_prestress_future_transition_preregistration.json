@@ -1,0 +1,65 @@
+﻿{
+  "protocol": "retained_prestress_future_transition_falsification",
+  "version": "v1",
+  "status": "preregistered_before_execution",
+
+  "source_benchmark": {
+    "module": "experiments.transition_order_mechanism_falsification",
+    "regime": "RECONFIGURING_NETWORK",
+    "initial_state": "build_source_image()",
+    "sequences": {
+      "AB": ["event_a()", "event_b()"],
+      "BA": ["event_b()", "event_a()"]
+    }
+  },
+
+  "registered_terminal_state_requirements": {
+    "connection_state_distance_max": 1e-12,
+    "prestress_distance_min_exclusive": 1e-12,
+    "meaning": "AB and BA must have equivalent registered adaptive connection state but distinguishable retained prestress before READ."
+  },
+
+  "registered_read": {
+    "source": "experiments.roif_dynamic_quotient_system_probe_locked.read_event",
+    "event_type": "shared_physical_probe",
+    "connection_exposures": [],
+    "prestress_perturbation": {
+      "node_id": "A",
+      "delta": 0.30
+    }
+  },
+
+  "comparison": {
+    "left": "T(X_AB, READ)",
+    "right": "T(X_BA, READ)",
+    "primary_observable": "target prestress vector",
+    "distance": "euclidean",
+    "tolerance": 1e-12
+  },
+
+  "hypothesis": {
+    "null": "If adaptive connection state is sufficient for the registered next mechanical transition, terminal AB and BA states with equivalent adaptive connection state must produce equivalent target prestress under the identical registered READ.",
+    "alternative": "Retained distributed prestress contains transition-relevant state not recoverable from the equivalent adaptive connection state."
+  },
+
+  "validity_conditions": {
+    "invalid_if_connection_state_distance_exceeds_tolerance": true,
+    "invalid_if_terminal_prestress_distance_does_not_exceed_tolerance": true,
+    "invalid_if_read_contains_connection_exposure": true
+  },
+
+  "decision_rule": {
+    "supports_retained_prestress_transition_relevance_if": "valid experiment AND post_READ_prestress_distance > 1e-12",
+    "null_not_rejected_if": "valid experiment AND post_READ_prestress_distance <= 1e-12",
+    "no_post_result_probe_selection": true
+  },
+
+  "claims_not_tested": [
+    "global_minimality",
+    "biological_validity",
+    "clinical_validity",
+    "necessity_of_prestress_in_all_dynamical_systems",
+    "uniqueness_of_path_dependence",
+    "novelty_of_mechanical_memory"
+  ]
+}

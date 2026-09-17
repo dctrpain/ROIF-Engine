@@ -1,0 +1,129 @@
+﻿{
+  "protocol": "transition_sufficient_local_rank_falsification",
+  "version": "v1",
+  "status": "PREREGISTERED_BEFORE_EXECUTION",
+
+  "question": "Can a smooth exact reduced state of dimension less than five preserve the registered future mechanical-interface response map of one adaptive connection locally around the registered interior state?",
+
+  "hidden_dynamic_state": [
+    "stiffness",
+    "contractile_capacity",
+    "reflex_gain",
+    "fatigue",
+    "remodeling_bias"
+  ],
+
+  "state_dimension": 5,
+
+  "base_state": {
+    "stiffness": 1.0,
+    "contractile_capacity": 1.0,
+    "reflex_gain": 1.0,
+    "fatigue": 0.25,
+    "remodeling_bias": 0.0
+  },
+
+  "fixed_bounds": {
+    "min_stiffness": 0.0,
+    "max_stiffness": 10.0,
+    "min_contractile_capacity": 0.0,
+    "max_contractile_capacity": 10.0,
+    "min_reflex_gain": 0.0,
+    "max_reflex_gain": 10.0
+  },
+
+  "observable_after_each_probe": [
+    "effective_transfer_gain",
+    "contractile_capacity"
+  ],
+
+  "effective_transfer_gain_definition": "stiffness * contractile_capacity * reflex_gain * (1 - fatigue)",
+
+  "probe_amplitude": 0.1,
+
+  "probes": {
+    "zero": {
+      "load": 0.0,
+      "strain": 0.0,
+      "activation": 0.0,
+      "damage": 0.0,
+      "recovery": 0.0
+    },
+    "load": {
+      "load": 0.1,
+      "strain": 0.0,
+      "activation": 0.0,
+      "damage": 0.0,
+      "recovery": 0.0
+    },
+    "strain": {
+      "load": 0.0,
+      "strain": 0.1,
+      "activation": 0.0,
+      "damage": 0.0,
+      "recovery": 0.0
+    },
+    "activation": {
+      "load": 0.0,
+      "strain": 0.0,
+      "activation": 0.1,
+      "damage": 0.0,
+      "recovery": 0.0
+    },
+    "damage": {
+      "load": 0.0,
+      "strain": 0.0,
+      "activation": 0.0,
+      "damage": 0.1,
+      "recovery": 0.0
+    },
+    "recovery": {
+      "load": 0.0,
+      "strain": 0.0,
+      "activation": 0.0,
+      "damage": 0.0,
+      "recovery": 0.1
+    }
+  },
+
+  "response_map": "Concatenation of (effective_transfer_gain, contractile_capacity) after independently applying each registered probe to the same base state.",
+
+  "jacobian_method": "central finite difference",
+
+  "finite_difference_step": 1e-6,
+
+  "rank_relative_threshold": 1e-9,
+
+  "primary_test": "rank(J_Phi) == 5",
+
+  "defeat_condition": "If rank(J_Phi) < 5 under the preregistered numerical criterion, this benchmark does not establish a five-dimensional local lower bound.",
+
+  "survival_condition": "If rank(J_Phi) == 5 and numerical stability checks support that rank, then no smooth exact factorization of this registered local future-response map through a state representation of dimension less than five exists locally.",
+
+  "required_controls": [
+    "all perturbed states remain inside registered bounds",
+    "no clamp boundary is crossed by finite-difference state perturbations",
+    "repeat evaluation is deterministic",
+    "rank must be reported together with all singular values",
+    "rank stability must be checked at finite-difference steps 1e-5, 1e-6, and 1e-7 without changing the primary registered step"
+  ],
+
+  "forbidden_post_result_changes": [
+    "changing the base state because the observed rank is undesirable",
+    "changing probe identities because the observed rank is undesirable",
+    "changing probe amplitude because the observed rank is undesirable",
+    "changing the primary finite-difference step because the observed rank is undesirable",
+    "changing the rank threshold because the observed rank is undesirable",
+    "adding new observables after seeing the result",
+    "reading hidden state coordinates directly as output observables"
+  ],
+
+  "claim_limits": {
+    "global_minimality": false,
+    "non_smooth_reductions_excluded": false,
+    "discontinuous_encodings_excluded": false,
+    "biological_validity_tested": false,
+    "clinical_validity_tested": false,
+    "all_system_states_covered": false
+  }
+}

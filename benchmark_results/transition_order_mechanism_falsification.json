@@ -1,0 +1,106 @@
+{
+  "additive_reference": {
+    "ab_final_prestress": {
+      "A": -0.04999999999999999,
+      "B": 0.30000000000000004,
+      "C": 0.0
+    },
+    "ab_minus_ba_by_node": {
+      "A": 0.0,
+      "B": 0.0,
+      "C": 0.0
+    },
+    "ba_final_prestress": {
+      "A": -0.04999999999999999,
+      "B": 0.30000000000000004,
+      "C": 0.0
+    },
+    "order_dependent": false,
+    "prestress_distance": 0.0
+  },
+  "benchmark_version": "transition_order_mechanism_falsification_v1",
+  "claim_scope": "computational_registered_system_only",
+  "claims_not_tested": [
+    "biological_validity",
+    "clinical_validity",
+    "causal_truth_in_nature",
+    "global_minimality_of_full_state",
+    "uniqueness_of_noncommutativity",
+    "chaos",
+    "calibrated_probability"
+  ],
+  "decision": {
+    "additive_control_valid": true,
+    "fixed_network_order_dependent": false,
+    "fixed_prestress_distance": 2.7755575615628914e-17,
+    "reconfiguration_minus_fixed_distance": 0.011814192037381724,
+    "reconfiguring_network_order_dependent": true,
+    "reconfiguring_prestress_distance": 0.011814192037381752,
+    "registered_conclusion": "RECONFIGURATION_INTRODUCES_REGISTERED_ORDER_DEPENDENCE",
+    "tolerance": 1e-12
+  },
+  "fixed_network": {
+    "ab_final_prestress": {
+      "A": -0.04999999999999999,
+      "B": 0.11250000000000002,
+      "C": 0.009375000000000022
+    },
+    "ab_minus_ba_by_node": {
+      "A": 0.0,
+      "B": -2.7755575615628914e-17,
+      "C": 0.0
+    },
+    "ba_final_prestress": {
+      "A": -0.04999999999999999,
+      "B": 0.11250000000000004,
+      "C": 0.009375000000000022
+    },
+    "order_dependent": false,
+    "prestress_distance": 2.7755575615628914e-17
+  },
+  "preregistered": {
+    "defeat_conditions": {
+      "procedure_invalid_if": "additive_AB_BA_distance_exceeds_tolerance",
+      "reconfiguration_amplification_hypothesis_defeated_if": "reconfiguring_prestress_distance_is_not_greater_than_fixed_network_prestress_distance_beyond_tolerance"
+    },
+    "events": [
+      "A",
+      "B"
+    ],
+    "initial_state": "build_source_image()",
+    "primary_readout": "euclidean_distance_final_prestress",
+    "secondary_readouts": [
+      "nodewise_final_prestress_difference",
+      "adaptive_connection_state_distance",
+      "registered_state_distance"
+    ],
+    "sequences": [
+      "AB",
+      "BA"
+    ],
+    "tolerance": 1e-12
+  },
+  "reconfiguring_network": {
+    "ab_final_prestress": {
+      "A": -0.04999999999999999,
+      "B": 0.1666569052633667,
+      "C": 0.03227268818127499
+    },
+    "ab_minus_ba_by_node": {
+      "A": 0.0,
+      "B": -2.7755575615628914e-17,
+      "C": -0.011814192037381752
+    },
+    "ba_final_prestress": {
+      "A": -0.04999999999999999,
+      "B": 0.16665690526336674,
+      "C": 0.04408688021865674
+    },
+    "connection_state_distance": 0.0,
+    "order_dependent_connections": false,
+    "order_dependent_prestress": true,
+    "order_dependent_registered_state": true,
+    "prestress_distance": 0.011814192037381752,
+    "registered_state_distance": 0.011814192037381752
+  }
+}
